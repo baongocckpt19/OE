@@ -1,0 +1,205 @@
+.container {
+    max-width: 70%; // Reduced width for a cleaner layout
+    margin: 40px auto; // Increased margin for better spacing
+    background: #f9f9f9; // Softer background color
+    padding: 30px; // Increased padding for a spacious feel
+    border-radius: 12px; // More rounded corners
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15); // Softer shadow
+    font-size: 1rem;
+    font-family: 'Roboto', sans-serif; // Modern font
+    margin-top: 100px; // Adjusted for header spacing
+}
+
+.form-group {
+    margin-bottom: 28px; // Increased spacing between form groups
+}
+
+.form-group label {
+    font-weight: 600; // Slightly lighter font weight
+    display: block;
+    margin-bottom: 8px; // Increased spacing below labels
+    color: #333; // Darker text for better readability
+}
+
+.required {
+    color: #e63946; // Softer red for required fields
+}
+
+textarea, input {
+    width: 70%; // Full width for consistency
+    padding: 12px; // Increased padding for better usability
+    border: 1px solid #ddd; // Softer border color
+    border-radius: 6px; // Slightly more rounded corners
+    font-size: 1rem; // Larger font size
+    margin-bottom: 16px; // Increased spacing below inputs
+    transition: border-color 0.3s, box-shadow 0.3s; // Smooth hover effect
+}
+
+select {
+    width: 30%; // Full width for consistency
+    padding: 12px; // Increased padding for better usability
+    border: 1px solid #ddd; // Softer border color
+    border-radius: 6px; // Slightly more rounded corners
+    font-size: 1rem; // Larger font size
+    margin-bottom: 16px; // Increased spacing below inputs
+    transition: border-color 0.3s, box-shadow 0.3s; // Smooth hover effect
+}
+textarea, input {
+    max-width: 60%; // Further restrict the width of input fields for answers
+}
+
+textarea:focus, input:focus, select:focus {
+    border-color: #007bff; // Highlighted border on focus
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); // Subtle glow on focus
+    outline: none;
+}
+
+.editor {
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    overflow: hidden;
+    background: #fff; // White background for editor
+}
+
+.toolbar {
+    display: flex;
+    background: #f1f1f1; // Softer toolbar background
+    padding: 8px;
+    border-bottom: 1px solid #ddd;
+}
+
+.toolbar button, .toolbar select {
+    margin-right: 8px;
+    padding: 6px 12px; // Added padding for buttons
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background: #fff;
+    cursor: pointer;
+    transition: background 0.3s, border-color 0.3s;
+}
+
+.toolbar button:hover, .toolbar select:hover {
+    background: #007bff; // Blue background on hover
+    color: #fff; // White text on hover
+    border-color: #007bff;
+}
+
+.answer {
+    display: flex; // Ensure horizontal alignment
+    align-items: center; // Vertically center all elements
+    gap: 8px; // Maintain spacing between elements
+    margin-bottom: 20px; // Spacing between answers
+}
+
+.answer-label {
+    background: #007bff; // Blue background for labels
+    color: white;
+    padding: 8px 14px; // Increased padding
+    border-radius: 50%;
+    margin-right: 12px;
+    font-size: 1.4rem; // Larger font size
+}
+
+.add-answer {
+    margin-top: 12px;
+    color: #007bff; // Blue text for add button
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.4rem;
+    transition: color 0.3s;
+}
+
+.add-answer:hover {
+    color: #0056b3; // Darker blue on hover
+}
+
+.buttons {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 40px; // Increased spacing above buttons
+}
+
+.cancel {
+    background: #6c757d; // Neutral gray background
+    color: white;
+    padding: 10px 20px; // Larger padding
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    margin-right: 12px;
+    transition: background 0.3s;
+}
+
+.cancel:hover {
+    background: #5a6268; // Darker gray on hover
+}
+
+.save {
+    background: #007bff; // Blue background
+    color: white;
+    padding: 10px 20px; // Larger padding
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.save:hover {
+    background: #0056b3; // Darker blue on hover
+}
+
+
+/* From Uiverse.io by vinodjangid07 */ 
+.bin-button {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 15px;
+    background-color: rgb(255, 95, 95);
+    cursor: pointer;
+    border: 3px solid rgb(255, 201, 201);
+    transition-duration: 0.3s;
+  }
+  .bin-bottom {
+    width: 15px;
+  }
+  .bin-top {
+    width: 17px;
+    transform-origin: right;
+    transition-duration: 0.3s;
+  }
+  .bin-button:hover .bin-top {
+    transform: rotate(45deg);
+  }
+  .bin-button:hover {
+    background-color: rgb(255, 0, 0);
+  }
+  .bin-button:active {
+    transform: scale(0.9);
+  }
+
+.form-row {
+    display: flex; // Align items horizontally
+    justify-content: flex-start; // Align items to the left
+    align-items: center; // Vertically center items
+    gap: 16px; // Add spacing between "môn học" and "mức độ" fields
+}
+
+input.score, select.correct-answer {
+    width: 30%; // Reduce the width of score and correct answer fields
+    padding: 8px; // Adjust padding for smaller fields
+    font-size: 1rem; // Ensure consistent font size
+}
+
+input.subject, select.difficulty {
+    width: 25%; // Reduce the width of "môn học" and "mức độ" fields
+    padding: 8px; // Adjust padding for smaller fields
+    font-size: 1rem; // Ensure consistent font size
+    margin-right: 16px; // Add spacing between the fields
+    display: inline-block; // Ensure horizontal alignment
+    text-align: left; // Align text to the left
+}

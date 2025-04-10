@@ -1,0 +1,166 @@
+<app-header [title]="'Thêm câu hỏi'"></app-header>
+<div class="container">
+    <div class = "header">
+        <div class="input-group">
+            <label for="question">Câu hỏi: <span class="required">*</span></label>
+            <input type="text" id="question" placeholder="Nhập câu hỏi">
+        </div>
+    <div class="form-group">
+        <label for="subject">Môn học: <span class="required">*</span></label>
+        <select id="subject">
+            <option>Chọn môn học</option>
+        </select>
+    </div>
+    </div>
+    <div class="form-group">
+        <label for="level">Mức độ:</label>
+        <select id="level">
+            <option>Chọn mức độ</option>
+            <option>Nhận biết</option>
+            <option>Thông hiểu</option>
+            <option>Vận dụng</option>
+            <option>Vận dụng cao</option>
+
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label>Câu hỏi</label>
+        <div class="editor">
+            <div class="toolbar">
+                <button><i class="fas fa-undo"></i></button>
+                <button><i class="fas fa-redo"></i></button>
+                <button><i class="fas fa-search"></i></button>
+                <button><i class="fas fa-image"></i></button>
+                <button><i class="fas fa-video"></i></button>
+                <button><i class="fas fa-music"></i></button>
+                <button><i class="fas fa-bold"></i></button>
+                <button><i class="fas fa-italic"></i></button>
+                <button><i class="fas fa-underline"></i></button>
+                <button><i class="fas fa-strikethrough"></i></button>
+                <select>
+                    <option>Mulish</option>
+                </select>
+                <select>
+                    <option>12pt</option>
+                </select>
+                <button><i class="fas fa-align-left"></i></button>
+                <button><i class="fas fa-align-center"></i></button>
+                <button><i class="fas fa-align-right"></i></button>
+                <button><i class="fas fa-align-justify"></i></button>
+                <button><i class="fas fa-list-ul"></i></button>
+                <button><i class="fas fa-list-ol"></i></button>
+                <button><i class="fas fa-superscript"></i></button>
+                <button><i class="fas fa-subscript"></i></button>
+                <button><i class="fas fa-highlighter"></i></button>
+                <button><i class="fas fa-pen"></i></button>
+                <button><i class="fas fa-ellipsis-h"></i></button>
+            </div>
+            <textarea rows="6"></textarea>
+        </div>
+    </div>
+
+    <div class="form-row">
+        <div class="form-group">
+            <label for="score">Điểm: <span class="required">*</span></label>
+            <input type="text" id="score">
+        </div>
+        <div class="form-group full-width">
+            <label for="correct-answer">Đáp án đúng:</label>
+            <input type="text" id="correct-answer" placeholder="Nhập đáp án đúng">
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label>Đáp án</label>
+        <div class="answer">
+            <span class="answer-label">a</span>
+            <input type="text" placeholder="Nhập đáp án">
+            <button class="bin-button">
+                <svg
+                  class="bin-top"
+                  viewBox="0 0 39 7"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <line y1="5" x2="39" y2="5" stroke="white" stroke-width="4"></line>
+                  <line
+                    x1="12"
+                    y1="1.5"
+                    x2="26.0357"
+                    y2="1.5"
+                    stroke="white"
+                    stroke-width="3"
+                  ></line>
+                </svg>
+                <svg
+                  class="bin-bottom"
+                  viewBox="0 0 33 39"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <mask id="path-1-inside-1_8_19" fill="white">
+                    <path
+                      d="M0 0H33V35C33 37.2091 31.2091 39 29 39H4C1.79086 39 0 37.2091 0 35V0Z"
+                    ></path>
+                  </mask>
+                  <path
+                    d="M0 0H33H0ZM37 35C37 39.4183 33.4183 43 29 43H4C-0.418278 43 -4 39.4183 -4 35H4H29H37ZM4 43C-0.418278 43 -4 39.4183 -4 35V0H4V35V43ZM37 0V35C37 39.4183 33.4183 43 29 43V35V0H37Z"
+                    fill="white"
+                    mask="url(#path-1-inside-1_8_19)"
+                  ></path>
+                  <path d="M12 6L12 29" stroke="white" stroke-width="4"></path>
+                  <path d="M21 6V29" stroke="white" stroke-width="4"></path>
+                </svg>
+              </button>
+        </div>
+        <div class="answer">
+            <span class="answer-label">b</span>
+            <input type="text" placeholder="Nhập đáp án">
+            <button class="bin-button">
+                <svg
+                  class="bin-top"
+                  viewBox="0 0 39 7"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <line y1="5" x2="39" y2="5" stroke="white" stroke-width="4"></line>
+                  <line
+                    x1="12"
+                    y1="1.5"
+                    x2="26.0357"
+                    y2="1.5"
+                    stroke="white"
+                    stroke-width="3"
+                  ></line>
+                </svg>
+                <svg
+                  class="bin-bottom"
+                  viewBox="0 0 33 39"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <mask id="path-1-inside-1_8_19" fill="white">
+                    <path
+                      d="M0 0H33V35C33 37.2091 31.2091 39 29 39H4C1.79086 39 0 37.2091 0 35V0Z"
+                    ></path>
+                  </mask>
+                  <path
+                    d="M0 0H33H0ZM37 35C37 39.4183 33.4183 43 29 43H4C-0.418278 43 -4 39.4183 -4 35H4H29H37ZM4 43C-0.418278 43 -4 39.4183 -4 35V0H4V35V43ZM37 0V35C37 39.4183 33.4183 43 29 43V35V0H37Z"
+                    fill="white"
+                    mask="url(#path-1-inside-1_8_19)"
+                  ></path>
+                  <path d="M12 6L12 29" stroke="white" stroke-width="4"></path>
+                  <path d="M21 6V29" stroke="white" stroke-width="4"></path>
+                </svg>
+              </button>
+              
+        </div>
+        <button class="add-answer"><i class="fas fa-plus"></i></button>
+    </div>
+
+    <div class="buttons">
+        <button class="cancel">Hủy</button>
+        <button class="save">Lưu</button>
+    </div>
+</div>

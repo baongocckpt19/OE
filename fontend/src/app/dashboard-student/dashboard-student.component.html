@@ -1,0 +1,76 @@
+<main class="dashboard">
+  <app-header [title]="'Dashboard-student'"></app-header>
+
+  <div class="cards-grid">
+      <!-- Card 1: Điểm trung bình -->
+      <div class="card">
+          <img class="card-icon"
+               src="https://storage.googleapis.com/a1aa/image/gJ7i79XKw2d50XSRKk2Ohq_Fq_OdSe8Oj_20nq0HgZk.jpg"
+               alt="GPA icon">
+          <div class="card-value">0</div>
+          <div class="card-label">Điểm trung bình</div>
+      </div>
+
+      <!-- Card 2: Bài tập đã hoàn thành -->
+      <div class="card">
+          <img class="card-icon"
+               src="https://storage.googleapis.com/a1aa/image/checkmark-icon.png"
+               alt="Completed icon">
+          <div class="card-value">0</div>
+          <div class="card-label">Bài tập đã hoàn thành</div>
+      </div>
+
+      <!-- Card 3: Bài kiểm tra sắp tới -->
+      <div class="card">
+          <img class="card-icon"
+               src="https://storage.googleapis.com/a1aa/image/calendar-icon.png"
+               alt="Exams icon">
+          <div class="card-value">0</div>
+          <div class="card-label">Bài kiểm tra sắp tới</div>
+      </div>
+
+      <!-- Card 4: Thời gian học -->
+      <div class="card">
+        <img class="card-icon"
+             src="https://storage.googleapis.com/a1aa/image/warning-icon.png"
+             alt="Pending icon">
+        <div class="card-value">3</div>
+        <div class="card-label">Bài tập chưa làm</div>
+    
+      </div>
+  </div>
+
+  <!-- Thêm section mới dành riêng cho học sinh -->
+  <div class="student-sections">
+      <!-- Section 1: Thông báo mới -->
+      <div class="section">
+          <h3 class="section-title">Thông báo mới</h3>
+          <div class="notification-list">
+              <div class="notification-item">
+                  <span class="notification-badge">Mới</span>
+                  <p class="notification-content">Bài kiểm tra Toán sẽ diễn ra vào thứ 6</p>
+              </div>
+              <div class="notification-item">
+                  <p class="notification-content">Giáo viên đã đăng tài liệu mới</p>
+              </div>
+          </div>
+      </div>
+
+      <!-- Section 2: Bài tập gần đây -->
+      <div class="section">
+          <h3 class="section-title">Bài tập gần đây</h3>
+          <div class="assignment-list">
+              <div class="assignment-item completed">
+                  <span class="assignment-subject">Toán</span>
+                  <p class="assignment-title">Bài tập đại số tuần 3</p>
+                  <span class="assignment-status">Đã nộp</span>
+              </div>
+              <div class="assignment-item pending">
+                  <span class="assignment-subject">Văn</span>
+                  <p class="assignment-title">Bài luận văn học</p>
+                  <span class="assignment-status">Chưa nộp</span>
+              </div>
+          </div>
+      </div>
+  </div>
+</main>

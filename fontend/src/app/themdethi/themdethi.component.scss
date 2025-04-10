@@ -1,0 +1,155 @@
+.container {
+    max-width: 70%;
+    margin: 30px auto;
+    background: #f9f9f9;
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    font-family: 'Roboto', sans-serif;
+    font-size: 1rem;
+    position: relative;
+    top: 75px; /* Adjust this value based on the header height */
+    color: #474747;
+}
+
+.header, .footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.header {
+    flex-direction: row; /* Arrange items in a horizontal row */
+    gap: 20px; /* Add spacing between items */
+    justify-content: flex-start; /* Align items to the left */
+}
+
+.header-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #333;
+}
+
+.input-group {
+    display: flex;
+    flex-direction: row; /* Align label and input/select horizontally */
+    align-items: center; /* Center items vertically */
+    gap: 10px; /* Add spacing between label and input/select */
+    margin-bottom: 15px;
+}
+
+.input-group label {
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #555;
+}
+
+.input-group input, .input-group select {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 1rem;
+}
+
+.input-group select {
+    text-align: left;
+    margin-left: 15px; /* Align with "Môn học" column */
+}
+
+.table-container {
+    overflow-x: auto;
+    margin-top: 20px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+}
+
+thead {
+    background: #f1e577;
+    color: rgb(44, 44, 44);
+    text-align: center;
+}
+
+th, td {
+    padding: 12px;
+    border: 1.8px solid #ffffff;
+    text-align: center;
+}
+
+th:nth-child(1), td:nth-child(1) { /* Adjust column for "Môn học" */
+    width: 15%;
+}
+
+th:nth-child(2), td:nth-child(2) { /* Adjust column for "Đáp án đúng" */
+    width: 55%;
+}
+
+th:nth-child(3), td:nth-child(3) { /* Adjust column for "Điểm" */
+    width: 15%;
+}
+
+th:nth-child(4), td:nth-child(4) { /* Adjust column for "Câu hỏi" */
+    width: 15%;
+}
+
+table tr:nth-child(even) {
+    background-color: #f2f2f2; /* Darker background for even rows */
+}
+
+table tr {
+    line-height: 2; /* Increase the line height for more spacing between rows */
+}
+
+.no-data {
+    text-align: center;
+    color: #888;
+    padding: 25px;
+    font-style: italic;
+}
+
+.button-group {
+    display: flex;
+    justify-content: flex-end;
+    gap: 15px;
+    margin-top: 25px;
+}
+
+.btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background 0.3s ease;
+}
+
+.add-question {
+    background: #007BFF;
+    color: white;
+}
+
+.add-question:hover {
+    background: #0056b3;
+}
+
+.cancel {
+    background: #6c757d;
+    color: white;
+}
+
+.cancel:hover {
+    background: #5a6268;
+}
+
+.publish {
+    background: #28a745;
+    color: white;
+}
+
+.publish:hover {
+    background: #218838;
+}

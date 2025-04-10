@@ -1,0 +1,73 @@
+.sidebar {
+    background: white;
+    box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1rem 0;
+    position: fixed;
+    left: 0;
+    top: 0;
+    height: 95vh;
+    width: 5rem;
+    z-index: 2;
+    transition: width 0.3s ease;
+    font-family: Helvetica, Arial, Tahoma, sans-serif;
+
+    &.expanded {
+        width: 15rem; /* Khi mở rộng */
+        align-items: flex-start;
+        padding-right: 0.4rem;
+    }
+
+    .profile {
+        margin-bottom: 1rem;
+        
+        img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+    }
+
+    .menu-items {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        width: 100%;
+        gap: 0.1rem;
+
+        .menu-item {
+        
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.8rem;
+            margin: 1rem 0;
+            padding: 0.8rem;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            width: 100%;
+            position: relative;
+            font-weight: bold;
+
+            i {
+                font-size: 1.5rem;
+                color: #9CA3AF;
+            }
+
+            .menu-label {
+                font-size: 1.4rem;
+                color: #374151;
+                white-space: nowrap;
+            }
+
+            &:hover {
+                background: #F3F4F6;
+            }
+        }
+    }
+}

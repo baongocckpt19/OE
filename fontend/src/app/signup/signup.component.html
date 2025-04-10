@@ -1,0 +1,65 @@
+<div id="body">
+    <div class="signup signup-hidden">
+       
+        <form class="signup-form">
+            <div class="form-group">
+                <div class="input-container">
+                    <input type="text" id="username" name="username" [(ngModel)]="username" placeholder="Tài khoản">
+                    <i class="fas fa-user input-icon"></i>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="input-container">
+                    <input type="text" id="fullname" name="fullname" [(ngModel)]="fullname" placeholder="Tên">
+                    <i class="fas fa-id-card input-icon"></i>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="input-container">
+                    <input type="password" id="password" name="password" [(ngModel)]="password" placeholder="Mật khẩu">
+                    <i class="fas fa-lock input-icon"></i>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="input-container">
+                    <input type="email" id="email" name="email" [(ngModel)]="email" placeholder="Email">
+                    <i class="fas fa-envelope input-icon"></i>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="input-container">
+                    <input type="text" id="class" name="class" [(ngModel)]="class" placeholder="Lớp">
+                    <i class="fas fa-school input-icon"></i>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="input-container">
+                    <input type="date" id="dob" name="dob" [(ngModel)]="dob" placeholder="Ngày sinh">
+                    <i class="fas fa-calendar input-icon"></i>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>
+                    <input type="checkbox" id="isTeacher" name="isTeacher" [(ngModel)]="isTeacher">
+                    Bạn là giảng viên
+                </label>
+            </div>
+
+            <button type="button" class="signup-button">Đăng ký</button>
+
+            <div class="form-links">
+                <span>Bạn đã có tài khoản? <a href="#" class="login-link">Đăng nhập ngay!</a></span>
+            </div>
+        </form>
+    </div>
+    <div class="background background-hidden">
+        <img src="/images/login_image.png" alt="Signup Background" class="background">
+    </div>
+</div>
+

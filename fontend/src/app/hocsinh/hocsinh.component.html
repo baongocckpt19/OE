@@ -1,0 +1,58 @@
+<app-header title="'Học Sinh'"></app-header>
+<main class=" hocsinh">
+
+    <div class="search-filter-container">
+        <div class="search-box">
+            <input type="text" placeholder="Tìm học sinh">
+            <button>
+                <i class="fas fa-search"></i>
+            </button>
+        </div>
+        <button class="filter-btn">
+            Bộ lọc <i class="fas fa-filter"></i>
+        </button>
+    </div>
+
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>Số thứ tự</th>
+                    <th>Họ và tên</th>
+                    <th>Lớp</th>
+                    <th>Ngày tháng năm sinh</th>
+                    <th>Email</th>
+                    <th>Điểm trung bình</th>
+                    <th>Hành động</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let student of students; let i = index">
+                    <td>{{ i + 1 }}</td>
+                    <td>{{ student.name }}</td>
+                    <td>{{ student.class }}</td>
+                    <td>{{ student.dob }}</td>
+                    <td>{{ student.email }}</td>
+                    <td>{{ student.avgScore }}</td>
+                    <td class="action">
+                         <button (click)="viewStudent(student.id)">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                        <button (click)="deleteStudent(student.id)">
+                            <i class="fas fa-trash-alt"></i>
+                        </button>
+                       
+                    </td>
+                    
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</main>
+
+
+
+
+
+
+

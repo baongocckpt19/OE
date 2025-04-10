@@ -1,0 +1,71 @@
+<app-header [title]="'Thêm đề thi'"></app-header>
+<div class="container">
+    <div class="header">
+        <div class="input-group">
+            <label for="test-name">Tên:</label>
+            <input type="text" id="test-name" placeholder="Tên bài kiểm tra">
+        </div>
+        <div class="input-group">
+            <label for="subject">Môn học:</label>
+            <select id="subject">
+                <option>Chọn môn học</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="question-header">
+        <h2>Danh sách câu hỏi</h2>
+        <button class="btn add-question">
+            <i class="fas fa-plus"></i>
+            <span>Thêm câu hỏi</span>
+        </button>
+    </div>
+
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>Môn học</th>
+                    <th>Câu hỏi</th>
+                    <th>Đáp án đúng</th>
+                    <th>Điểm</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Toán</td>
+                    <td>2 + 2 bằng mấy?</td>
+                    <td>4</td>
+                    <td>1</td>
+                </tr>
+                <tr>
+                    <td>Văn</td>
+                    <td>Phân tích bài thơ 'Tây Tiến'.</td>
+                    <td>Đúng</td>
+                    <td>2</td>
+                </tr>
+                <tr>
+                    <td>Hóa</td>
+                    <td>Nguyên tố nào có ký hiệu H?</td>
+                    <td>Hydro</td>
+                    <td>1</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="footer">
+        <div class="input-group">
+            <label for="total-score">Tổng điểm:</label>
+            <input type="text" id="total-score" value="0">
+        </div>
+    </div>
+
+    <div class="button-group">
+        <button class="btn cancel">Hủy</button>
+        <button class="btn publish">
+            <i class="fas fa-rocket"></i>
+            <span>Xuất bản</span>
+        </button>
+    </div>
+</div>
