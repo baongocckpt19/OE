@@ -23,10 +23,10 @@ export class LoginComponent {
   constructor(public accountService: AccountService, private router: Router) { }
 
   login() {
-    this.model.role = this.isTeacher ? 'admin' : 'student';
+    this.model.role = this.isTeacher ? 'teacher' : 'student';
     this.accountService.login(this.model).subscribe({
       next: response => {
-        if (response && response.user && response.user.role === 'admin') {
+        if (response && response.user && response.user.role === 'teacher') {
           this.router.navigate(['/dashboard']);
         } else if (response && response.user && response.user.role === 'student') {
           this.router.navigate(['/dashboard-student']); // Chuyển đến trang dashboard cho student
