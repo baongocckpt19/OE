@@ -3,18 +3,22 @@
 
     <div class="search-filter-container">
         <div class="search-box">
-            <input type="text" placeholder="Tìm kiếm câu hỏi">
+            <input type="text" placeholder="Tìm kiếm câu hỏi" [(ngModel)]="searchText" (input)="onSearch()" />
+
             <button>
                 <i class="fas fa-search"></i>
             </button>
         </div>
         <div class="filter-group">
-            <button class="add-question-btn">
+            <button class="add-question-btn" (click)="goToAddQuestion()">
                 Thêm Câu Hỏi <i class="fas fa-plus"></i>
             </button>
-            <button class="filter-btn">
+
+            <button class="filter-btn" (click)="showFilter = !showFilter">
                 Bộ lọc <i class="fas fa-filter"></i>
-            </button>
+              </button>
+              
+              
         </div>
     </div>
 
@@ -32,7 +36,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let question  of questions; let i = index">
+                <tr *ngFor="let question of filteredQuestions; let i = index">
                     <td>{{ i + 1 }}</td>
                     <td>{{ question.questionText }}</td>
                     <td>{{ question.nameOfSubject }}</td>
@@ -82,4 +86,66 @@
             </tbody>
         </table>
     </div>
+    <!-- Modal hiển thị nội dung câu hỏi -->
+    <div class="modal-overlay" *ngIf="isModalVisible">
+        <div class="modal-box">
+            <h2>Chi tiết Câu Hỏi</h2>
+            <p class="question-text"><strong>Câu hỏi:</strong> {{ selectedQuestion?.questionText }}</p>
+
+            <div class="answers-grid">
+                <div class="answer-box" [class.correct]="selectedQuestion?.correctAnswer === 'A'">
+                    <span class="answer-label">A.</span> {{ selectedQuestion?.answerA }}
+                    <i *ngIf="selectedQuestion?.correctAnswer === 'A'" class="fas fa-check tick-icon"></i>
+                </div>
+                <div class="answer-box" [class.correct]="selectedQuestion?.correctAnswer === 'B'">
+                    <span class="answer-label">B.</span> {{ selectedQuestion?.answerB }}
+                    <i *ngIf="selectedQuestion?.correctAnswer === 'B'" class="fas fa-check tick-icon"></i>
+                </div>
+                <div class="answer-box" [class.correct]="selectedQuestion?.correctAnswer === 'C'">
+                    <span class="answer-label">C.</span> {{ selectedQuestion?.answerC }}
+                    <i *ngIf="selectedQuestion?.correctAnswer === 'C'" class="fas fa-check tick-icon"></i>
+                </div>
+                <div class="answer-box" [class.correct]="selectedQuestion?.correctAnswer === 'D'">
+                    <span class="answer-label">D.</span> {{ selectedQuestion?.answerD }}
+                    <i *ngIf="selectedQuestion?.correctAnswer === 'D'" class="fas fa-check tick-icon"></i>
+                </div>
+            </div>
+
+            <button class="close-btn" (click)="closeModal()">Đóng</button>
+        </div>
+    </div>
+    <!-- Popup bộ lọc -->
+<div class="filter-popup-overlay" *ngIf="showFilter">
+    <div class="filter-popup">
+      <h3>Bộ lọc câu hỏi</h3>
+      
+      <div class="form-group">
+        <label>Môn học:</label>
+        <select [(ngModel)]="filterSubject">
+          <option value="">Tất cả</option>
+          <option *ngFor="let subject of subjects" [value]="subject">{{ subject }}</option>
+        </select>
+      </div>
+  
+      <div class="form-group">
+        <label>Mức độ:</label>
+        <select [(ngModel)]="filterLevel">
+          <option value="">Tất cả</option>
+          <option *ngFor="let level of levels" [value]="level">{{ level }}</option>
+        </select>
+      </div>
+  
+      <div class="form-group">
+        <label>Ngày tạo:</label>
+        <input type="date" [(ngModel)]="filterDate" />
+      </div>
+  
+      <div class="filter-buttons">
+        <button class="cancel-btn" (click)="cancelFilter()">Hủy</button>
+        <button class="apply-btn" (click)="applyFilter()">Áp dụng</button>
+      </div>
+    </div>
+  </div>
+  
+
 </main>
