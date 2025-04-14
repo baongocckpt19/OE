@@ -27,6 +27,7 @@ export class HocsinhComponent {
     this.studentService.getAllStudents().subscribe(
       (data) => {
         this.students = data;
+        this.filteredStudents = data; 
       },
       (error) => {
         console.error('Error loading students:', error);
@@ -45,9 +46,11 @@ export class HocsinhComponent {
 }
 
   deleteStudent(id: number) {
+    if (!confirm("Bạn có chắc chắn muốn xóa học sinh này?")) return;
     this.studentService.deleteStudent(id).subscribe(
       () => {
-        this.students = this.students.filter(student => student.id !== id);
+        this.loadStudents(); // 🔁 Tự động reload lại danh sách
+
       },
       (error) => {
         console.error('Error deleting student:', error);

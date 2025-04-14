@@ -1,7 +1,11 @@
 package com.example.backend.repository;
 
 import com.example.backend.model.Student;
+
+import jakarta.transaction.Transactional;
+
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -22,4 +26,24 @@ public interface StudentRepository extends JpaRepository<Student, Long> {
     List<Student> findByRole(String role);
 
     List<Student> findByStudentClass(String studentClass);
+
+    @Modifying
+    @Transactional
+    @Query(value = "DELETE FROM user_answers WHERE user_id = :userId", nativeQuery = true)
+    void deleteUserAnswers(@Param("userId") Long userId);
+
+    @Modifying
+    @Transactional
+    @Query(value = "DELETE FROM exam_attempts WHERE user_id = :userId", nativeQuery = true)
+    void deleteExamAttempts(@Param("userId") Long userId);
+
+    @Modifying
+    @Transactional
+    @Query(value = "DELETE FROM results WHERE user_id = :userId", nativeQuery = true)
+    void deleteResults(@Param("userId") Long userId);
+
+    @Modifying
+    @Transactional
+    @Query(value = "DELETE FROM users WHERE user_id = :userId", nativeQuery = true)
+    void deleteUserById(@Param("userId") Long userId);
 }
