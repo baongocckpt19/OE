@@ -22,7 +22,18 @@ public class StudentService {
     }
 
     public void deleteStudent(Long id) {
-        studentRepository.deleteById(id);
+        System.out.println("⛔ Deleting user ID: " + id); // debug
+
+        try {
+            studentRepository.deleteUserAnswers(id);
+            studentRepository.deleteExamAttempts(id);
+            studentRepository.deleteResults(id);
+            studentRepository.deleteUserById(id);
+            System.out.println("✅ Deleted user and related data: " + id);
+        } catch (Exception e) {
+            System.err.println("🔥 Error deleting user: " + e.getMessage());
+            throw e; // rollback
+        }
     }
 
     // Thêm các phương thức mới phù hợp với repository
