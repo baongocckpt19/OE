@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms'; // Thêm FormsModule để sử d�
 import { HeaderComponent } from '../header/header.component';
 import { Subject } from 'rxjs';
 import { create } from 'domain';
+import { QuestionService } from '../services/question.service';
 
 
 
@@ -15,25 +16,25 @@ import { create } from 'domain';
   styleUrls: ['./question-management.component.scss'],
 })
 export class QuestionManagementComponent {
+  questions: any[] = [];
 
-[x: string]: any;
-  questions = [
-    { id: 1, text: 'Câu Hỏi 1', subject: 'Toán', difficulty: 'Nhận biết', creator: 'Nguyễn văn A', date: '1/1/2025' },
-    { id: 2, text: 'Câu hỏi 2', subject: 'lí', difficulty: 'Nhận biết', creator: 'Nguyễn văn b', date: '1/1/2025' },
-    { id: 3, text: 'Câu hỏi 3', subject: 'Hóa', difficulty: 'Nhận biết', creator: 'Nguyễn văn c', date: '1/1/2025' },
-    { id: 4, text: 'Câu hỏi 4', subject: 'Văn', difficulty: 'Nhận biết', creator: 'Nguyễn văn d', date: '1/1/2025' },
-    { id: 5, text: 'Câu hỏi 5', subject: 'Anh', difficulty: 'Nhận biết', creator: 'Nguyễn văn e', date: '1/1/2025'}
-  ];
+  constructor(private questionService: QuestionService) {}
 
-  searchQuery: string = '';
+  ngOnInit(): void {
+    this.questionService.getQuestions().subscribe((data) => {
+      this.questions = data;
+    });
+  }
 
   deleteQuestion(id: number) {
-    this.questions = this.questions.filter(question => question.id !== id);
+    this.questions = this.questions.filter((q) => q.id !== id);
   }
-  viewQuestion(arg0: number) {
-    throw new Error('Method not implemented.');
+
+  viewQuestion(id: number) {
+    console.log('View question', id);
   }
-  editQuestion(arg0: number) {
-    throw new Error('Method not implemented.');
+
+  editQuestion(id: number) {
+    console.log('Edit question', id);
   }
 }

@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["src/app/header/header.component.scss"],
+  "sourcesContent": [".header {\r\n    padding: 1.5rem;\r\n    font-family: 'Roboto', sans-serif;\r\n    width:  93%;\r\n    margin-left: auto;\r\n    margin-bottom: 1.5rem;\r\n    border-radius: 8px;\r\n    font-size: 1.5rem;\r\n    font-weight: 300;\r\n    color: white;\r\n    position: fixed;\r\n    z-index: 1;\r\n    right: 0;\r\n    top: 0.8rem;\r\n    background: linear-gradient(to left, #F76AC2, #3EDBFF);\r\n}\r\n"],
+  "mappings": ";AAAA,CAAA;AACI,WAAA;AACA,eAAA,QAAA,EAAA;AACA,SAAA;AACA,eAAA;AACA,iBAAA;AACA,iBAAA;AACA,aAAA;AACA,eAAA;AACA,SAAA;AACA,YAAA;AACA,WAAA;AACA,SAAA;AACA,OAAA;AACA;IAAA;MAAA,GAAA,IAAA;MAAA,OAAA;MAAA;;",
+  "names": []
+}

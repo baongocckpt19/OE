@@ -25,22 +25,20 @@
                     <th>Số thứ tự</th>
                     <th>Tên đề thi</th>
                     <th>Môn Học</th>
-                    <th>Số câu hỏi</th>
                     <th>Thời gian</th>
                     <th>Người tạo</th>
-                    <th>Ngày Tạo</th>
+                    <th>Ngày tạo</th>
                     <th>Hành động</th>
                 </tr>
             </thead>
             <tbody>
                 <tr *ngFor="let dethi  of dethis; let i = index">
                     <td>{{ i + 1 }}</td>
-                    <td>{{ dethi.name }}</td>
-                    <td>{{ dethi.subject }}</td>
-                    <td>{{ dethi.numques }}</td>
-                    <td>{{ dethi.time }}</td>
-                    <td>{{ dethi.creator }}</td>
-                    <td>{{ dethi.date }}</td>
+                    <td>{{ dethi.description }}</td>
+                    <td>{{ dethi.examName }}</td>
+                    <td>{{ dethi.duration }}</td>
+                    <td>{{ dethi.created_by }}</td>
+                    <td>{{ dethi.created_at }}</td>
                     <td class='action'>
                         <!-- From Uiverse.io by catraco -->
                         <button>
