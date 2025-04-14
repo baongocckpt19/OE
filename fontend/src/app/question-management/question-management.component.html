@@ -34,11 +34,11 @@
             <tbody>
                 <tr *ngFor="let question  of questions; let i = index">
                     <td>{{ i + 1 }}</td>
-                    <td>{{ question.text }}</td>
-                    <td>{{ question.subject }}</td>
+                    <td>{{ question.questionText }}</td>
+                    <td>{{ question.nameOfSubject }}</td>
                     <td>{{ question.difficulty }}</td>
-                    <td>{{ question.creator }}</td>
-                    <td>{{ question.date }}</td>
+                    <td>{{ question.createdBy }}</td>
+                    <td>{{ question.createdAt }}</td>
                     <td class='action'>
                         <!-- From Uiverse.io by catraco -->
                         <button>

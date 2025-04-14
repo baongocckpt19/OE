@@ -1,4 +1,3 @@
-// File: src/main/java/com/example/backend/model/Question.java
 package com.example.backend.model;
 
 import java.time.LocalDate;
@@ -9,23 +8,34 @@ import jakarta.persistence.*;
 public class Question {
 
     @Id
+    @Column(name = "question_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "question_text")
     private String questionText;
+
     private String option1;
     private String option2;
     private String option3;
     private String option4;
-    private int correctOption;
-    private String nameOfSubject;
-    private String difficulty;
-    private String createdBy;
-    private LocalDate createdAt;
-    public Question() {
-    }
 
-    // ✅ Constructor đầy đủ
+    @Column(name = "correct_option")
+    private int correctOption;
+
+    @Column(name = "name_of_subject")
+    private String nameOfSubject;
+
+    private String difficulty;
+
+    @Column(name = "created_by")
+    private String createdBy;
+
+    @Column(name = "created_at")
+    private LocalDate createdAt;
+
+    public Question() {}
+
     public Question(Long id, String questionText, String option1, String option2,
                     String option3, String option4, int correctOption,
                     String nameOfSubject, String difficulty,
@@ -42,7 +52,7 @@ public class Question {
         this.createdBy = createdBy;
         this.createdAt = createdAt;
     }
-    // Getters
+
     public Long getId() {
         return id;
     }
@@ -87,7 +97,6 @@ public class Question {
         return createdAt;
     }
 
-    // Setters
     public void setId(Long id) {
         this.id = id;
     }
@@ -132,4 +141,3 @@ public class Question {
         this.createdAt = createdAt;
     }
 }
-
