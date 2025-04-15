@@ -93,21 +93,21 @@
             <p class="question-text"><strong>Câu hỏi:</strong> {{ selectedQuestion?.questionText }}</p>
 
             <div class="answers-grid">
-                <div class="answer-box" [class.correct]="selectedQuestion?.correctAnswer === 'A'">
+                <div class="answer-box" [class.correct]="selectedQuestion?.correctOption === 'A'">
                     <span class="answer-label">A.</span> {{ selectedQuestion?.option1 }}
-                    <i *ngIf="selectedQuestion?.correctAnswer === 'A'" class="fas fa-check tick-icon"></i>
+                    <i *ngIf="selectedQuestion?.correctOption === 'A'" class="fas fa-check tick-icon"></i>
                 </div>
-                <div class="answer-box" [class.correct]="selectedQuestion?.correctAnswer === 'B'">
+                <div class="answer-box" [class.correct]="selectedQuestion?.correctOption === 'B'">
                     <span class="answer-label">B.</span> {{ selectedQuestion?.option2 }}
-                    <i *ngIf="selectedQuestion?.correctAnswer === 'B'" class="fas fa-check tick-icon"></i>
+                    <i *ngIf="selectedQuestion?.correctOption === 'B'" class="fas fa-check tick-icon"></i>
                 </div>
-                <div class="answer-box" [class.correct]="selectedQuestion?.correctAnswer === 'C'">
+                <div class="answer-box" [class.correct]="selectedQuestion?.correctOption === 'C'">
                     <span class="answer-label">C.</span> {{ selectedQuestion?.option3 }}
-                    <i *ngIf="selectedQuestion?.correctAnswer === 'C'" class="fas fa-check tick-icon"></i>
+                    <i *ngIf="selectedQuestion?.correctOption === 'C'" class="fas fa-check tick-icon"></i>
                 </div>
-                <div class="answer-box" [class.correct]="selectedQuestion?.correctAnswer === 'D'">
+                <div class="answer-box" [class.correct]="selectedQuestion?.correctOption === 'D'">
                     <span class="answer-label">D.</span> {{ selectedQuestion?.option4 }}
-                    <i *ngIf="selectedQuestion?.correctAnswer === 'D'" class="fas fa-check tick-icon"></i>
+                    <i *ngIf="selectedQuestion?.correctOption === 'D'" class="fas fa-check tick-icon"></i>
                 </div>
             </div>
 
