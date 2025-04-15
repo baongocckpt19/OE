@@ -30,7 +30,7 @@ export class HeaderComponent {
       '/ki-thi': 'Kì thi',
       '/de-thi': 'Đề thi',
       '/them-cau-hoi': 'Thêm câu hỏi',
-      '/them-de-thi': 'Thêm đề thi',
+      '/themdethi': 'Thêm đề thi',
 
     };
 
