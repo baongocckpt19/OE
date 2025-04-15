@@ -35,13 +35,19 @@ export class QuestionManagementComponent {
 
 
   ngOnInit(): void {
+    this.loadQuestions();
+  }
+
+  loadQuestions() {
     this.questionService.getQuestions().subscribe((data) => {
       this.questions = data;
-      this.filteredQuestions = data; // ban đầu hiển thị toàn bộ
+      this.filteredQuestions = data;
       this.subjects = [...new Set(data.map(q => q.nameOfSubject))];
       this.difficulties = [...new Set(data.map(q => q.difficulty))];
       this.creators = [...new Set(data.map(q => q.createdBy))];
       this.levels = [...new Set(data.map(q => q.level))];
+    },(error) => {
+      console.error('Lỗi khi tải câu hỏi:', error);
     });
   }
   onSearch() {
@@ -56,8 +62,26 @@ export class QuestionManagementComponent {
   }
 
   deleteQuestion(id: number) {
-    this.questions = this.questions.filter((q) => q.id !== id);
+    if (confirm('Bạn có chắc chắn muốn xóa câu hỏi này?')) {
+      this.questionService.deleteQuestion(id).subscribe({
+        next: (response) => { // Thêm tham số response nếu API trả về dữ liệu sau khi xóa
+          console.log('Xóa câu hỏi thành công', response);
+          console.log('Bắt đầu gọi loadQuestions()');
+          this.loadQuestions();
+          console.log('Kết thúc gọi loadQuestions()');
+  
+          // Hoặc, nếu API trả về trạng thái/danh sách mới, bạn có thể xử lý như sau:
+          // this.questions = response.newListOfQuestions;
+          // this.filteredQuestions = [...this.questions];
+        },
+        error: (err) => {
+          console.error('Lỗi khi xóa câu hỏi:', err);
+          alert('Đã xảy ra lỗi khi xóa câu hỏi. Vui lòng thử lại sau.');
+        },
+      });
+    }
   }
+
 
 
   viewQuestion(id: number) {
