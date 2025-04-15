@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { HeaderComponent } from "../header/header.component";
+<<<<<<< HEAD
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
@@ -14,8 +15,13 @@ import { RouterModule } from '@angular/router';
     ReactiveFormsModule,
     RouterModule
   ],
+=======
+@Component({
+  selector: 'app-themdethi',
+>>>>>>> 287b22e0e44ea65ace82bd8218ce10858d01eefb
   templateUrl: './themdethi.component.html',
-  styleUrl: './themdethi.component.scss'
+  styleUrl: './themdethi.component.scss',
+  imports: [HeaderComponent]
 })
 export class ThemdethiComponent {
   test = {

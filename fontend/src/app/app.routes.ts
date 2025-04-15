@@ -86,6 +86,15 @@ export const routes: Routes = [
   },
 
   {
+    path: 'them-de-thi',
+    component: ThemdethiComponent,
+    data: { title: 'Thêm đề thi' },
+    canActivate : [authGuard]
+  },
+
+
+
+  {
     path: '',
     redirectTo: '/login',
     pathMatch: 'full'
