@@ -25,6 +25,12 @@
     justify-content: flex-start; /* Align items to the left */
 }
 
+.question-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
 .header-title {
     font-size: 1.5rem;
     font-weight: bold;
