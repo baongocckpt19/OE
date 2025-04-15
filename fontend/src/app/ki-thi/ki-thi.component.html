@@ -25,7 +25,6 @@
                     <th>Số thứ tự</th>
                     <th>Tên Kì thi</th>
                     <th>Môn Học</th>
-                    <th>Trạng Thái</th>
                     <th>Người tạo</th>
                     <th>Ngày Tạo</th>
                     <th>Hành động</th>
@@ -34,11 +33,10 @@
             <tbody>
                 <tr *ngFor="let kithi  of kithis; let i = index">
                     <td>{{ i + 1 }}</td>
-                    <td>{{ kithi.name }}</td>
-                    <td>{{ kithi.subject }}</td>
-                    <td>{{ kithi.state }}</td>
-                    <td>{{ kithi.creator }}</td>
-                    <td>{{ kithi.date }}</td>
+                    <td>{{ kithi.description}}</td>
+                    <td>{{ kithi.title }}</td>
+                    <td>{{ kithi.createdBy }}</td>
+                    <td>{{ kithi.createdDate }}</td>
                     <td class='action'>
                         <!-- From Uiverse.io by catraco -->
                         <button>

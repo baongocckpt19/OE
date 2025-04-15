@@ -1,29 +1,56 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { HeaderComponent } from '../header/header.component';
-
+import { KiThiService } from '../services/ki-thi.service';
+interface Kithi {
+  id: number;
+  title: string;
+  description: string;
+  createdBy: string;
+  createdDate: string;
+  // Add other properties to match your backend
+}
 @Component({
   selector: 'app-ki-thi',
   imports: [CommonModule, HeaderComponent],
   templateUrl: './ki-thi.component.html',
   styleUrl: './ki-thi.component.scss'
 })
-export class KiThiComponent {
-  viewKithi(arg0: number) {
-    throw new Error('Method not implemented.');
+export class KiThiComponent implements OnInit {
+  kithis: Kithi[] = [];
+  filteredQuestions: any[] = [];
+
+  constructor(private kiThiService: KiThiService) { } // Inject the service
+
+  ngOnInit(): void {
+      this.loadKithis();
   }
-  editKithi(arg0: number) {
-    throw new Error('Method not implemented.');
+
+  loadKithis(): void {
+      this.kiThiService.getKithis().subscribe(
+          (data) => {
+              this.kithis = data;
+              this.filteredQuestions = data;
+          },
+          (error) => {
+              console.error('Error fetching examinations:', error);
+          }
+      );
   }
-  deleteKithi(arg0: number) {
-    throw new Error('Method not implemented.');
+
+  viewKithi(id: number) {
+      console.log(`View examination with ID: ${id}`);
+      // Implement your view logic
   }
-  kithis = [
-    { id: 1, name: 'Thi giữa kì 1 - lớp 8', subject: 'Toán', state: 'Chưa tổ chức', creator: 'Nguyễn văn A', date: '1/1/2025' },
-    { id: 2, name: 'Tiếng anh đầu vào NH 2024-2025', subject: 'Tiếng Anh', state: 'Đã tổ chức', creator: 'Nguyễn văn B', date: '1/1/2025' },
-    { id: 3, name: 'Thi cuối kì 1 - lớp 9', subject: 'Hóa', state: 'Chưa tổ chức', creator: 'Nguyễn Văn C', date: '15/1/2025' },
-    { id: 4, name: 'Thi giữa kì 2 - lớp 10', subject: 'Văn', state: 'Đã tổ chức', creator: 'Nguyễn Văn D', date: '20/2/2025' },
-    { id: 5, name: 'Thi thử đại học', subject: 'Anh', state: 'Chưa tổ chức', creator: 'Nguyễn Văn E', date: '10/3/2025' }
-  ];
+
+  editKithi(id: number) {
+      console.log(`Edit examination with ID: ${id}`);
+      // Implement your edit logic
+  }
+
+  deleteKithi(id: number) {
+      console.log(`Delete examination with ID: ${id}`);
+      // Implement your delete logic
+  }
 
 }
