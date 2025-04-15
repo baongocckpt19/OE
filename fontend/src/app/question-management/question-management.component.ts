@@ -17,7 +17,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./question-management.component.scss'],
 })
 export class QuestionManagementComponent {
-[x: string]: any;
+  [x: string]: any;
   questions: any[] = [];
 
   constructor(private questionService: QuestionService, private router: Router) { }
@@ -31,7 +31,7 @@ export class QuestionManagementComponent {
   difficulties: string[] = [];
   creators: string[] = [];
   levels: string[] = ['Dễ', 'Trung bình', 'Khó'];
-  
+
 
 
   ngOnInit(): void {
@@ -107,22 +107,22 @@ export class QuestionManagementComponent {
   filterSubject = '';
   filterLevel = '';
   filterDate: string | null = null;
-  
+
   cancelFilter() {
     this.showFilter = false;
     this.filterSubject = '';
     this.filterLevel = '';
     this.filterDate = null;
   }
-  
+
   applyFilter() {
     // Lọc danh sách tại đây
     this.showFilter = false;
     this.filterQuestions();
   }
-  
+
   filterQuestions() {
     // Gọi API hoặc lọc tại client-side theo filterSubject, filterLevel, filterDate
   }
-  
+
 }
