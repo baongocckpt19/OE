@@ -3,15 +3,16 @@
 
     <div class="search-filter-container">
         <div class="search-box">
-            <input type="text" placeholder="Tìm kiếm đề thi">
+            <input type="text" placeholder="Tìm kiếm đề thi" [(ngModel)]="searchTerm" (input)="filterDethis()">
+
             <button>
                 <i class="fas fa-search"></i>
             </button>
         </div>
         <div class="filter-group">
-            <button class="add-exam-btn">
+            <button class="add-exam-btn" (click)="addDethi()">
                 Thêm đề thi <i class="fas fa-plus"></i>
-            </button>
+              </button>
             <button class="filter-btn">
                 Bộ lọc <i class="fas fa-filter"></i>
             </button>
@@ -32,7 +33,8 @@
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let dethi  of dethis; let i = index">
+                <tr *ngFor="let dethi of filteredDethis; let i = index">
+
                     <td>{{ i + 1 }}</td>
                     <td>{{ dethi.description }}</td>
                     <td>{{ dethi.examName }}</td>

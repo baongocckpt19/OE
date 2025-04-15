@@ -58,6 +58,7 @@ export const routes: Routes = [
   {
     path: 'themdethi',
     component: ThemdethiComponent,
+    data: { title: 'Thêm đề thi' },
    canActivate : [authGuard]
   },
   {
@@ -67,33 +68,17 @@ export const routes: Routes = [
     canActivate : [authGuard]
   },
   {
-    path: 'de-thi',
-    component: DeThiComponent,
-    data: {title:'Đề Thi'},
-    canActivate : [authGuard]
-  },
-  {
-    path: 'de-thi',
-    component: DeThiComponent,
-    data: {title:'Đề Thi'},
-    canActivate : [authGuard]
-  },
-  {
     path: 'dashboard-student',
     component: DashboardStudentComponent,
     data: { title: 'Dashboard' },
     canActivate : [authGuard]
   },
-
   {
-    path: 'them-de-thi',
+    path: 'themdethi',
     component: ThemdethiComponent,
     data: { title: 'Thêm đề thi' },
-    canActivate : [authGuard]
+   canActivate : [authGuard]
   },
-
-
-
   {
     path: '',
     redirectTo: '/login',

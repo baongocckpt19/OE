@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
 import { HeaderComponent } from "../header/header.component";
-<<<<<<< HEAD
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
+import { ExamService } from '../services/exam.service';
 
 @Component({
   selector: 'app-themdethi',
@@ -15,15 +16,11 @@ import { RouterModule } from '@angular/router';
     ReactiveFormsModule,
     RouterModule
   ],
-=======
-@Component({
-  selector: 'app-themdethi',
->>>>>>> 287b22e0e44ea65ace82bd8218ce10858d01eefb
   templateUrl: './themdethi.component.html',
-  styleUrl: './themdethi.component.scss',
-  imports: [HeaderComponent]
+  styleUrls: ['./themdethi.component.scss']
 })
 export class ThemdethiComponent {
+  constructor(private examService: ExamService) {}
   test = {
     name: '',
     subject: '',
@@ -66,7 +63,19 @@ export class ThemdethiComponent {
 
   onAddTest() {
     if (this.test.name && this.test.subject && this.test.duration) {
-      this.isTestAdded = true;
+      const userId = 1; // 🔁 Lấy user id từ localStorage hoặc auth service nếu có
+  
+      this.examService.addExam(this.test, userId)
+        .subscribe({
+          next: () => {
+            this.isTestAdded = true;
+            alert("Thêm đề thi thành công!");
+          },
+          error: (err) => {
+            console.error("Lỗi khi thêm đề thi:", err);
+            alert("Đã xảy ra lỗi khi thêm đề thi.");
+          }
+        });
     } else {
       alert("Vui lòng điền đầy đủ thông tin đề thi!");
     }
