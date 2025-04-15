@@ -1,71 +1,134 @@
 <app-header [title]="'Thêm đề thi'"></app-header>
-<div class="container">
-    <div class="header">
-        <div class="input-group">
-            <label for="test-name">Tên:</label>
-            <input type="text" id="test-name" placeholder="Tên bài kiểm tra">
+
+<div class="page-container">
+    <!-- Cột trái: Thêm đề thi + Câu hỏi -->
+    <div class="left-column">
+        <!-- Thêm đề thi -->
+        <div class="form-section">
+            <h2>Thêm đề thi</h2>
+            <div class="form-grid">
+                <div class="form-group">
+                    <label for="testName">Tên đề thi</label>
+                    <input type="text" id="testName" [(ngModel)]="test.name" />
+                </div>
+                <div class="form-group">
+                    <label for="subject">Môn học</label>
+                    <input type="text" id="subject" [(ngModel)]="test.subject" />
+                </div>
+                <div class="form-group">
+                    <label for="duration">Thời gian (phút)</label>
+                    <input type="number" id="duration" [(ngModel)]="test.duration" />
+                </div>
+            </div>
+
+            <div class="form-description">
+                <label for="description">Mô tả</label>
+                <textarea id="description" rows="2" [(ngModel)]="test.description"></textarea>
+            </div>
+
+            <button class="btn btn-add-test" (click)="onAddTest()">Thêm đề thi</button>
         </div>
-        <div class="input-group">
-            <label for="subject">Môn học:</label>
-            <select id="subject">
-                <option>Chọn môn học</option>
-            </select>
+
+
+        <!-- Thêm câu hỏi -->
+        <div *ngIf="isTestAdded" class="form-card">
+            <div class="form-header">
+                <h2>Danh sách câu hỏi</h2>
+                <button class="btn btn-secondary" (click)="openAddQuestionModal()">+ Thêm câu hỏi</button>
+
+                <button class="btn preview" (click)="submitSelectedQuestions()">Xem trước</button>
+
+            </div>
+
+            <table class="question-table">
+                <thead>
+                    <tr>
+                        <th>Môn học</th>
+                        <th>Câu hỏi</th>
+                        <th>Mức độ</th>
+                        <th>Hành động</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let q of questions">
+                        <td>{{ q.subject }}</td>
+                        <td>{{ q.question }}</td>
+                        <td>{{ q.level }}</td>
+                        <td><button class="btn-delete"><i class="fas fa-trash-alt"></i></button></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="button-group">
+                <button class="btn btn-cancel">Hủy</button>
+                <button class="btn btn-publish">Xuất bản</button>
+            </div>
         </div>
     </div>
 
-    <div class="question-header">
-        <h2>Danh sách câu hỏi</h2>
-        <button class="btn add-question">
-            <i class="fas fa-plus"></i>
-            <span>Thêm câu hỏi</span>
-        </button>
+    <!-- Cột phải: Preview -->
+    <div class="right-column">
+        <div class="preview-card">
+            <h3>Xem trước câu hỏi</h3>
+
+            <div *ngIf="questions.length > 0; else noQuestions">
+                <div *ngFor="let q of questions; let i = index" class="preview-question">
+                    <p class="question-preview">Câu {{ i + 1 }}: {{ q.question }}</p>
+                    <div class="answers-grid">
+                        <div class="answer-box" *ngFor="let answer of q.answers; let j = index"
+                            [class.selected]="selectedAnswers[i] === j" (click)="onSelectAnswer(i, j)">
+                            <span class="answer-label">{{ getAnswerLabel(j) }}.</span>
+                            <span class="answer-text">{{ answer }}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <ng-template #noQuestions>
+                <div class="no-preview">Chưa có câu hỏi nào được thêm.</div>
+            </ng-template>
+        </div>
+
+
     </div>
 
-    <div class="table-container">
-        <table>
+</div>
+
+<!-- Modal Thêm Câu Hỏi -->
+<div class="modal-overlay" *ngIf="isAddQuestionModalOpen">
+    <div class="modal">
+        <h2>Thêm câu hỏi</h2>
+
+        <!-- Thanh tìm kiếm và nút thêm mới -->
+        <div class="modal-controls">
+            <input type="text" placeholder="Tìm kiếm câu hỏi..." [(ngModel)]="searchQuery" />
+            <button class="btn btn-add-new" (click)="onAddNewQuestion()">+ Thêm câu hỏi mới</button>
+        </div>
+
+        <!-- Bảng danh sách câu hỏi -->
+        <table class="modal-table">
             <thead>
                 <tr>
+                    <th><input type="checkbox" (change)="toggleSelectAll($event)" /></th>
+                    <th>Tên câu hỏi</th>
                     <th>Môn học</th>
-                    <th>Câu hỏi</th>
-                    <th>Đáp án đúng</th>
-                    <th>Điểm</th>
+                    <th>Mức độ</th>
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>Toán</td>
-                    <td>2 + 2 bằng mấy?</td>
-                    <td>4</td>
-                    <td>1</td>
-                </tr>
-                <tr>
-                    <td>Văn</td>
-                    <td>Phân tích bài thơ 'Tây Tiến'.</td>
-                    <td>Đúng</td>
-                    <td>2</td>
-                </tr>
-                <tr>
-                    <td>Hóa</td>
-                    <td>Nguyên tố nào có ký hiệu H?</td>
-                    <td>Hydro</td>
-                    <td>1</td>
+                <tr *ngFor="let q of filteredQuestions">
+                    <td><input type="checkbox" [(ngModel)]="q.selected" /></td>
+                    <td>{{ q.question }}</td>
+                    <td>{{ q.subject }}</td>
+                    <td>{{ q.level }}</td>
                 </tr>
             </tbody>
         </table>
-    </div>
 
-    <div class="footer">
-        <div class="input-group">
-            <label for="total-score">Tổng điểm:</label>
-            <input type="text" id="total-score" value="0">
+        <!-- Button Hủy / Xuất -->
+        <div class="modal-footer">
+            <button class="btn btn-cancel" (click)="closeAddQuestionModal()">Hủy</button>
+            <button class="btn btn-publish" (click)="submitSelectedQuestions()">Xuất</button>
         </div>
-    </div>
-
-    <div class="button-group">
-        <button class="btn cancel">Hủy</button>
-        <button class="btn publish">
-            <i class="fas fa-rocket"></i>
-            <span>Xuất bản</span>
-        </button>
     </div>
 </div>
