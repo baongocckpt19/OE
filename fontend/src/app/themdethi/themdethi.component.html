@@ -9,7 +9,7 @@
             <div class="form-grid">
                 <div class="form-group">
                     <label for="testName">Tên đề thi</label>
-                    <input type="text" id="testName" [(ngModel)]="test.name" />
+                    <input type="text" id="testName" [(ngModel)]="test.examName" />
                 </div>
                 <div class="form-group">
                     <label for="subject">Môn học</label>
@@ -61,13 +61,13 @@
 
             <div class="button-group">
                 <button class="btn btn-cancel">Hủy</button>
-                <button class="btn btn-publish">Xuất bản</button>
+                <a class="btn btn-publish" routerLink="/de-thi">Xuất bản</a>
             </div>
         </div>
     </div>
 
     <!-- Cột phải: Preview -->
-    <div class="right-column">
+    <div class="right-column" *ngIf="isTestAdded">
         <div class="preview-card">
             <h3>Xem trước câu hỏi</h3>
 
@@ -106,24 +106,26 @@
         </div>
 
         <!-- Bảng danh sách câu hỏi -->
-        <table class="modal-table">
-            <thead>
-                <tr>
-                    <th><input type="checkbox" (change)="toggleSelectAll($event)" /></th>
-                    <th>Tên câu hỏi</th>
-                    <th>Môn học</th>
-                    <th>Mức độ</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let q of filteredQuestions">
-                    <td><input type="checkbox" [(ngModel)]="q.selected" /></td>
-                    <td>{{ q.question }}</td>
-                    <td>{{ q.subject }}</td>
-                    <td>{{ q.level }}</td>
-                </tr>
-            </tbody>
-        </table>
+        <div style="overflow-y: auto; max-height: 300px;">
+            <table class="modal-table">
+                <thead>
+                    <tr>
+                        <th><input type="checkbox" (change)="toggleSelectAll($event)" /></th>
+                        <th>Tên câu hỏi</th>
+                        <th>Môn học</th>
+                        <th>Mức độ</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let q of filteredQuestions">
+                        <td><input type="checkbox" [(ngModel)]="q.selected" /></td>
+                        <td>{{ q.question }}</td>
+                        <td>{{ q.subject }}</td>
+                        <td>{{ q.level }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
 
         <!-- Button Hủy / Xuất -->
         <div class="modal-footer">

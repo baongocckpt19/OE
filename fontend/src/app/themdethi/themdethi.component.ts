@@ -5,6 +5,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { ExamService } from '../services/exam.service';
+import { QuestionService } from '../services/question.service';
 
 @Component({
   selector: 'app-themdethi',
@@ -20,15 +21,23 @@ import { ExamService } from '../services/exam.service';
   styleUrls: ['./themdethi.component.scss']
 })
 export class ThemdethiComponent {
-  constructor(private examService: ExamService) {}
+  router: any;
+  constructor(private examService: ExamService, private questionService: QuestionService) { }
   test = {
-    name: '',
+    examName: '',
     subject: '',
     duration: null as number | null,
     description: ''
   };
 
   isTestAdded = false;
+
+  // Modal
+  isAddQuestionModalOpen = false;
+  searchQuery = '';
+
+  // Trạng thái đáp án được chọn cho mỗi câu hỏi (chỉ trong preview)
+  selectedAnswers: { [questionIndex: number]: number | null } = {};
 
   questions: {
     subject: string;
@@ -37,37 +46,33 @@ export class ThemdethiComponent {
     answers: string[];
   }[] = [];
 
-  // Modal
-  isAddQuestionModalOpen = false;
-  searchQuery = '';
+  questionsBank: {
+    subject: string;
+    question: string;
+    level: string;
+    answers: string[];
+    selected?: boolean;
+  }[] = [];
 
-  questionBank = [
-    {
-      question: "Thủ đô của Việt Nam là gì?",
-      subject: "Địa lý",
-      level: "Dễ",
-      answers: ["Hà Nội", "TP.HCM", "Huế", "Đà Nẵng"],
-      selected: false
-    },
-    {
-      question: "2 + 2 bằng mấy?",
-      subject: "Toán",
-      level: "Dễ",
-      answers: ["2", "3", "4", "5"],
-      selected: false
-    }
-  ];
-
-  // Trạng thái đáp án được chọn cho mỗi câu hỏi (chỉ trong preview)
-  selectedAnswers: { [questionIndex: number]: number | null } = {};
+  ngOnInit() {
+    this.questionService.getQuestions()
+      .subscribe((data: any[]) => {
+        this.questionsBank = data.map(q => ({
+          subject: q.nameOfSubject,
+          question: q.questionText,
+          level: q.difficulty,
+          answers: [q.option1, q.option2, q.option3, q.option4],
+          selected: false // nếu cần
+        }));
+      });
+  }
 
   onAddTest() {
-    if (this.test.name && this.test.subject && this.test.duration) {
+    if (this.test.examName && this.test.subject && this.test.duration) {
       const userId = 1; // 🔁 Lấy user id từ localStorage hoặc auth service nếu có
-  
       this.examService.addExam(this.test, userId)
         .subscribe({
-          next: () => {
+          next: (res) => {
             this.isTestAdded = true;
             alert("Thêm đề thi thành công!");
           },
@@ -91,7 +96,7 @@ export class ThemdethiComponent {
 
   get filteredQuestions() {
     const keyword = this.searchQuery.toLowerCase();
-    return this.questionBank.filter(q =>
+    return this.questionsBank.filter(q =>
       q.question.toLowerCase().includes(keyword) ||
       q.subject.toLowerCase().includes(keyword) ||
       q.level.toLowerCase().includes(keyword)
@@ -104,7 +109,7 @@ export class ThemdethiComponent {
   }
 
   submitSelectedQuestions() {
-    const selected = this.questionBank.filter(q => q.selected);
+    const selected = this.questionsBank.filter(q => q.selected);
 
     selected.forEach(q => {
       const exists = this.questions.find(existing =>
@@ -136,4 +141,15 @@ export class ThemdethiComponent {
   onAddNewQuestion() {
     alert("Chức năng thêm mới câu hỏi sẽ được phát triển sau.");
   }
+
+
+
+
+
+  onPublish(): void {
+    this.router.navigate(['/de-thi']);
+  }
+
+
+
 }

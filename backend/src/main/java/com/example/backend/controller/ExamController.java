@@ -3,7 +3,10 @@ package com.example.backend.controller;
 import com.example.backend.model.Exam;
 import com.example.backend.services.ExamService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/exam")
@@ -14,8 +17,9 @@ public class ExamController {
     private ExamService examService;
 
     @PostMapping
-    public String addExam(@RequestBody Exam exam, @RequestParam int userId) {
+    public ResponseEntity<?> addExam(@RequestBody Exam exam, @RequestParam int userId) {
         examService.createExam(exam, userId);
-        return "Đề thi đã được lưu thành công!";
+        return ResponseEntity.ok(Map.of("message", "Exam created successfully"));
     }
+
 }
