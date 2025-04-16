@@ -1,12 +1,12 @@
 import {
+  withHttpTransferCache
+} from "./chunk-4F6EIFIE.js";
+import {
   CommonModule,
   DomAdapter,
   getDOM,
   setRootDomAdapter
 } from "./chunk-GAMBKT2F.js";
-import {
-  withHttpTransferCache
-} from "./chunk-4F6EIFIE.js";
 import {
   DOCUMENT,
   PLATFORM_BROWSER_ID,
@@ -2029,4 +2029,4 @@ export {
    * License: MIT
    *)
 */
-//# sourceMappingURL=chunk-UJWUWLNB.js.map
+//# sourceMappingURL=chunk-6V25XI5Q.js.map
