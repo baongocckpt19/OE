@@ -31,6 +31,6 @@ public class ExaminationController {
         List<Examination> examinations = examinationService.getAllExaminations();
         return new ResponseEntity<>(examinations, HttpStatus.OK);
     }
-
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            
 
 }
