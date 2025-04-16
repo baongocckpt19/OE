@@ -10,9 +10,8 @@ public class Exam {
     private int createdBy;
 
     // Getter methods
-    public String getExamName() {
-        return examName;
-    }
+    public String getExamName() { return examName; }
+    public void setExamName(String examName) { this.examName = examName; }
 
     public String getDescription() {
         return description;

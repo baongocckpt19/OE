@@ -14,8 +14,8 @@ public class ExamService {
     private ExamRepository examRepository;
 
     public void createExam(Exam exam, int userId) {
-        exam.setCreatedBy(userId);
-        exam.setCreatedAt(LocalDateTime.now());
-        examRepository.saveExam(exam);
+//        exam.setCreatedBy(userId);
+//        exam.setCreatedAt(LocalDateTime.now());
+        examRepository.saveExam(exam, userId);
     }
 }
