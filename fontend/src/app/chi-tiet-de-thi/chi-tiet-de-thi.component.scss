@@ -1,0 +1,149 @@
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #f4f6fa;
+  color: #2e3a59;
+  margin: 0;
+  padding: 0;
+}
+
+.exam-container {
+  max-width: 1200px;
+  margin: auto;
+  padding: 2rem;
+}
+
+.exam-header {
+  background-color: #e9f0fb;
+  padding: 1.5rem;
+  border-radius: 12px;
+  margin-bottom: 2rem;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+.exam-header h2 {
+  margin-bottom: 1rem;
+  font-size: 1.8rem;
+  color: #007bff;
+}
+
+.exam-header ul {
+  list-style: none;
+  padding-left: 0;
+  font-size: 1rem;
+}
+
+.exam-header li {
+  margin-bottom: 0.5rem;
+}
+
+.exam-content {
+  display: flex;
+  gap: 2rem;
+}
+
+.question-section {
+  flex: 3;
+}
+
+.question-card {
+  background-color: #fff;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+  border-radius: 10px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+}
+
+.answers-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.answer-box {
+  padding: 0.75rem 1rem;
+  border: 2px solid #cbd4e0;
+  border-radius: 10px;
+  background-color: #f9fbfd;
+  cursor: pointer;
+  transition: 0.3s;
+  display: flex;
+  align-items: center;
+  font-size: 0.95rem;
+}
+
+.answer-box:hover {
+  background-color: #d8e8ff;
+  border-color: #007bff;
+}
+
+.answer-box.selected {
+  background-color: #007bff;
+  color: white;
+  border-color: #0056b3;
+}
+
+.label {
+  font-weight: bold;
+  margin-right: 0.5rem;
+}
+
+.question-nav {
+  flex: 1;
+  border-left: 2px solid #dde3ea;
+  padding-left: 1rem;
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+.question-nav h4 {
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+}
+
+.nav-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.question-nav button {
+  width: 40px;
+  height: 40px;
+  background-color: #e1e7f0;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: 0.2s;
+}
+
+.question-nav button:hover {
+  background-color: #cbd4e0;
+}
+
+.question-nav button.answered {
+  background-color: #28a745;
+  color: white;
+}
+
+.submit-section {
+  text-align: center;
+  margin-top: 2rem;
+}
+
+.submit-section button {
+  padding: 12px 36px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-weight: bold;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.submit-section button:hover {
+  background-color: #0056b3;
+}

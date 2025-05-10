@@ -68,10 +68,10 @@ export class DeThiComponent {
     // this.router.navigate(['/edit-de-thi', id]); // Cần inject Router nếu bạn muốn điều hướng
   }
 
-  viewDethi(id: number): void {
+  viewDethi(): void {
     // Điều hướng đến trang xem chi tiết đề thi với ID tương ứng
-    console.log(`Xem đề thi với ID: ${id}`);
-    // this.router.navigate(['/view-de-thi', id]); // Cần inject Router nếu bạn muốn điều hướng
+  //  console.log(`Xem đề thi với ID: ${id}`);
+     this.router.navigate(['/chi-tiet-de-thi']); // Cần inject Router nếu bạn muốn điều hướng
   }
 
 }

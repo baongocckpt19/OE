@@ -1,0 +1,48 @@
+<div class="exam-container">
+
+  <!-- Thông tin đề thi -->
+  <section class="exam-header">
+    <h2>{{ exam.examName }}</h2>
+    <ul>
+      <li><strong>Môn học:</strong> {{ exam.subject }}</li>
+      <li><strong>Thời gian làm bài:</strong> {{ exam.duration }} phút</li>
+      <li><strong>Số câu hỏi:</strong> {{ exam.totalQuestions }}</li>
+    </ul>
+  </section>
+
+  <div class="exam-content">
+
+    <!-- Danh sách câu hỏi -->
+    <div class="question-section">
+      <div *ngFor="let q of questions; let i = index" class="question-card">
+        <h3>Câu {{ i + 1 }}: {{ q.question }}</h3>
+        <div class="answers-grid">
+          <div *ngFor="let ans of q.answers; let j = index"
+               class="answer-box"
+               [class.selected]="selectedAnswers[i] === j"
+               (click)="toggleAnswer(i, j)">
+            <span class="label">{{ 'ABCD'[j] }}.</span>
+            <span class="text">{{ ans }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Khung số câu hỏi -->
+    <div class="question-nav">
+      <h4>Danh sách câu</h4>
+      <div class="nav-grid">
+        <button *ngFor="let q of questions; let i = index"
+                [class.answered]="selectedAnswers[i] !== null">
+          {{ i + 1 }}
+        </button>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Nút nộp bài -->
+  <div class="submit-section">
+    <button (click)="submitExam()">Nộp bài</button>
+  </div>
+</div>

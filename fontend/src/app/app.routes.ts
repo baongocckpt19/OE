@@ -11,6 +11,7 @@ import { ThemcauhoiComponent } from './themcauhoi/themcauhoi.component';
 import { ThemdethiComponent } from './themdethi/themdethi.component';
 import { authGuard } from './guard/auth.guard';
 import { DashboardStudentComponent } from './dashboard-student/dashboard-student.component';
+import { ChiTietDeThiComponent } from './chi-tiet-de-thi/chi-tiet-de-thi.component';
 
 
 
@@ -77,6 +78,12 @@ export const routes: Routes = [
     path: 'themdethi',
     component: ThemdethiComponent,
     data: { title: 'Thêm đề thi' },
+   canActivate : [authGuard]
+  },
+  {
+    path: 'chi-tiet-de-thi',
+    component: ChiTietDeThiComponent,
+    data: { title: 'Chi tiết đề thi' },
    canActivate : [authGuard]
   },
   {
