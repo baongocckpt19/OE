@@ -1,48 +1,89 @@
-<div class="exam-container">
-
-  <!-- Thông tin đề thi -->
+<div class="exam-container" *ngIf="exam && questions">
   <section class="exam-header">
-    <h2>{{ exam.examName }}</h2>
+    <h2>{{ exam.description }}</h2>
     <ul>
-      <li><strong>Môn học:</strong> {{ exam.subject }}</li>
+      <li><strong>Môn học:</strong> {{ exam.examName }}</li>
       <li><strong>Thời gian làm bài:</strong> {{ exam.duration }} phút</li>
-      <li><strong>Số câu hỏi:</strong> {{ exam.totalQuestions }}</li>
     </ul>
   </section>
 
   <div class="exam-content">
-
-    <!-- Danh sách câu hỏi -->
     <div class="question-section">
-      <div *ngFor="let q of questions; let i = index" class="question-card">
-        <h3>Câu {{ i + 1 }}: {{ q.question }}</h3>
+      <div *ngIf="currentQuestion" class="question-card">
+        <h3>Câu {{ currentIndex + 1 }}: {{ currentQuestion.questionText }}</h3>
         <div class="answers-grid">
-          <div *ngFor="let ans of q.answers; let j = index"
-               class="answer-box"
-               [class.selected]="selectedAnswers[i] === j"
-               (click)="toggleAnswer(i, j)">
-            <span class="label">{{ 'ABCD'[j] }}.</span>
-            <span class="text">{{ ans }}</span>
+          <div class="answer-box"
+               [class.selected]="selectedAnswers[currentIndex] === 0"
+               (click)="toggleAnswer(currentIndex, 0)">
+            <span class="label">A.</span>
+            <span class="text">{{ currentQuestion.option1 }}</span>
+          </div>
+          <div class="answer-box"
+               [class.selected]="selectedAnswers[currentIndex] === 1"
+               (click)="toggleAnswer(currentIndex, 1)">
+            <span class="label">B.</span>
+            <span class="text">{{ currentQuestion.option2 }}</span>
+          </div>
+          <div class="answer-box"
+               *ngIf="currentQuestion.option3"
+               [class.selected]="selectedAnswers[currentIndex] === 2"
+               (click)="toggleAnswer(currentIndex, 2)">
+            <span class="label">C.</span>
+            <span class="text">{{ currentQuestion.option3 }}</span>
+          </div>
+          <div class="answer-box"
+               *ngIf="currentQuestion.option4"
+               [class.selected]="selectedAnswers[currentIndex] === 3"
+               (click)="toggleAnswer(currentIndex, 3)">
+            <span class="label">D.</span>
+            <span class="text">{{ currentQuestion.option4 }}</span>
           </div>
         </div>
       </div>
+      <div *ngIf="!currentQuestion && questions.length > 0">
+          <p>Không thể hiển thị câu hỏi hiện tại.</p>
+      </div>
+      <div *ngIf="questions.length === 0">
+        <p>Đề thi này chưa có câu hỏi nào.</p>
+      </div>
+
     </div>
 
-    <!-- Khung số câu hỏi -->
     <div class="question-nav">
       <h4>Danh sách câu</h4>
       <div class="nav-grid">
         <button *ngFor="let q of questions; let i = index"
-                [class.answered]="selectedAnswers[i] !== null">
+                [class.answered]="selectedAnswers[i] !== null"
+                [class.active]="i === currentIndex"
+                (click)="goToQuestion(i)">
           {{ i + 1 }}
         </button>
       </div>
-    </div>
-
+      <div class="navigation-buttons">
+          <button (click)="goToPreviousQuestion()" [disabled]="currentIndex === 0" class="btn btn-prev">
+              <i class="fas fa-chevron-left"></i> Câu trước
+          </button>
+          <button (click)="goToNextQuestion()" [disabled]="currentIndex === questions.length - 1" class="btn btn-next">
+              Câu kế tiếp <i class="fas fa-chevron-right"></i>
+          </button>
+      </div>
+      </div>
   </div>
 
-  <!-- Nút nộp bài -->
   <div class="submit-section">
     <button (click)="submitExam()">Nộp bài</button>
   </div>
+</div>
+
+<div *ngIf="isLoading && !exam && !errorMessage">
+  <p>Đang tải thông tin đề thi...</p>
+</div>
+
+<div *ngIf="errorMessage">
+  <p style="color: red;">{{ errorMessage }}</p>
+  <button routerLink="/de-thi" class="btn btn-back">Quay lại danh sách đề thi</button>
+</div>
+
+<div *ngIf="!examId && !isLoading && !errorMessage">
+  <p>Không tìm thấy ID đề thi.</p>
 </div>

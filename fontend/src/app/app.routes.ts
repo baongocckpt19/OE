@@ -81,7 +81,7 @@ export const routes: Routes = [
    canActivate : [authGuard]
   },
   {
-    path: 'chi-tiet-de-thi',
+    path: 'chi-tiet-de-thi/:id',
     component: ChiTietDeThiComponent,
     data: { title: 'Chi tiết đề thi' },
    canActivate : [authGuard]

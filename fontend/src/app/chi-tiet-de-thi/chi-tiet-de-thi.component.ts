@@ -1,150 +1,112 @@
-import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { CommonModule } from '@angular/common';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router'; // Import RouterLink for "Back" button
+import { FormsModule } from '@angular/forms';
+import { DeThiService, Dethi, Question } from '../services/de-thi.service';
+import { HeaderComponent } from '../header/header.component'; // Assuming you want a header
 
 @Component({
   selector: 'app-chi-tiet-de-thi',
-  imports: [CommonModule],
+  standalone: true,
+  imports: [CommonModule, FormsModule, RouterLink], // Add HeaderComponent, RouterLink
   templateUrl: './chi-tiet-de-thi.component.html',
-  styleUrls: ['./chi-tiet-de-thi.component.scss']
+  styleUrls: ['./chi-tiet-de-thi.component.scss'],
 })
 export class ChiTietDeThiComponent implements OnInit {
-  // Thông tin đề thi mẫu
-  exam = {
-    examName: 'Đề thi thử THPT Quốc Gia 2025',
-    subject: 'Ngữ văn',
-    duration: 90,
-    totalQuestions: 10 // Bạn có thể để là 40 nếu muốn
-  };
-  toggleAnswer(questionIndex: number, answerIndex: number): void {
-    if (this.selectedAnswers[questionIndex] === answerIndex) {
-      this.selectedAnswers[questionIndex] = null; // Nhấn lại -> bỏ chọn
-    } else {
-      this.selectedAnswers[questionIndex] = answerIndex; // Chọn mới
-    }
-  }
-  
-  // Danh sách câu hỏi mẫu
-  questions = [
-    {
-      question: 'Câu 1: Nhân vật Tràng trong “Vợ nhặt” của Kim Lân là người như thế nào?',
-      answers: [
-        'A. Vô cảm, lạnh lùng với cuộc đời',
-        'B. Lãng mạn, mộng mơ',
-        'C. Thô kệch nhưng giàu tình thương',
-        'D. Giàu có, trí thức'
-      ]
-    },
-    {
-      question: 'Câu 2: Chủ đề chính của bài thơ “Tây Tiến” là gì?',
-      answers: [
-        'A. Ca ngợi người lính Tây Tiến hào hoa, lãng mạn',
-        'B. Tình yêu quê hương tha thiết',
-        'C. Tình bạn trong chiến đấu',
-        'D. Cuộc sống thường nhật của người lính'
-      ]
-    },
-    {
-      question: 'Câu 3: Hình tượng “sóng” trong bài thơ của Xuân Quỳnh tượng trưng cho điều gì?',
-      answers: [
-        'A. Những con sóng biển dữ dội',
-        'B. Sự mạnh mẽ của thiên nhiên',
-        'C. Những cung bậc cảm xúc của tình yêu',
-        'D. Những thay đổi trong xã hội'
-      ]
-    },
-    {
-      question: 'Câu 4: “Chí Phèo” là tác phẩm của ai?',
-      answers: [
-        'A. Nam Cao',
-        'B. Nguyễn Tuân',
-        'C. Tô Hoài',
-        'D. Ngô Tất Tố'
-      ]
-    },
-    {
-      question: 'Câu 5: Tác phẩm “Ai đã đặt tên cho dòng sông?” được viết theo thể loại nào?',
-      answers: [
-        'A. Tự sự',
-        'B. Bút ký',
-        'C. Tùy bút',
-        'D. Phóng sự'
-      ]
-    },
-    {
-      question: 'Câu 6: Hình tượng cây tre trong văn học thường tượng trưng cho?',
-      answers: [
-        'A. Lòng dũng cảm, kiên cường của người Việt',
-        'B. Sự mềm mại, yếu đuối',
-        'C. Sự thịnh vượng',
-        'D. Văn minh phương Tây'
-      ]
-    },
-    {
-      question: 'Câu 7: Câu thơ “Sống là cho đâu chỉ nhận riêng mình” là của ai?',
-      answers: [
-        'A. Tố Hữu',
-        'B. Xuân Diệu',
-        'C. Nguyễn Duy',
-        'D. Tế Hanh'
-      ]
-    },
-    {
-      question: 'Câu 8: Ý nghĩa của hình tượng “chiếc thuyền ngoài xa” trong truyện cùng tên là gì?',
-      answers: [
-        'A. Vẻ đẹp chân thật của cuộc sống',
-        'B. Nghệ thuật thuần túy',
-        'C. Mâu thuẫn giữa hiện thực và nghệ thuật',
-        'D. Bi kịch của người phụ nữ'
-      ]
-    },
-    {
-      question: 'Câu 9: Nhân vật Mị trong “Vợ chồng A Phủ” là người như thế nào?',
-      answers: [
-        'A. Biết cam chịu',
-        'B. Cam chịu và dần vùng lên mạnh mẽ',
-        'C. Nhẫn nhịn đến cuối đời',
-        'D. Không có sự phản kháng'
-      ]
-    },
-    {
-      question: 'Câu 10: “Sống chết mặc bay” là tác phẩm phản ánh điều gì?',
-      answers: [
-        'A. Cuộc sống phong lưu của tầng lớp thống trị',
-        'B. Tinh thần yêu nước',
-        'C. Tình yêu đôi lứa',
-        'D. Tình cảm gia đình'
-      ]
-    }
-  ];
-
-  selectedAnswers: (number | null)[] = [];
+  examId: number | null = null;
+  exam: Dethi | null = null;
+  questions: Question[] = [];
+  selectedAnswers: (number | null)[] = []; // Keep if interactive, remove if view-only
   currentIndex = 0;
+  isLoading = true; // Add loading state
+  errorMessage: string | null = null; // Add error message state
 
-  get currentQuestion() {
-    return this.questions[this.currentIndex];
-  }
-
-  constructor(private route: ActivatedRoute) {}
+  constructor(
+    private route: ActivatedRoute,
+    private deThiService: DeThiService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
-    const id = this.route.snapshot.paramMap.get('id');
-    this.selectedAnswers = Array(this.questions.length).fill(null);
+    console.log('ChiTietDeThiComponent ngOnInit được gọi');
+    this.route.paramMap.subscribe((params) => {
+      const id = params.get('id');
+      console.log('ID từ URL paramMap:', id);
+      this.examId = id ? +id : null;
+      if (this.examId) {
+        this.loadExamDetails(this.examId);
+      } else {
+        this.errorMessage = 'Không tìm thấy ID đề thi.';
+        this.isLoading = false;
+      }
+    });
   }
 
-  selectAnswer(questionIndex: number, answerIndex: number): void {
-    this.selectedAnswers[questionIndex] = answerIndex;
+  loadExamDetails(examId: number): void {
+    console.log('Đang tải chi tiết đề thi cho ID:', examId);
+    this.isLoading = true;
+    this.errorMessage = null; // Clear previous errors
+    this.deThiService.getDethiDetails(examId).subscribe(
+      response => {
+        if (response && response.exam && response.questions && Array.isArray(response.questions)) {
+          this.exam = response.exam;
+          this.questions = response.questions;
+          this.selectedAnswers = new Array(this.questions.length).fill(null);
+          this.isLoading = false;
+          if (this.questions.length === 0) {
+            this.errorMessage = 'Đề thi này chưa có câu hỏi nào.';
+          }
+        } else {
+          console.warn("API không trả về dữ liệu đề thi hoặc câu hỏi hợp lệ.");
+          this.errorMessage = 'Không thể tải chi tiết đề thi. Dữ liệu trả về không hợp lệ.';
+          this.isLoading = false;
+          this.questions = []; // Đảm bảo luôn là mảng rỗng
+        }
+      },
+      error => {
+        console.error('Lỗi khi tải chi tiết đề thi:', error);
+        this.errorMessage = 'Lỗi kết nối hoặc server. Vui lòng thử lại sau.';
+        this.isLoading = false;
+        this.questions = []; // Đảm bảo luôn là mảng rỗng
+        // this.router.navigate(['/de-thi']); // Có thể điều hướng lại
+      }
+    );
+  }
+
+  // --- Methods for interactive exam view (keep if intended, otherwise remove) ---
+  toggleAnswer(questionIndex: number, answerIndex: number): void {
+    this.selectedAnswers[questionIndex] =
+      this.selectedAnswers[questionIndex] === answerIndex ? null : answerIndex;
+  }
+
+  goToNextQuestion(): void {
+    if (this.currentIndex < this.questions.length - 1) {
+      this.currentIndex++;
+    }
+  }
+
+  goToPreviousQuestion(): void {
+    if (this.currentIndex > 0) {
+      this.currentIndex--;
+    }
   }
 
   goToQuestion(index: number): void {
-    this.currentIndex = index;
+    if (index >= 0 && index < this.questions.length) {
+      this.currentIndex = index;
+    }
   }
 
   submitExam(): void {
-    const confirmed = confirm('Bạn chắc chắn muốn nộp bài?');
-    if (confirmed) {
-      console.log('Đáp án đã chọn:', this.selectedAnswers);
-      alert('Bài thi đã được nộp!');
-    }
+    console.log('Selected Answers:', this.selectedAnswers);
+    alert('Đề thi đã được nộp!');
+    // Implement actual submission logic here (e.g., send to backend)
+    // Then navigate to a results page or back to exam list
+    // this.router.navigate(['/ket-qua-thi', this.examId]);
+  }
+  // -----------------------------------------------------------------------------
+
+  get currentQuestion() {
+    return this.questions && this.questions.length > 0 ? this.questions[this.currentIndex] : null;
   }
 }
