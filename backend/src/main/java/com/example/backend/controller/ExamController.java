@@ -21,5 +21,16 @@ public class ExamController {
         examService.createExam(exam, userId);
         return ResponseEntity.ok(Map.of("message", "Exam created successfully"));
     }
+// ExamController.java
+@GetMapping("/{id}")
+public ResponseEntity<Map<String, Object>> getExamById(@PathVariable Long id) {
+    Exam exam = examService.getExamById(id);
+    List<Question> questions = examService.getQuestionsByExamId(id);
+    
+    return ResponseEntity.ok(Map.of(
+        "exam", exam,
+        "questions", questions
+    ));
+}
 
 }
