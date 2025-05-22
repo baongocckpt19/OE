@@ -10,6 +10,7 @@ import { Router } from '@angular/router';
 })
 export class SidebarComponent {
   isExpanded = false;
+currentRoute: any;
 
   constructor(private router: Router) {}
   menuItems = [

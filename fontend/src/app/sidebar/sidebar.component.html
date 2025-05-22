@@ -3,19 +3,18 @@
      (mouseover)="onMouseEnter()" 
      (mouseleave)="onMouseLeave()">
 
-    <div class="profile">
-        <img alt="User profile" 
-             src="https://storage.googleapis.com/a1aa/image/hiCfLbekyfRdCR6xjo6vwuaQ1Cp4oSFKFAKJvcLm6jI.jpg"/>
-    </div>
+  <div class="profile">
+    <img alt="User profile" 
+         src="https://storage.googleapis.com/a1aa/image/hiCfLbekyfRdCR6xjo6vwuaQ1Cp4oSFKFAKJvcLm6jI.jpg"/>
+  </div>
 
-    <div class="menu-items">
-        <div class="menu-item" 
-        *ngFor="let item of menuItems"
-        [ngStyle]="{'border-left': isExpanded ? '5px solid ' + item.color : 'none'}"
-        (click)="navigateTo(item.route)"
-        >
-        <i class="fas {{ item.icon }}" [ngStyle]="{'color': item.color}"></i>
-            <span class="menu-label" *ngIf="isExpanded">{{ item.label }}</span>
-        </div>
+  <div class="menu-items">
+    <div class="menu-item"
+         *ngFor="let item of menuItems"
+         [class.active]="item.route === currentRoute"
+         (click)="navigateTo(item.route)">
+      <i class="fas {{ item.icon }}"></i>
+      <span class="menu-label" *ngIf="isExpanded">{{ item.label }}</span>
     </div>
+  </div>
 </nav>
