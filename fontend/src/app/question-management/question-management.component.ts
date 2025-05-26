@@ -122,7 +122,14 @@ export class QuestionManagementComponent {
   }
 
   filterQuestions() {
-    // Gọi API hoặc lọc tại client-side theo filterSubject, filterLevel, filterDate
+  this.filteredQuestions = this.questions.filter(question => {
+    const matchesSubject = !this.filterSubject || question.nameOfSubject === this.filterSubject;
+    const matchesLevel = !this.filterLevel || question.difficulty === this.filterLevel;
+    const matchesDate = !this.filterDate || new Date(question.createdAt).toISOString().slice(0, 10) === this.filterDate;
+
+    return matchesSubject && matchesLevel && matchesDate;
+  });
+}
+
   }
 
-}

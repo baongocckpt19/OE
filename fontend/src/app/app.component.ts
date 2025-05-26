@@ -21,6 +21,7 @@ export class AppComponent {
   showLayoutlogin = false;
   isExamPage: boolean = false;
   isSignupPage: boolean = false;
+  isTrangthiPage: boolean = false;
 
   constructor(private router: Router) {
     this.router.events.subscribe(event => {
@@ -34,6 +35,9 @@ export class AppComponent {
     });
     this.router.events.subscribe(() => {
       this.isSignupPage = this.router.url.includes('signup');
+  });
+  this.router.events.subscribe(() => {
+      this.isTrangthiPage = this.router.url.includes('trangthi');
   });
 };
 }
