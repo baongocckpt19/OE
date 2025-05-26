@@ -20,6 +20,7 @@ import { SignupComponent } from "./signup/signup.component";
 export class AppComponent {
   showLayoutlogin = false;
   isExamPage: boolean = false;
+  isSignupPage: boolean = false;
 
   constructor(private router: Router) {
     this.router.events.subscribe(event => {
@@ -31,6 +32,8 @@ export class AppComponent {
     this.router.events.subscribe(() => {
       this.isExamPage = this.router.url.includes('chi-tiet-de-thi');
     });
-  }
+    this.router.events.subscribe(() => {
+      this.isSignupPage = this.router.url.includes('signup');
+  });
 };
-
+}

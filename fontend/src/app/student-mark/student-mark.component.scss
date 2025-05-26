@@ -1,0 +1,126 @@
+.student-mark {
+  flex: 1;
+  padding: 1.5rem;
+  margin-left: 5rem;
+  margin-top: 100px;
+  font-family: Helvetica, Arial, Tahoma, sans-serif;
+  color: #474747;
+}
+
+.search-filter-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.search-box {
+  display: flex;
+  align-items: center;
+  background: #f1f0f0;
+  padding: 0.5rem;
+  border-radius: 15px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  width: 400px;
+  height: 2rem;
+}
+
+.search-box input {
+  flex: 1;
+  border: none;
+  outline: none;
+  padding: 1rem;
+  border-radius: 999px;
+  background: none;
+  font-size: 1rem;
+}
+
+.search-box button {
+  margin-left: 9rem;
+  background: none;
+  border: none;
+  color: #6D28D9;
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+
+.filter-group {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  height: 2.5rem;
+}
+
+.filter-btn {
+  background: #2563EB;
+  color: white;
+  width: 8rem;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  justify-content: center;
+  margin-right: 10%;
+}
+
+.table-container {
+  width: 100%;
+  background: white;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  overflow: hidden;
+  margin: 0 auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+thead tr {
+  background: #f7db95;
+  text-align: center;
+}
+
+th, td {
+  padding: 2rem;
+  border-bottom: 1px solid #E5E7EB;
+  text-align: center;
+}
+
+thead tr th {
+  background: #f7db95;
+  border-right: 1px solid white;
+}
+
+thead tr th:last-child {
+  border-right: none;
+}
+
+tbody tr:nth-child(even) {
+  background: #F3E8FF;
+}
+
+th:nth-child(1), td:nth-child(1) {
+  width: 6%;
+}
+th:nth-child(2), td:nth-child(2) {
+  width: 22%;
+}
+th:nth-child(3), td:nth-child(3) {
+  width: 15%;
+}
+th:nth-child(4), td:nth-child(4) {
+  width: 18%;
+}
+th:nth-child(5), td:nth-child(5) {
+  width: 18%;
+}
+th:nth-child(6), td:nth-child(6) {
+  width: 10%;
+  font-weight: bold;
+  color: #1e40af;
+}

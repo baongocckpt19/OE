@@ -17,8 +17,9 @@ export class HocsinhComponent {
   students: any[] = [];
   filteredStudents: Student[] = [];
   searchText: string = '';
-  constructor(private studentService: StudentService) {}
-
+  constructor(private studentService: StudentService) { }
+  selectedStudent: any = null;
+  
   ngOnInit() {
     this.loadStudents();
   }
@@ -27,23 +28,21 @@ export class HocsinhComponent {
     this.studentService.getAllStudents().subscribe(
       (data) => {
         this.students = data;
-        this.filteredStudents = data; 
+        this.filteredStudents = data;
       },
       (error) => {
         console.error('Error loading students:', error);
       }
     );
   }
-  searchStudents() {
-    if (this.searchText.trim() === '') {
-        this.filteredStudents = [...this.students]; // Hiển thị lại tất cả nếu searchText rỗng
-    } else {
-        this.filteredStudents = this.students.filter(student =>
-            student.fullName.toLowerCase().includes(this.searchText.toLowerCase()) 
-
-        );
-    }
-}
+  searchStudents():void {
+    const keyword = this.searchText.toLowerCase(); 
+    this.filteredStudents = this.students.filter(student =>
+      student.fullName.toLowerCase().includes(keyword)
+      || student.email.toLowerCase().includes(keyword)
+      || student.studentClass.toLowerCase().includes(keyword)
+    );
+  }
 
   deleteStudent(id: number) {
     if (!confirm("Bạn có chắc chắn muốn xóa học sinh này?")) return;
@@ -57,8 +56,21 @@ export class HocsinhComponent {
       }
     );
   }
-
   viewStudent(id: number) {
-    // Implement view logic
+  const student = this.students.find(s => s.userId === id);
+  if (student) {
+    // Giả sử bạn có thể lấy danh sách bài thi từ student.exams
+    this.selectedStudent = {
+      ...student,
+      exams: student.exams || [  // Dữ liệu demo
+        { title: 'Toán học kỳ I', score: 8.5, submittedAt: new Date() },
+        { title: 'Văn học kỳ I', score: 7.0, submittedAt: new Date() },
+      ]
+    };
   }
+}
+
+closeModal() {
+  this.selectedStudent = null;
+}
 }
