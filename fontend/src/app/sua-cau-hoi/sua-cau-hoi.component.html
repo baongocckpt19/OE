@@ -1,0 +1,93 @@
+<app-header [title]="'Thêm câu hỏi'"></app-header>
+<div class="container">
+  <div class="header">
+    <div class="form-group">
+      <label for="subject">Môn học: <span class="required">*</span></label>
+      <input type="text" id="subject" name="subject" [(ngModel)]="question.nameOfSubject" placeholder="Nhập môn học">
+    </div>
+    <div class="form-group">
+      <label for="level">Mức độ:</label>
+      <select id="level" name="difficulty" [(ngModel)]="question.difficulty">
+        <option>dễ</option>
+        <option>trung bình</option>
+        <option>khó</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label>Câu hỏi</label>
+    <div class="editor">
+      <div class="toolbar">
+        
+            <button><i class="fas fa-undo"></i></button>
+            <button><i class="fas fa-redo"></i></button>
+            <button><i class="fas fa-search"></i></button>
+            <button><i class="fas fa-image"></i></button>
+            <button><i class="fas fa-video"></i></button>
+            <button><i class="fas fa-music"></i></button>
+            <button><i class="fas fa-bold"></i></button>
+            <button><i class="fas fa-italic"></i></button>
+            <button><i class="fas fa-underline"></i></button>
+            <button><i class="fas fa-strikethrough"></i></button>
+            <select>
+              <option>Mulish</option>
+            </select>
+            <select>
+              <option>12pt</option>
+            </select>
+            <button><i class="fas fa-align-left"></i></button>
+            <button><i class="fas fa-align-center"></i></button>
+            <button><i class="fas fa-align-right"></i></button>
+            <button><i class="fas fa-align-justify"></i></button>
+            <button><i class="fas fa-list-ul"></i></button>
+            <button><i class="fas fa-list-ol"></i></button>
+            <button><i class="fas fa-superscript"></i></button>
+            <button><i class="fas fa-subscript"></i></button>
+            <button><i class="fas fa-highlighter"></i></button>
+            <button><i class="fas fa-pen"></i></button>
+            <button><i class="fas fa-ellipsis-h"></i></button>
+         
+      </div> 
+      <textarea rows="6" [(ngModel)]="question.questionText" name="questionText"></textarea>
+    </div>
+  </div>
+
+  <div class="form-row">
+    <div class="form-group full-width">
+      <label for="correct-answer">Đáp án đúng:</label>
+      <select id="correct-answer" name="correctOption" [(ngModel)]="question.correctOption">
+        <option [value]="1">A</option>
+        <option [value]="2">B</option>
+        <option [value]="3">C</option>
+        <option [value]="4">D</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="form-group-answers">
+    <label for="answers">Đáp án <span class="required">*</span></label>
+
+    <div class="answer">
+      <span class="answer-label">A</span>
+      <input type="text" placeholder="Nhập đáp án" [(ngModel)]="question.option1" name="option1">
+    </div>
+    <div class="answer">
+      <span class="answer-label">B</span>
+      <input type="text" placeholder="Nhập đáp án" [(ngModel)]="question.option2" name="option2">
+    </div>
+    <div class="answer">
+      <span class="answer-label">C</span>
+      <input type="text" placeholder="Nhập đáp án" [(ngModel)]="question.option3" name="option3">
+    </div>
+    <div class="answer">
+      <span class="answer-label">D</span>
+      <input type="text" placeholder="Nhập đáp án" [(ngModel)]="question.option4" name="option4">
+    </div>
+  </div>
+
+  <div class="buttons">
+    <button class="cancel">Hủy</button>
+    <button class="save" (click)="onSave()">Lưu</button>
+  </div>
+</div>

@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
-import { HeaderComponent } from "../header/header.component";
 import { HttpClient } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+
 interface Question {
   questionText: string;
   option1: string;
@@ -14,13 +15,17 @@ interface Question {
   createdBy: string;
   createdAt: string;
 }
+
 @Component({
   selector: 'app-themcauhoi',
-  imports: [HeaderComponent, FormsModule],
+  standalone: true,
+  imports: [FormsModule, CommonModule],
   templateUrl: './themcauhoi.component.html',
   styleUrl: './themcauhoi.component.scss'
 })
 export class ThemcauhoiComponent {
+  showPreview: boolean = false;
+
   question: Question = {
     questionText: '',
     option1: '',
@@ -33,22 +38,21 @@ export class ThemcauhoiComponent {
     createdBy: '1',
     createdAt: ''
   };
-  constructor(private http: HttpClient) { }
+
+  constructor(private http: HttpClient) {}
 
   onSave() {
     console.log('Saving question:', this.question);
-    this.http.post<Question>('http://localhost:8080/api/questions', this.question) // Specify the type of the expected response
-      .subscribe({
-        next: (response) => {
-          console.log('Question saved successfully', response);
-          // Handle success (e.g., show a success message, reset the form)
-          this.resetForm(); //Added reset form.
-        },
-        error: (error) => {
-          console.error('Error saving question:', error); // This is where your error log comes from
-          // Handle error (e.g., show an error message)
-        }
-      });
+    this.http.post<Question>('http://localhost:8080/api/questions', this.question).subscribe({
+      next: (response) => {
+        console.log('Question saved successfully', response);
+        this.resetForm();
+        this.showPreview = false;
+      },
+      error: (error) => {
+        console.error('Error saving question:', error);
+      }
+    });
   }
 
   resetForm() {
@@ -64,6 +68,10 @@ export class ThemcauhoiComponent {
       createdBy: 'admin',
       createdAt: ''
     };
+    this.showPreview = false;
   }
-  
+
+  preview() {
+    this.showPreview = true;
+  }
 }

@@ -23,7 +23,7 @@ export class AppComponent {
   isSignupPage: boolean = false;
 
   isTrangthiPage: boolean = false;
-
+  isThemCauHoiPage: boolean = false;
 
   constructor(private router: Router) {
     this.router.events.subscribe(event => {
@@ -40,6 +40,9 @@ export class AppComponent {
   });
   this.router.events.subscribe(() => {
       this.isTrangthiPage = this.router.url.includes('trangthi');
+  });
+  this.router.events.subscribe(() => {
+      this.isThemCauHoiPage = this.router.url.includes('them-cau-hoi');
   });
 };
 }

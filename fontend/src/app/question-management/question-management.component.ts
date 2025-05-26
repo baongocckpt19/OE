@@ -1,135 +1,153 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms'; // Thêm FormsModule để sử dụng ngModel
-import { HeaderComponent } from '../header/header.component';
-import { Subject } from 'rxjs';
-import { create } from 'domain';
-import { QuestionService } from '../services/question.service';
+import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-
-
+import { HeaderComponent } from '../header/header.component';
+import { QuestionService } from '../services/question.service';
 
 @Component({
   selector: 'app-question-management',
-  standalone: true, // Đánh dấu component là standalone
-  imports: [CommonModule, FormsModule, HeaderComponent], // Thêm FormsModule vào imports
+  standalone: true,
+  imports: [CommonModule, FormsModule, HeaderComponent],
   templateUrl: './question-management.component.html',
-  styleUrls: ['./question-management.component.scss'],
+  styleUrls: ['./question-management.component.scss']
 })
 export class QuestionManagementComponent {
-  [x: string]: any;
   questions: any[] = [];
-
-  constructor(private questionService: QuestionService, private router: Router) { }
-
-  searchText: string = '';
   filteredQuestions: any[] = [];
-  selectedQuestion: any = null;
-  isModalVisible: boolean = false;
+
+  searchText = '';
+  showFilter = false;
+  filterSubject = '';
+  filterLevel = '';
+  filterDate: string | null = null;
 
   subjects: string[] = [];
-  difficulties: string[] = [];
-  creators: string[] = [];
-  levels: string[] = ['Dễ', 'Trung bình', 'Khó'];
+  levels: string[] = ['dễ', 'trung bình', 'khó'];
 
+  selectedQuestion: any = null;
+  isModalVisible = false;
+  isAddModalVisible = false;
+  showPreview = false;
 
+  question: any = this.getEmptyQuestion();
+
+  constructor(private questionService: QuestionService, private router: Router) {}
 
   ngOnInit(): void {
     this.loadQuestions();
   }
 
+  getEmptyQuestion() {
+    return {
+      questionText: '',
+      option1: '',
+      option2: '',
+      option3: '',
+      option4: '',
+      correctOption: 1,
+      nameOfSubject: '',
+      difficulty: 'dễ',
+      createdBy: 1
+      // createdAt: new Date().toISOString().slice(0, 10) // Không cần gửi createdAt, server tự xử lý
+    };
+  }
+
   loadQuestions() {
-    this.questionService.getQuestions().subscribe((data) => {
-      this.questions = data;
-      this.filteredQuestions = data;
-      this.subjects = [...new Set(data.map(q => q.nameOfSubject))];
-      this.difficulties = [...new Set(data.map(q => q.difficulty))];
-      this.creators = [...new Set(data.map(q => q.createdBy))];
-      this.levels = [...new Set(data.map(q => q.level))];
-    },(error) => {
-      console.error('Lỗi khi tải câu hỏi:', error);
+    this.questionService.getQuestions().subscribe({
+      next: data => {
+        this.questions = this.filteredQuestions = data;
+        this.subjects = [...new Set(data.map(q => q.nameOfSubject))];
+      },
+      error: err => console.error('Lỗi khi tải câu hỏi:', err)
     });
   }
+
   onSearch() {
     const keyword = this.searchText.toLowerCase().trim();
-
-    this.filteredQuestions = this.questions.filter(q => {
-      return q.questionText.toLowerCase().includes(keyword) ||
-        q.nameOfSubject.toLowerCase().includes(keyword) ||
-        q.difficulty.toLowerCase().includes(keyword) ||
-        q.createdBy.toLowerCase().includes(keyword);
-    });
+    this.filteredQuestions = this.questions.filter(q =>
+      [q.questionText, q.nameOfSubject, q.difficulty, q.createdBy]
+        .some(field => field.toLowerCase().includes(keyword))
+    );
   }
 
   deleteQuestion(id: number) {
     if (confirm('Bạn có chắc chắn muốn xóa câu hỏi này?')) {
       this.questionService.deleteQuestion(id).subscribe({
-        next: (response) => { // Thêm tham số response nếu API trả về dữ liệu sau khi xóa
-          console.log('Xóa câu hỏi thành công', response);
-          console.log('Bắt đầu gọi loadQuestions()');
-          this.loadQuestions();
-          console.log('Kết thúc gọi loadQuestions()');
-  
-          // Hoặc, nếu API trả về trạng thái/danh sách mới, bạn có thể xử lý như sau:
-          // this.questions = response.newListOfQuestions;
-          // this.filteredQuestions = [...this.questions];
-        },
-        error: (err) => {
-          console.error('Lỗi khi xóa câu hỏi:', err);
-          alert('Đã xảy ra lỗi khi xóa câu hỏi. Vui lòng thử lại sau.');
-        },
+        next: () => this.loadQuestions(),
+        error: () => alert('Lỗi khi xóa câu hỏi')
       });
     }
   }
 
-
-
   viewQuestion(id: number) {
-    const found = this.questions.find((q) => q.id === id);
-    if (found) {
-      this.selectedQuestion = found;
-      this.isModalVisible = true;
-    }
+    this.selectedQuestion = this.questions.find(q => q.id === id);
+    this.isModalVisible = !!this.selectedQuestion;
   }
 
   closeModal() {
     this.isModalVisible = false;
   }
 
-
-  editQuestion(id: number) {
-    console.log('Edit question', id);
-  }
   goToAddQuestion() {
-    this.router.navigate(['/them-cau-hoi']);
+    this.isAddModalVisible = true;
+    this.resetForm();
   }
-  showFilter = false;
-  filterSubject = '';
-  filterLevel = '';
-  filterDate: string | null = null;
+
+  resetForm() {
+    this.question = this.getEmptyQuestion();
+    this.showPreview = false;
+  }
+
+  preview() {
+    this.showPreview = true;
+  }
+
+  onSave() {
+    if (
+      !this.question.questionText.trim() ||
+      !this.question.option1.trim() ||
+      !this.question.option2.trim() ||
+      !this.question.option3.trim() ||
+      !this.question.option4.trim()
+    ) {
+      alert('Vui lòng nhập đầy đủ nội dung câu hỏi và các phương án!');
+      return;
+    }
+
+    const payload = { ...this.question };
+    delete payload.createdAt; // 🔥 Tránh gửi createdAt gây lỗi 500
+
+    this.questionService.addQuestion(payload).subscribe({
+      next: () => {
+        alert('Thêm câu hỏi thành công!');
+        this.loadQuestions();
+        this.resetForm();
+        this.isAddModalVisible = false;
+      },
+      error: (err) => {
+        console.error('Lỗi khi gửi câu hỏi:', err);
+        alert('Không thể thêm câu hỏi. Vui lòng kiểm tra lại dữ liệu và kết nối server!');
+      }
+    });
+  }
 
   cancelFilter() {
     this.showFilter = false;
-    this.filterSubject = '';
-    this.filterLevel = '';
+    this.filterSubject = this.filterLevel = '';
     this.filterDate = null;
   }
 
   applyFilter() {
-    // Lọc danh sách tại đây
     this.showFilter = false;
-    this.filterQuestions();
+    this.filteredQuestions = this.questions.filter(q =>
+      (!this.filterSubject || q.nameOfSubject === this.filterSubject) &&
+      (!this.filterLevel || q.difficulty === this.filterLevel) &&
+      (!this.filterDate || q.createdAt?.slice(0, 10) === this.filterDate)
+    );
   }
 
-  filterQuestions() {
-  this.filteredQuestions = this.questions.filter(question => {
-    const matchesSubject = !this.filterSubject || question.nameOfSubject === this.filterSubject;
-    const matchesLevel = !this.filterLevel || question.difficulty === this.filterLevel;
-    const matchesDate = !this.filterDate || new Date(question.createdAt).toISOString().slice(0, 10) === this.filterDate;
-
-    return matchesSubject && matchesLevel && matchesDate;
-  });
+  editQuestion(id: number) {
+    console.log('Edit question', id); // placeholder
+  }
 }
-
-  }
-
