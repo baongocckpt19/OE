@@ -27,7 +27,8 @@
                     <th>Tên đề thi</th>
                     <th>Môn Học</th>
                     <th>Thời gian</th>
-                    <th>Người tạo</th>
+                    <th>Người tạo</th>                   
+                    <th>Mô tả</th>
                     <th>Ngày tạo</th>
                     <th>Hành động</th>
                 </tr>
@@ -36,10 +37,11 @@
                 <tr *ngFor="let dethi of filteredDethis; let i = index">
 
                     <td>{{ i + 1 }}</td>
-                    <td>{{ dethi.description }}</td>
                     <td>{{ dethi.examName }}</td>
+                    <td>{{ dethi.name_of_subject }}</td>
                     <td>{{ dethi.duration }}</td>
                     <td>{{ dethi.createdBy }}</td>
+                    <td>{{ dethi.description }}</td>
                     <td>{{ dethi.createdAt }}</td>
                     <td class='action'>
                         <!-- From Uiverse.io by catraco -->
@@ -69,7 +71,7 @@
                                 </div>
                             </div>
                         </button>
-                        <button (click)="deleteDethi(dethi.id)">
+                        <button (click)="deleteDethi(dethi.examId)">
                             <i class="fas fa-trash-alt"></i>
                         </button>
                         <button (click)="editDethi(dethi.id)">

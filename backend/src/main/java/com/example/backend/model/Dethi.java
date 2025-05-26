@@ -23,6 +23,9 @@ public class Dethi {
     @Column(name = "description")
     private String description;
 
+    @Column(name = "name_of_subject")
+    private String name_of_subject;
+
     @Column(name = "duration")
     private Integer duration; // Thời gian có thể tính bằng phút
 
@@ -37,15 +40,24 @@ public class Dethi {
         this.createdAt = LocalDateTime.now(); // Set thời gian tạo mặc định
     }
 
-    public Dethi(String examName, String description, Integer duration, String createdBy) {
+    public Dethi(String examName, String description, Integer duration, String createdBy,String name_of_subject) {
         this.examName = examName;
         this.description = description;
         this.duration = duration;
         this.createdBy = createdBy;
         this.createdAt = LocalDateTime.now();
+        this.name_of_subject = name_of_subject;
     }
 
     // Getters and Setters
+    public String getName_of_subject() {
+        return name_of_subject;
+    }
+
+    public void setName_of_subject(String name_of_subject) {
+        this.name_of_subject = name_of_subject;
+    }
+
     public Long getExamId() {
         return examId;
     }
@@ -65,7 +77,7 @@ public class Dethi {
     public String getDescription() {
         return description;
     }
-    public void getDescription(String description ) {
+    public void setDescription(String description ) {
         this.description = description;
     }
     public Integer getDuration() {
@@ -79,10 +91,12 @@ public class Dethi {
         return createdBy;
     }
 
-    public void setCreatedBy(String createdBy) {
-        this.createdBy = createdBy;
+    public void setCreatedBy(int userId) {
+         this.createdBy = String.valueOf(userId);
     }
 
+    public void setCreatedAt(LocalDateTime now) {
+    }
     public LocalDateTime getCreatedAt() {
         return createdAt;
     }

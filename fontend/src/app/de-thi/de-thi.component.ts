@@ -58,6 +58,7 @@ export class DeThiComponent {
   }
   deleteDethi(id: number): void {
     // Gọi service để xóa đề thi dựa trên ID
+    
     console.log(`Xóa đề thi với ID: ${id}`);
     // this.deThiService.deleteDethi(id).subscribe(...);
   }

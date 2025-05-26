@@ -1,10 +1,9 @@
-import { Component } from '@angular/core';
-import { HeaderComponent } from "../header/header.component";
 import { CommonModule } from '@angular/common';
+import { Component, OnInit } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { RouterModule } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
-import { ExamService } from '../services/exam.service';
+import { Router, RouterModule } from '@angular/router';
+import { HeaderComponent } from "../header/header.component";
+import { DeThiService } from '../services/de-thi.service';
 import { QuestionService } from '../services/question.service';
 
 @Component({
@@ -20,14 +19,14 @@ import { QuestionService } from '../services/question.service';
   templateUrl: './themdethi.component.html',
   styleUrls: ['./themdethi.component.scss']
 })
-export class ThemdethiComponent {
-  router: any;
-  constructor(private examService: ExamService, private questionService: QuestionService) { }
+export class ThemdethiComponent implements OnInit{
+  currentExamId: number | null = null;
+  constructor(private examService: DeThiService, private questionService: QuestionService,private router: Router) { }
   test = {
     examName: '',
-    subject: '',
     duration: null as number | null,
-    description: ''
+    description: '',
+    name_of_subject: ''
   };
 
   isTestAdded = false;
@@ -40,6 +39,7 @@ export class ThemdethiComponent {
   selectedAnswers: { [questionIndex: number]: number | null } = {};
 
   questions: {
+    id?: number;
     subject: string;
     question: string;
     level: string;
@@ -47,6 +47,7 @@ export class ThemdethiComponent {
   }[] = [];
 
   questionsBank: {
+    id: number;
     subject: string;
     question: string;
     level: string;
@@ -58,6 +59,7 @@ export class ThemdethiComponent {
     this.questionService.getQuestions()
       .subscribe((data: any[]) => {
         this.questionsBank = data.map(q => ({
+          id: q.questionId,
           subject: q.nameOfSubject,
           question: q.questionText,
           level: q.difficulty,
@@ -68,13 +70,14 @@ export class ThemdethiComponent {
   }
 
   onAddTest() {
-    if (this.test.examName && this.test.subject && this.test.duration) {
+    if (this.test.examName && this.test.duration) {
       const userId = 1; // 🔁 Lấy user id từ localStorage hoặc auth service nếu có
-      this.examService.addExam(this.test, userId)
+      this.examService.addExam(this.test, userId) // No userId parameter needed here
         .subscribe({
-          next: (res) => {
+          next: (res: any) => {
             this.isTestAdded = true;
-            alert("Thêm đề thi thành công!");
+            this.currentExamId = res.examId;
+            alert(`Thêm đề thi thành công! ID: ${this.currentExamId}`);
           },
           error: (err) => {
             console.error("Lỗi khi thêm đề thi:", err);
@@ -109,24 +112,45 @@ export class ThemdethiComponent {
   }
 
   submitSelectedQuestions() {
-    const selected = this.questionsBank.filter(q => q.selected);
+     console.log('Current Exam ID khi submit:', this.currentExamId); 
+    if (!this.currentExamId) {
+      alert("Lỗi: Không tìm thấy ID đề thi. Vui lòng tạo đề thi trước.");
+      return;
+    }
 
-    selected.forEach(q => {
-      const exists = this.questions.find(existing =>
-        existing.question === q.question && existing.subject === q.subject
-      );
+    const selectedQuestionBankIds: number[] = this.questionsBank
+      .filter(q => q.selected)
+      .map(q => Number(q.id)); // Giả sử model QuestionBank của bạn có 'id'
 
-      if (!exists) {
-        this.questions.push({
-          subject: q.subject,
-          question: q.question,
-          level: q.level,
-          answers: q.answers
-        });
-      }
-    });
+    if (selectedQuestionBankIds.length === 0) {
+      alert("Vui lòng chọn ít nhất một câu hỏi.");
+      return;
+    }
 
-    this.closeAddQuestionModal();
+
+    this.examService.addQuestionsToExam(this.currentExamId, selectedQuestionBankIds) // Gọi service mới
+      .subscribe({
+        next: (res: any) => {
+          alert(res.message || "Thêm câu hỏi vào đề thi thành công!");
+          // Cập nhật danh sách câu hỏi hiển thị trên UI chính nếu cần
+          // Bạn có thể fetch lại danh sách câu hỏi cho đề thi này
+          // hoặc thêm trực tiếp vào mảng `questions` nếu bạn có đủ dữ liệu
+          this.questions.push(...this.questionsBank.filter(q => q.selected).map(q => ({
+                                              id: q.id, // Giữ lại ID nếu bạn cần nó sau này
+                                              subject: q.subject,
+                                              question: q.question,
+                                              level: q.level,
+                                              answers: q.answers
+                                          }))); // Cập nhật tạm thời trên UI
+          this.closeAddQuestionModal();
+          // Reset trạng thái selected của các câu hỏi trong questionsBank
+          this.questionsBank.forEach(q => q.selected = false);
+        },
+        error: () => {
+          console.error("Lỗi khi thêm câu hỏi vào đề thi:");
+          alert("Đã xảy ra lỗi khi thêm câu hỏi vào đề thi.");
+        }
+      });
   }
 
   // Gán đáp án được chọn cho mỗi câu hỏi

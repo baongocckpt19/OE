@@ -14,7 +14,6 @@ import { DashboardStudentComponent } from './dashboard-student/dashboard-student
 import { ChiTietDeThiComponent } from './chi-tiet-de-thi/chi-tiet-de-thi.component';
 
 
-
 export const routes: Routes = [
   {
     path: 'login',

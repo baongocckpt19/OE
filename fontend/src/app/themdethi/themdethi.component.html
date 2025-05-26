@@ -10,11 +10,11 @@
                 <div class="form-group">
                     <label for="testName">Tên đề thi</label>
                     <input type="text" id="testName" [(ngModel)]="test.examName" />
-                </div>
+                </div> <!-- Đóng thẻ form-group -->
                 <div class="form-group">
                     <label for="subject">Môn học</label>
-                    <input type="text" id="subject" [(ngModel)]="test.subject" />
-                </div>
+                    <input type="text" id="subject" [(ngModel)]="test.name_of_subject" />
+                </div> <!-- Đóng thẻ form-group -->
                 <div class="form-group">
                     <label for="duration">Thời gian (phút)</label>
                     <input type="number" id="duration" [(ngModel)]="test.duration" />
