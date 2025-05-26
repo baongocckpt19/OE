@@ -1,0 +1,54 @@
+<div class="exam-container">
+    <!-- PHẦN THÔNG TIN ĐỀ THI -->
+    <section class="exam-info">
+        <h2>{{ exam.examName }}</h2>
+        <p><strong>Môn học:</strong> {{ exam.subject }}</p>
+        <p><strong>Thời gian làm bài:</strong> {{ exam.duration }} phút</p>
+        <p><strong>Mô tả:</strong> {{ exam.description }}</p>
+    </section>
+
+    <!-- Đồng hồ đếm ngược -->
+    <div class="timer">
+        <span>⏰ Thời gian còn lại:</span>
+        <strong>{{ displayTime }}</strong>
+    </div>
+
+    <div class="exam-layout">
+        <!-- DANH SÁCH CÂU HỎI -->
+        <div class="question-section">
+            <div *ngFor="let q of questions; let i = index" class="question-block">
+
+                <!-- CỜ ĐÁNH DẤU -->
+                <div class="flag" [class.flagged]="flaggedQuestions[i]" (click)="toggleFlag(i)"
+                    title="Đánh dấu nghi ngờ">
+                    🚩
+                </div>
+
+                <p><strong>Câu {{ i + 1 }}:</strong> {{ q.question }}</p>
+                <div class="answer-grid">
+                    <label *ngFor="let a of q.answers; let j = index" class="answer-option"
+                        [class.selected]="selectedAnswers[i] === j" (click)="selectAnswer(i, j)">
+                        <span class="label">{{ 'ABCD'[j] }}.</span>
+                        <span class="text">{{ a }}</span>
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <!-- QUESTION NAV -->
+        <div class="question-nav">
+            <h4>Câu hỏi</h4>
+            <div class="nav-grid">
+                <div *ngFor="let q of questions; let i = index" class="nav-item"
+                    [class.answered]="selectedAnswers[i] !== null" [class.flagged]="flaggedQuestions[i]"
+                    (click)="scrollToQuestion(i)">
+                    {{ i + 1 }}
+                </div>
+            </div>
+
+            <!-- Nút nộp bài -->
+            <button class="submit-button" (click)="onSubmit()">Nộp bài</button>
+        </div>
+
+    </div>
+</div>
