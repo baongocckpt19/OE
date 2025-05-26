@@ -1,7 +1,8 @@
 // de-thi.service.ts
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { catchError, Observable, throwError } from 'rxjs';
+import { AccountService } from './account-service.service';
 
 export interface Dethi {
   examId: number;
@@ -10,6 +11,7 @@ export interface Dethi {
   duration: string;
   created_by: string;
   created_at: string;
+  name_of_subject: string;
 }
 export interface Question {
   questionId: number;
@@ -44,5 +46,24 @@ export class DeThiService {
 
     return this.http.get<DethiDetailsResponse>(`${this.apiUrl}/details/${id}`);
   }
-  // Bạn có thể thêm các phương thức khác như postDethi, deleteDethi, updateDethi nếu cần
+
+addExam(examData: any, userId: number): Observable<any> {
+  return this.http.post(
+    `${this.apiUrl}/addExam?userId=${userId}`,
+    examData,
+    { responseType: 'text' }
+  );
+}
+// de-thi.service.ts
+addQuestionsToExam(examId: number, questionIds: number[]): Observable<any> {
+  const url = `${this.apiUrl}/${examId}/questions`;
+  const token = sessionStorage.getItem('token');
+  const headers = new HttpHeaders({
+    'Authorization': `Bearer ${token}`,
+    'Content-Type': 'application/json'
+  });
+
+  return this.http.post(url, questionIds, { headers });
+}
+
 }

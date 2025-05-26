@@ -16,7 +16,6 @@ import { StudentMarkComponent } from './student-mark/student-mark.component';
 import { TrangthiComponent } from './trangthi/trangthi.component';
 import { SuaCauHoiComponent } from './sua-cau-hoi/sua-cau-hoi.component';
 
-
 export const routes: Routes = [
   {
     path: 'login',

@@ -8,13 +8,14 @@ import { QuestionManagementComponent } from './question-management/question-mana
 import { Routes } from '@angular/router';
 import { TooltipComponent } from './tooltip/tooltip.component';
 import { SignupComponent } from "./signup/signup.component";
+import { FormsModule } from '@angular/forms';
 
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
-  imports: [HeaderComponent, SidebarComponent, RouterModule, CommonModule, TooltipComponent]
+  imports: [HeaderComponent, SidebarComponent, RouterModule, CommonModule, TooltipComponent,FormsModule ]
 })
 //baongoc
 export class AppComponent {
