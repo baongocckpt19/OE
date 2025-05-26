@@ -1,0 +1,41 @@
+<app-header title="'Bảng điểm học sinh'"></app-header>
+<main class="student-mark">
+  <div class="search-filter-container">
+    <div class="search-box">
+      <input type="text" placeholder="Tìm kiếm theo tên đề hoặc môn học" [(ngModel)]="searchTerm" (input)="filterScores()">
+      <button>
+        <i class="fas fa-search"></i>
+      </button>
+    </div>
+    <div class="filter-group">
+      <button class="filter-btn">
+        Bộ lọc <i class="fas fa-filter"></i>
+      </button>
+    </div>
+  </div>
+
+  <div class="table-container">
+    <table>
+      <thead>
+        <tr>
+          <th>STT</th>
+          <th>Tên đề</th>
+          <th>Môn học</th>
+          <th>Thời gian hoàn thành</th>
+          <th>Thời gian nộp</th>
+          <th>Điểm số</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let score of filteredScores; let i = index">
+          <td>{{ i + 1 }}</td>
+          <td>{{ score.examName }}</td>
+          <td>{{ score.subject }}</td>
+          <td>{{ score.finishedAt }}</td>
+          <td>{{ score.submittedAt }}</td>
+          <td>{{ score.score }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</main>
