@@ -12,7 +12,8 @@ import { ThemdethiComponent } from './themdethi/themdethi.component';
 import { authGuard } from './guard/auth.guard';
 import { DashboardStudentComponent } from './dashboard-student/dashboard-student.component';
 import { ChiTietDeThiComponent } from './chi-tiet-de-thi/chi-tiet-de-thi.component';
-
+import { StudentMarkComponent } from './student-mark/student-mark.component';
+import { TrangthiComponent } from './trangthi/trangthi.component';
 
 export const routes: Routes = [
   {
@@ -22,7 +23,7 @@ export const routes: Routes = [
   {
     path: 'signup',
     component: SignupComponent
-    
+
   },
   {
     path: 'dashboard',
@@ -79,10 +80,22 @@ export const routes: Routes = [
     data: { title: 'Thêm đề thi' },
    canActivate : [authGuard]
   },
+    {
+    path: 'student-mark',
+    component: StudentMarkComponent,
+    data: { title: 'Điểm số học sinh' },
+   canActivate : [authGuard]
+  },
   {
     path: 'chi-tiet-de-thi/:id',
     component: ChiTietDeThiComponent,
     data: { title: 'Chi tiết đề thi' },
+   canActivate : [authGuard]
+  },
+  {
+    path: 'trangthi',
+    component: TrangthiComponent,
+    data: { title: 'Trang thi' },
    canActivate : [authGuard]
   },
   {

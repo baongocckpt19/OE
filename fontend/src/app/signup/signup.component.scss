@@ -1,103 +1,102 @@
+body {
+  margin: 0;
+  background-color: #ffffff;
+  font-family: 'Segoe UI', sans-serif;
+}
+
 .signup-container {
-    display: flex;
-    height: 100vh;
-    font-family: 'Segoe UI', sans-serif;
-    background: linear-gradient(to right, #0f172a, #1e3a8a);
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  justify-content: center;
+  min-height: 100vh;
+  background: #ffffff;
+}
+
+.signup-illustration {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #ffffff;
+  padding: 0;
+
+  img {
+    width: 100%;
+    height: 100vh; // Chiếm toàn bộ chiều cao trang
+    object-fit: contain; // Hoặc 'contain' nếu muốn ảnh không bị cắt
   }
-  
-  .signup-illustration {
-    flex: 1;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background: #0f172a;
-  }
-  
-  .signup-illustration img {
-    width: 80%;
-    max-width: 500px;
-    object-fit: contain;
-    border-radius: 1rem;
-  }
-  
-  .signup-content {
-    flex: 1;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background: #ffffff;
-    padding: 3rem;
-    border-top-left-radius: 2rem;
-    border-bottom-left-radius: 2rem;
-  }
-  
+}
+.signup-content {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #ffffff;
+  padding: 2rem;
+
   .signup-form {
     width: 100%;
     max-width: 400px;
+    background: #eaecf1;
+    padding: 2rem;
+    border-radius: 16px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
     display: flex;
     flex-direction: column;
     gap: 1rem;
+
+    .form-title {
+      font-size: 1.8rem;
+      font-weight: bold;
+      color: #333;
+      text-align: center;
+    }
+
+    input[type="text"],
+    input[type="password"],
+    input[type="email"],
+    input[type="date"] {
+      padding: 0.75rem 1rem;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 1rem;
+    }
+
+    .checkbox-group {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.95rem;
+    }
+
+    .signup-btn {
+      padding: 0.75rem;
+      font-size: 1rem;
+      background-color: #4a90e2;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+
+      &:hover {
+        background-color: #357ac7;
+      }
+    }
+
+    .login-link {
+      font-size: 0.9rem;
+      text-align: center;
+
+      a {
+        color: #4a90e2;
+        text-decoration: none;
+
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+    }
   }
-  
-  .form-title {
-    text-align: center;
-    font-size: 2rem;
-    font-weight: 700;
-    color: #1e3a8a;
-    margin-bottom: 1rem;
-  }
-  
-  .signup-form input[type="text"],
-  .signup-form input[type="email"],
-  .signup-form input[type="password"],
-  .signup-form input[type="date"] {
-    padding: 0.75rem 1rem;
-    font-size: 1rem;
-    border: 1px solid #cbd5e0;
-    border-radius: 0.75rem;
-    background-color: #f9fafb;
-    transition: border-color 0.3s ease;
-  }
-  
-  .signup-form input:focus {
-    outline: none;
-    border-color: #3b82f6;
-    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
-  }
-  
-  .checkbox-group {
-    font-size: 0.95rem;
-    color: #2d3748;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-  }
-  
-  .signup-btn {
-    margin-top: 1rem;
-    background: linear-gradient(to right, #2563eb, #1d4ed8);
-    color: white;
-    font-weight: 600;
-    padding: 0.75rem;
-    border: none;
-    border-radius: 999px;
-    cursor: pointer;
-    transition: transform 0.2s ease;
-  }
-  
-  .signup-btn:hover {
-    transform: scale(1.05);
-  }
-  
-  .login-link {
-    text-align: center;
-    font-size: 0.95rem;
-    margin-top: 1rem;
-  }
-  
-  .login-link a {
-    color: #2563eb;
-    text-decoration: none;
-    font-weight: 600;
-  }
-  
+}
