@@ -1,15 +1,8 @@
-<<<<<<< HEAD
-<app-header *ngIf="showLayoutlogin && !isExamPage && !isSignupPage" ></app-header>
-
-<div class="main-container ">
-    <app-sidebar *ngIf="showLayoutlogin && !isExamPage && !isSignupPage"></app-sidebar>
-=======
 <app-header *ngIf="showLayoutlogin && !isExamPage && !isSignupPage && !isTrangthiPage" ></app-header>
 
 <div class="main-container ">
     <app-sidebar *ngIf="showLayoutlogin && !isExamPage && !isSignupPage && !isTrangthiPage"></app-sidebar>
->>>>>>> a503458ad540b89a2e3ca63770e246e0b091b274
- 
+
     <app-tooltip *ngIf=" !isExamPage  && !isTrangthiPage"></app-tooltip>
     <router-outlet></router-outlet>
 </div>
