@@ -71,7 +71,7 @@
       <tbody>
         <tr *ngFor="let exam of selectedStudent.exams; let i = index">
           <td>{{ i + 1 }}</td>
-          <td>{{ exam.title }}</td>
+         <td>{{ getExamTitleById(exam.examId) }}</td>
           <td>{{ exam.score }}</td>
           <td>{{ exam.submittedAt | date:'dd/MM/yyyy HH:mm' }}</td>
         </tr>
