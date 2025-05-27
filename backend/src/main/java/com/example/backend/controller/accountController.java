@@ -26,7 +26,6 @@ public class accountController {
         String password_hash = loginRequest.get("password_hash");
         String role = loginRequest.getOrDefault("role", "student");
         Map<String, Object> user = accountService.login(username, password_hash, role);
-
         if (user != null) {
             // Kiểm tra vai trò sau khi đăng nhập thành công
             if (user.containsKey("role") && user.get("role").equals(role)) {
@@ -42,4 +41,15 @@ public class accountController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Map.of("error", "Sai email hoặc mật khẩu hoặc tài khoản bị khóa"));
         }
     }
+    @PostMapping("/auth/register")
+public ResponseEntity<?> register(@RequestBody Map<String, Object> registerRequest) {
+    boolean success = accountService.register(registerRequest);
+    if (success) {
+        return ResponseEntity.ok(Map.of("message", "Đăng ký thành công"));
+    } else {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(Map.of("error", "Lỗi chi tiết ở server. Kiểm tra log backend."));
+    }
+}
+
 }
