@@ -23,25 +23,42 @@
     </div>
   </div>
 
-  <!-- ✅ Modal overlay + popup -->
+  <!-- Modal overlay -->
   <div class="modal-overlay" *ngIf="showFilter" (click)="toggleFilter()"></div>
 
+  <!-- Modal nội dung -->
   <div class="modal" *ngIf="showFilter">
     <h2 class="modal-title">Bộ lọc kết quả</h2>
 
     <label for="fromDate">Từ ngày:</label>
-    <input id="fromDate" type="date" [(ngModel)]="fromDate" />
+    <input id="fromDate" type="date" [(ngModel)]="tempFromDate" />
 
     <label for="toDate">Đến ngày:</label>
-    <input id="toDate" type="date" [(ngModel)]="toDate" />
+    <input id="toDate" type="date" [(ngModel)]="tempToDate" />
+
     <label>Sắp xếp điểm số:</label>
-<div class="sort-buttons">
-  <button class="sort-btn" (click)="sortByScoreAsc()">Tăng dần</button>
-  <button class="sort-btn" (click)="sortByScoreDesc()">Giảm dần</button>
+   <div class="sort-buttons">
+  <button
+    class="sort-btn"
+    [ngClass]="{ 'selected': tempSortDirection === 'asc' }"
+    (click)="tempSortDirection = 'asc'"
+  >
+    Tăng dần
+  </button>
+
+  <button
+    class="sort-btn"
+    [ngClass]="{ 'selected': tempSortDirection === 'desc' }"
+    (click)="tempSortDirection = 'desc'"
+  >
+    Giảm dần
+  </button>
 </div>
+
+
     <div class="modal-actions">
-      <button class="cancel-btn" (click)="toggleFilter()">Hủy</button>
-      <button class="apply-btn" (click)="applyFilter()">Áp dụng</button>
+  <button class="cancel-btn" (click)="resetFilter(); toggleFilter()">Hủy</button>
+  <button class="apply-btn" (click)="applyFilter()">Áp dụng</button>
     </div>
   </div>
 

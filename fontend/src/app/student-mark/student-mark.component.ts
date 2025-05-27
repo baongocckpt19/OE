@@ -17,8 +17,14 @@ export class StudentMarkComponent implements OnInit, OnDestroy {
   filteredScores: any[] = [];
   searchTerm: string = '';
   showFilter: boolean = false;
+
   fromDate?: string;
   toDate?: string;
+  sortDirection?: 'asc' | 'desc';
+
+  tempFromDate?: string;
+  tempToDate?: string;
+  tempSortDirection?: 'asc' | 'desc';
 
   private subscription?: Subscription;
 
@@ -40,7 +46,10 @@ export class StudentMarkComponent implements OnInit, OnDestroy {
     this.subscription?.unsubscribe();
   }
 
-  // ===== Tìm kiếm không dấu ===== //
+  removeVietnameseTones(str: string): string {
+    return str.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+  }
+
   filterScores(): void {
     const keyword = this.removeVietnameseTones(this.searchTerm);
     this.filteredScores = this.scores.filter(score =>
@@ -49,54 +58,47 @@ export class StudentMarkComponent implements OnInit, OnDestroy {
     );
   }
 
-  removeVietnameseTones(str: string): string {
-    return str
-      .normalize('NFD')
-      .replace(/[\u0300-\u036f]/g, '')
-      .toLowerCase();
-  }
-
-  // ===== Toggle modal ===== //
   toggleFilter(): void {
     this.showFilter = !this.showFilter;
   }
 
-  // ===== Áp dụng lọc (theo ngày) ===== //
   applyFilter(): void {
-    this.filterByDate();
+    this.fromDate = this.tempFromDate;
+    this.toDate = this.tempToDate;
+    this.sortDirection = this.tempSortDirection;
+
+    let result = [...this.scores];
+
+    // Lọc theo ngày
+    if (this.fromDate || this.toDate) {
+      const from = this.fromDate ? new Date(this.fromDate) : new Date('2000-01-01');
+      const to = this.toDate ? new Date(this.toDate + 'T23:59:59') : new Date('2100-01-01');
+
+      result = result.filter(score => {
+        const isoDateStr = score.finishedAt.replace(' ', 'T');
+        const scoreDate = new Date(isoDateStr);
+        return scoreDate >= from && scoreDate <= to;
+      });
+    }
+
+    // Sắp xếp
+    if (this.sortDirection === 'asc') {
+      result.sort((a, b) => a.score - b.score);
+    } else if (this.sortDirection === 'desc') {
+      result.sort((a, b) => b.score - a.score);
+    }
+
+    this.filteredScores = result;
     this.showFilter = false;
   }
 
-  // ===== Lọc theo ngày ===== //
-  filterByDate(): void {
-    if (!this.fromDate && !this.toDate) {
-      this.filteredScores = [...this.scores];
-      return;
-    }
-
-    const from = this.fromDate ? new Date(this.fromDate) : new Date('2000-01-01');
-    const to = this.toDate ? new Date(this.toDate + 'T23:59:59') : new Date('2100-01-01');
-
-    this.filteredScores = this.scores.filter(score => {
-      const isoDateStr = score.finishedAt.replace(' ', 'T');
-      const scoreDate = new Date(isoDateStr);
-      return scoreDate >= from && scoreDate <= to;
-    });
-  }
-
-  // ===== Sắp xếp điểm ===== //
-  sortByScoreAsc(): void {
-    this.filteredScores = [...this.filteredScores].sort((a, b) => a.score - b.score);
-  }
-
-  sortByScoreDesc(): void {
-    this.filteredScores = [...this.filteredScores].sort((a, b) => b.score - a.score);
-  }
-
-  // ===== Reset lọc ===== //
   resetFilter(): void {
     this.filteredScores = [...this.scores];
     this.fromDate = undefined;
     this.toDate = undefined;
+    this.tempFromDate = undefined;
+    this.tempToDate = undefined;
+    this.sortDirection = undefined;
+    this.tempSortDirection = undefined;
   }
 }

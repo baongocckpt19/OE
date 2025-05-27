@@ -9,7 +9,7 @@ export const SIDEBAR_MENUS = {
   ],
   student: [
     { icon: 'fa-tachometer-alt', label: 'Dashboard', route: '/dashboard-student' },
-    { icon: 'fa-book-open', label: 'Làm bài thi', route: '/exam-list' },
+    { icon: 'fa-book-open', label: 'Đề thi', route: '/de-thi-student' },
     { icon: 'fa-clipboard-check', label: 'Bảng điểm', route: '/student-mark' },
     { icon: 'fa-sign-out-alt', label: 'Đăng xuất', route: '/login' }
   ]

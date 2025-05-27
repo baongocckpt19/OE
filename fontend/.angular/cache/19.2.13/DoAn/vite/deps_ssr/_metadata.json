@@ -1,5 +1,7 @@
 {
 <<<<<<< HEAD
+=======
+<<<<<<< HEAD
   "hash": "9d0ce871",
   "configHash": "60e08272",
   "lockfileHash": "23dcec34",
@@ -11,12 +13,16 @@
   "lockfileHash": "23dcec34",
   "browserHash": "88292352",
 =======
+>>>>>>> 03402bb12ed67c7af039138f80cc6565bf07dd83
   "hash": "4d3a3c51",
   "configHash": "58e39ebf",
   "lockfileHash": "23dcec34",
   "browserHash": "c1464426",
+<<<<<<< HEAD
+=======
 >>>>>>> badf4d8abdeb9a5c76eb1cd48b124e68e5ad9b76
 >>>>>>> f7a1151655b6126227ff1230f2d3845125d30f11
+>>>>>>> 03402bb12ed67c7af039138f80cc6565bf07dd83
   "optimized": {},
   "chunks": {}
 }

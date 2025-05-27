@@ -111,64 +111,40 @@
     font-size: 1rem;
   }
 
-  .modal-actions {
-  display: flex;
-  justify-content: flex-end;
-  gap: 1rem;
-  margin-top: 1rem;
 
- .cancel-btn {
-    background: #dc2626;
-    color: white;
-    border: none;
-    padding: 0.5rem 1.25rem;
-    border-radius: 8px;
-    font-weight: 500;
-    cursor: pointer;
-    transition: background-color 0.2s;
 
-    &:hover {
-      background: #b91c1c;
-    }
-  }
 
-  .apply-btn {
-    background: #16a34a;
-    color: white;
-    border: none;
-    padding: 0.5rem 1.25rem;
-    border-radius: 8px;
-    font-weight: 500;
-    cursor: pointer;
-    transition: background-color 0.2s;
-
-    &:hover {
-      background: #15803d;
-    }
-  }
 }
-}
+
 .sort-buttons {
   display: flex;
   gap: 1rem;
 
   .sort-btn {
     flex: 1;
-    background-color: #2563EB;
-    color: white;
-    border: none;
+    background-color: white;
+    color: #2563EB;
+    border: 2px solid #2563EB;
     padding: 0.5rem 1rem;
     border-radius: 8px;
     font-size: 1rem;
     font-weight: 500;
     cursor: pointer;
-    transition: background-color 0.2s;
+    transition: all 0.2s ease;
 
     &:hover {
-      background-color: #1d4ed8; // xanh đậm hơn khi hover
+      background-color: #dbeafe; // xanh nhạt khi hover
+      color: #1e3a8a;
+    }
+
+    &.selected {
+      background-color: #2563EB; // xanh đậm
+      color: white;
+      border-color: #2563EB;
     }
   }
 }
+
 // ======= Table ======= //
 .table-container {
   width: 100%;
@@ -231,3 +207,48 @@ table {
     color: #1e40af;
   }
 }
+.modal-actions {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 1.5rem;
+
+  .cancel-btn,
+  .apply-btn {
+    
+    width: 120px;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 500;
+    font-family: inherit;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    text-align: center;
+    border: none;
+  }
+
+  .cancel-btn {
+    background-color: #e5e7eb; // xám nhạt
+    color: #6b7280;            // xám đậm
+
+    &:hover {
+      background-color: #dc2626; // đỏ khi hover
+      color: white;
+      transform: scale(1.02);
+      box-shadow: 0 2px 6px rgba(220, 38, 38, 0.3);
+    }
+  }
+
+  .apply-btn {
+    background-color: #4caf50;
+    color: white;
+
+    &:hover {
+      background-color: #388e3c;
+      transform: scale(1.02);
+      box-shadow: 0 2px 6px rgba(76, 175, 80, 0.3);
+    }
+  }
+}
+
