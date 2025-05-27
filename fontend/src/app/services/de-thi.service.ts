@@ -50,8 +50,7 @@ export class DeThiService {
 addExam(examData: any, userId: number): Observable<any> {
   return this.http.post(
     `${this.apiUrl}/addExam?userId=${userId}`,
-    examData,
-    { responseType: 'text' }
+    examData
   );
 }
 // de-thi.service.ts
@@ -63,7 +62,7 @@ addQuestionsToExam(examId: number, questionIds: number[]): Observable<any> {
     'Content-Type': 'application/json'
   });
 
-  return this.http.post(url, questionIds, { headers });
+  return this.http.post(url, questionIds, { headers, responseType: 'text' });
 }
 
 }

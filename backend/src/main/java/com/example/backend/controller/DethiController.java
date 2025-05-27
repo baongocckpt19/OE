@@ -48,10 +48,15 @@ public class DethiController {
     // Endpoint mới để thêm câu hỏi vào đề thi
     @PostMapping("/{examId}/questions")
     public ResponseEntity<?> addQuestionsToExam(@PathVariable Long examId, @RequestBody List<Long> questionBankIds) {
+        System.out.println("Received request to add questions to exam. Exam ID: " + examId);
+    System.out.println("Question IDs to add: " + questionBankIds);
+
         try {
             examService.addQuestionsToExam(examId, questionBankIds);
             return ResponseEntity.ok().body("Thêm câu hỏi vào đề thi thành công!");
         } catch (Exception e) {
+            System.err.println("Error adding questions to exam: " + e.getMessage());
+        e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Lỗi khi thêm câu hỏi vào đề thi: " + e.getMessage());
         }
     }               

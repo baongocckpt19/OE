@@ -31,6 +31,7 @@ public class ExamQuestionRepository {
                 ps.setLong(1, examQuestion.getExam().getExamId());
                 // Lấy question_id từ đối tượng Question (ngân hàng câu hỏi) được liên kết
                 ps.setLong(2, examQuestion.getQuestionBank().getId()); // Đã sửa: Sử dụng getId() của Question
+            System.out.println("Repository: Chuẩn bị chèn - exam_id: " + examQuestion.getExam().getExamId() + ", question_id: " + examQuestion.getQuestionBank().getId());
             });
     }
 

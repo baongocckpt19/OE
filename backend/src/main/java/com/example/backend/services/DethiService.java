@@ -42,6 +42,9 @@ return examRepository.saveExam(exam);
 }
 @Transactional
 public void addQuestionsToExam(Long examId, List<Long> questionBankIds) {
+     System.out.println("Service: Bắt đầu thêm câu hỏi cho đề thi ID: " + examId);
+    System.out.println("Service: Các Question IDs nhận được: " + questionBankIds);
+
     Dethi exam = examRepository.findById(examId)
             .orElseThrow(() -> new RuntimeException("Không tìm thấy đề thi!"));
 
