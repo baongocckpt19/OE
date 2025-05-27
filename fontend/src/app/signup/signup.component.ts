@@ -31,7 +31,7 @@ export class SignupComponent {
       this.formState = 'visible';
     }, 100); // Start animation after component loads
   }
-
+  confirmPassword: string = '';
   username: any;
   fullname: any;
   password: any;

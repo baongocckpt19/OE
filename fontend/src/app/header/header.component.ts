@@ -31,6 +31,7 @@ export class HeaderComponent {
       '/de-thi': 'Đề thi',
       '/them-cau-hoi': 'Thêm câu hỏi',
       '/themdethi': 'Thêm đề thi',
+      '/student-mark': 'Điểm số',
 
     };
 

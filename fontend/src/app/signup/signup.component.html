@@ -1,28 +1,30 @@
+<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@600&display=swap" rel="stylesheet">
 <div class="signup-container">
-    <div class="signup-illustration">
-      <img src="../images/undraw_welcome-cats_tw36.png" alt="Welcome Cats">
-    </div>
-    <div class="signup-content">
-      <form class="signup-form">
-        <h2 class="form-title">Đăng ký tài khoản</h2>
-
-        <input type="text" placeholder="Tài khoản" [(ngModel)]="username" name="username" />
-        <input type="text" placeholder="Họ và tên" [(ngModel)]="fullname" name="fullname" />
-        <input type="password" placeholder="Mật khẩu" [(ngModel)]="password" name="password" />
-        <input type="email" placeholder="Email" [(ngModel)]="email" name="email" />
-        <input type="text" placeholder="Lớp" [(ngModel)]="class" name="class" />
-        <input type="date" [(ngModel)]="dob" name="dob" />
-
-        <label class="checkbox-group">
-          <input type="checkbox" [(ngModel)]="isTeacher" name="isTeacher" />
-          Tôi là giảng viên
-        </label>
-
-        <button type="submit" class="signup-btn">Đăng ký</button>
-
-        <p class="login-link">
-          Đã có tài khoản? <a href="#">Đăng nhập</a>
-        </p>
-      </form>
-    </div>
+  <div class="signup-illustration">
+    <img src="../images/undraw_welcome-cats_tw36.png" alt="Welcome Cats">
   </div>
+  <div class="signup-content">
+    <form class="signup-form">
+      <h2 class="form-title">Đăng ký tài khoản</h2>
+
+      <input type="text" placeholder="Tài khoản" [(ngModel)]="username" name="username" />
+      <input type="text" placeholder="Họ và tên" [(ngModel)]="fullname" name="fullname" />
+      <input type="password" placeholder="Mật khẩu" [(ngModel)]="password" name="password" />
+      <input type="password" placeholder="Xác nhận mật khẩu" [(ngModel)]="confirmPassword" name="confirmPassword" />
+      <input type="email" placeholder="Email" [(ngModel)]="email" name="email" />
+      <input type="text" placeholder="Lớp" [(ngModel)]="class" name="class" />
+      <input type="date" [(ngModel)]="dob" name="dob" />
+
+      <label class="checkbox-group">
+        <input type="checkbox" [(ngModel)]="isTeacher" name="isTeacher" />
+        Tôi là giảng viên
+      </label>
+
+      <button type="submit" class="signup-btn">Đăng ký</button>
+
+      <p class="login-link">
+        Đã có tài khoản? <a href="#">Đăng nhập</a>
+      </p>
+    </form>
+  </div>
+</div>
