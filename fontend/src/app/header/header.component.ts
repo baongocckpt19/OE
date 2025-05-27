@@ -26,7 +26,7 @@ export class HeaderComponent {
       '/hocsinh': 'Học sinh',
       '/settings': 'Cài đặt',
       '/question-management': 'Câu Hỏi',
-      '/dashboard-student': 'Dashboard Học sinh',
+      '/dashboard-student': 'Dashboard ',
       '/ki-thi': 'Kì thi',
       '/de-thi': 'Đề thi',
       '/them-cau-hoi': 'Thêm câu hỏi',
