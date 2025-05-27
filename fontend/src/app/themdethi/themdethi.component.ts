@@ -5,6 +5,7 @@ import { Router, RouterModule } from '@angular/router';
 import { HeaderComponent } from "../header/header.component";
 import { DeThiService } from '../services/de-thi.service';
 import { QuestionService } from '../services/question.service';
+import { AccountService } from '../services/account-service.service';
 
 @Component({
   selector: 'app-themdethi',
@@ -23,14 +24,17 @@ export class ThemdethiComponent implements OnInit {
   currentExamId: number | null = null; isMessageModalOpen: boolean = false;
   messageModalTitle: string = '';
   messageModalContent: string = '';
-  constructor(private examService: DeThiService, private questionService: QuestionService, private router: Router) { }
+  constructor(private examService: DeThiService, private accountService: AccountService, private questionService: QuestionService, private router: Router) { }
   test = {
     examName: '',
     duration: null as number | null,
     description: '',
     name_of_subject: ''
   };
-
+  user: {
+    userId?: number,
+    username: string
+  } | null = null;
   isTestAdded = false;
 
   // Modal
@@ -61,7 +65,7 @@ export class ThemdethiComponent implements OnInit {
     this.questionService.getQuestions()
       .subscribe((data: any[]) => {
         this.questionsBank = data.map(q => ({
-          id: q.id ,
+          id: q.id,
           subject: q.nameOfSubject,
           question: q.questionText,
           level: q.difficulty,
@@ -69,6 +73,17 @@ export class ThemdethiComponent implements OnInit {
           selected: false // nếu cần
         }));
       });
+    this.accountService.userInfo$.subscribe(user => {
+      if (user) {
+        this.user = {
+          userId: user.id || user.userId,     // dựa vào key backend trả về
+          username: user.username || user.name || ''
+        }; console.log('🔥 Username hiện tại:', this.user.username);
+      } else {
+        this.user = null;
+      }
+    });
+
   }
   showMessageModal(title: string, content: string) {
     this.messageModalTitle = title;
@@ -77,7 +92,14 @@ export class ThemdethiComponent implements OnInit {
   }
   onAddTest() {
     if (this.test.examName && this.test.duration) {
-      const userId = 1; // 🔁 Lấy user id từ localStorage hoặc auth service nếu có
+      const userId = this.accountService.getUserId();
+      console.log('✅ Debug - UserID:', userId);
+      if (!userId) {
+        alert('Không tìm thấy thông tin người dùng. Vui lòng đăng nhập lại.');
+        return;
+      }
+
+      //const userId = 1; // 🔁 Lấy user id từ localStorage hoặc auth service nếu có
       this.examService.addExam(this.test, userId) // No userId parameter needed here
         .subscribe({
           next: (res: any) => {
@@ -163,10 +185,10 @@ export class ThemdethiComponent implements OnInit {
           // Reset trạng thái selected của các câu hỏi trong questionsBank
           this.questionsBank.forEach(q => q.selected = false);
         },
-error: (err) => {
-  const errorMessage = err?.error?.error || err?.message || 'Lỗi không xác định';
-  this.showMessageModal('Lỗi!', `Đã xảy ra lỗi khi thêm câu hỏi: ${errorMessage}`);
-}
+        error: (err) => {
+          const errorMessage = err?.error?.error || err?.message || 'Lỗi không xác định';
+          this.showMessageModal('Lỗi!', `Đã xảy ra lỗi khi thêm câu hỏi: ${errorMessage}`);
+        }
 
       });
   }

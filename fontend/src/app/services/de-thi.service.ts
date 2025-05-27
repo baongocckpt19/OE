@@ -53,18 +53,7 @@ addExam(examData: any, userId: number): Observable<any> {
     examData
   );
 }
-// de-thi.service.ts
-// addQuestionsToExam(examId: number, questionIds: number[]): Observable<any> {
-//   const url = `${this.apiUrl}/${examId}/questions`;
-//   const token = sessionStorage.getItem('token');
-//   const headers = new HttpHeaders({
-//     'Authorization': `Bearer ${token}`,
-//     'Content-Type': 'application/json'
-//   });
 
-//   return this.http.post(url, questionIds, { headers, responseType: 'text' });
-// }
-// de-thi.service.ts
 addQuestionsToExam(examId: number, questionIds: number[]): Observable<string> {
   const url = `${this.apiUrl}/${examId}/questions`;
   const token = sessionStorage.getItem('token');
