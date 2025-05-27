@@ -15,7 +15,7 @@ import { FormsModule } from '@angular/forms';
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
-  imports: [HeaderComponent, SidebarComponent, RouterModule, CommonModule, TooltipComponent,FormsModule ]
+  imports: [HeaderComponent, SidebarComponent, RouterModule, CommonModule, FormsModule]
 })
 //baongoc
 export class AppComponent {

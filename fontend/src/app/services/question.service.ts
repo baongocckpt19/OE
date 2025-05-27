@@ -25,5 +25,8 @@ addQuestion(question: any): Observable<any> {
 getUsers(): Observable<any[]> {
   return this.http.get<any[]>('http://localhost:8080/api/users');
 }
+updateQuestion(id: number, updatedData: any) {
+  return this.http.put(`http://localhost:8080/api/questions/${id}`, updatedData);
+}
 
 }

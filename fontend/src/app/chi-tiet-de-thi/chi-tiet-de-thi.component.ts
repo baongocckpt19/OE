@@ -8,7 +8,7 @@ import { HeaderComponent } from '../header/header.component'; // Assuming you wa
 @Component({
   selector: 'app-chi-tiet-de-thi',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterLink], // Add HeaderComponent, RouterLink
+  imports: [CommonModule, FormsModule], // Add HeaderComponent, RouterLink
   templateUrl: './chi-tiet-de-thi.component.html',
   styleUrls: ['./chi-tiet-de-thi.component.scss'],
 })
@@ -79,23 +79,23 @@ export class ChiTietDeThiComponent implements OnInit {
       this.selectedAnswers[questionIndex] === answerIndex ? null : answerIndex;
   }
 
-  goToNextQuestion(): void {
-    if (this.currentIndex < this.questions.length - 1) {
-      this.currentIndex++;
-    }
-  }
+  // goToNextQuestion(): void {
+  //   if (this.currentIndex < this.questions.length - 1) {
+  //     this.currentIndex++;
+  //   }
+  // }
 
-  goToPreviousQuestion(): void {
-    if (this.currentIndex > 0) {
-      this.currentIndex--;
-    }
-  }
+  // goToPreviousQuestion(): void {
+  //   if (this.currentIndex > 0) {
+  //     this.currentIndex--;
+  //   }
+  // }
 
-  goToQuestion(index: number): void {
-    if (index >= 0 && index < this.questions.length) {
-      this.currentIndex = index;
-    }
-  }
+  // goToQuestion(index: number): void {
+  //   if (index >= 0 && index < this.questions.length) {
+  //     this.currentIndex = index;
+  //   }
+  //}
 
   submitExam(): void {
     console.log('Selected Answers:', this.selectedAnswers);
@@ -109,4 +109,14 @@ export class ChiTietDeThiComponent implements OnInit {
   get currentQuestion() {
     return this.questions && this.questions.length > 0 ? this.questions[this.currentIndex] : null;
   }
+  scrollToQuestion(index: number): void {
+  const element = document.getElementById('q' + index);
+  if (element) {
+    element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+}
+exitExam(): void {
+  this.router.navigate(['/de-thi']);
+}
+
 }

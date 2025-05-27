@@ -1,28 +1,8 @@
 {
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
   "hash": "a42c1bb2",
   "configHash": "77a46163",
   "lockfileHash": "23dcec34",
   "browserHash": "88292352",
-=======
-<<<<<<< HEAD
->>>>>>> aa5966f9e9e9036f1cf0eeae2154794c7f83d09c
-  "hash": "4d3a3c51",
-  "configHash": "58e39ebf",
-  "lockfileHash": "23dcec34",
-  "browserHash": "c1464426",
-<<<<<<< HEAD
-=======
-=======
-  "hash": "9d0ce871",
-  "configHash": "60e08272",
-  "lockfileHash": "23dcec34",
-  "browserHash": "20c0e2da",
->>>>>>> 41c3ce445f484a2f8b45c83fb6e0705cc1ea2c9a
->>>>>>> 96c95b3ff20f61eb3f2b929366fd1bf678686142
->>>>>>> aa5966f9e9e9036f1cf0eeae2154794c7f83d09c
   "optimized": {},
   "chunks": {}
 }

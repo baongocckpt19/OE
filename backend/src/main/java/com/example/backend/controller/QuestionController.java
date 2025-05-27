@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.List;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -50,5 +51,25 @@ public class QuestionController {
         question.setCreatedAt(LocalDate.now());
         Question savedQuestion = questionRepository.save(question); // Use the repository here
         return ResponseEntity.ok(savedQuestion);
+    }
+
+    //đẩy câu hỏi lên tuwf dtb để thực hiện sửa
+    @PutMapping("/{id}")
+    public ResponseEntity<Question> updateQuestion(@PathVariable Long id, @RequestBody Question updatedQuestion) {
+        return questionService.getQuestionById(id).map(existingQuestion -> {
+            existingQuestion.setQuestionText(updatedQuestion.getQuestionText());
+            existingQuestion.setOption1(updatedQuestion.getOption1());
+            existingQuestion.setOption2(updatedQuestion.getOption2());
+            existingQuestion.setOption3(updatedQuestion.getOption3());
+            existingQuestion.setOption4(updatedQuestion.getOption4());
+            existingQuestion.setCorrectOption(updatedQuestion.getCorrectOption());
+            existingQuestion.setNameOfSubject(updatedQuestion.getNameOfSubject());
+            existingQuestion.setDifficulty(updatedQuestion.getDifficulty());
+            existingQuestion.setCreatedBy(updatedQuestion.getCreatedBy());
+            // Không cập nhật createdAt để giữ nguyên thời điểm tạo ban đầu
+
+            Question saved = questionService.saveQuestion(existingQuestion);
+            return new ResponseEntity<>(saved, HttpStatus.OK);
+        }).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 }

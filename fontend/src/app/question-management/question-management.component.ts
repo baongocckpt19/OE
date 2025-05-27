@@ -15,28 +15,28 @@ import { QuestionService } from '../services/question.service';
 export class QuestionManagementComponent {
   questions: any[] = [];
   filteredQuestions: any[] = [];
-users: any[] = [];  
+  users: any[] = [];
   searchText = '';
   showFilter = false;
   filterSubject = '';
   filterLevel = '';
   filterDate: string | null = null;
-
   subjects: string[] = [];
   levels: string[] = ['dễ', 'trung bình', 'khó'];
-
   selectedQuestion: any = null;
   isModalVisible = false;
   isAddModalVisible = false;
   showPreview = false;
 
   question: any = this.getEmptyQuestion();
+  isEditMode: boolean = false;
+  editingQuestionId: number | null = null;
 
   constructor(private questionService: QuestionService, private router: Router) {}
 
   ngOnInit(): void {
-  this.loadQuestions();
-  this.loadUsers();
+    this.loadQuestions();
+    this.loadUsers();
   }
 
   getEmptyQuestion() {
@@ -50,47 +50,41 @@ users: any[] = [];
       nameOfSubject: '',
       difficulty: 'dễ',
       createdBy: 1
-      // createdAt: new Date().toISOString().slice(0, 10) // Không cần gửi createdAt, server tự xử lý
     };
   }
-loadUsers() {
-  this.questionService.getUsers().subscribe({
-    next: data => {
-      this.users = data;
-      console.log('Dữ liệu người dùng:', data);
-    },
-    error: err => console.error('Lỗi khi tải danh sách người dùng:', err)
-  });
-}
 
-loadQuestions() {
-  this.questionService.getQuestions().subscribe({
-    next: data => {
-      console.log('Dữ liệu câu hỏi:', data.map(q => ({ id: q.id, createdBy: q.createdBy, type: typeof q.createdBy })));
-      this.questions = this.filteredQuestions = data;
-      this.subjects = [...new Set(data.map(q => q.nameOfSubject))];
-    },
-    error: err => console.error('Lỗi khi tải câu hỏi:', err)
-  });
-}
-
-getUsernameById(userId: any): string {
-  const id = +userId;
-  const user = this.users.find(u => +u.userId === id);
-
-  if (!user) {
-    console.warn(`Không tìm thấy user với id = ${id}`);
-    console.warn('Danh sách users hiện tại:', this.users);
+  loadUsers() {
+    this.questionService.getUsers().subscribe({
+      next: data => {
+        this.users = data;
+        console.log('Dữ liệu người dùng:', data);
+      },
+      error: err => console.error('Lỗi khi tải danh sách người dùng:', err)
+    });
   }
 
-  return user ? user.username : 'Không rõ';
-}
+  loadQuestions() {
+    this.questionService.getQuestions().subscribe({
+      next: data => {
+        console.log('Dữ liệu câu hỏi:', data.map(q => ({ id: q.id, createdBy: q.createdBy, type: typeof q.createdBy })));
+        this.questions = this.filteredQuestions = data;
+        this.subjects = [...new Set(data.map(q => q.nameOfSubject))];
+      },
+      error: err => console.error('Lỗi khi tải câu hỏi:', err)
+    });
+  }
+
+  getUsernameById(userId: any): string {
+    const id = +userId;
+    const user = this.users.find(u => +u.userId === id);
+    return user ? user.username : 'Không rõ';
+  }
 
   onSearch() {
     const keyword = this.searchText.toLowerCase().trim();
     this.filteredQuestions = this.questions.filter(q =>
       [q.questionText, q.nameOfSubject, q.difficulty, q.createdBy]
-        .some(field => field.toLowerCase().includes(keyword))
+        .some(field => field.toString().toLowerCase().includes(keyword))
     );
   }
 
@@ -120,6 +114,8 @@ getUsernameById(userId: any): string {
   resetForm() {
     this.question = this.getEmptyQuestion();
     this.showPreview = false;
+    this.isEditMode = false;
+    this.editingQuestionId = null;
   }
 
   preview() {
@@ -139,26 +135,37 @@ getUsernameById(userId: any): string {
     }
 
     const payload = { ...this.question };
-    delete payload.createdAt; // 🔥 Tránh gửi createdAt gây lỗi 500
 
-    this.questionService.addQuestion(payload).subscribe({
-      next: () => {
-        alert('Thêm câu hỏi thành công!');
-        this.loadQuestions();
-        this.resetForm();
-        this.isAddModalVisible = false;
-      },
-      error: (err) => {
-        console.error('Lỗi khi gửi câu hỏi:', err);
-        alert('Không thể thêm câu hỏi. Vui lòng kiểm tra lại dữ liệu và kết nối server!');
-      }
-    });
-  }
-
-  cancelFilter() {
-    this.showFilter = false;
-    this.filterSubject = this.filterLevel = '';
-    this.filterDate = null;
+    if (this.isEditMode && this.editingQuestionId !== null) {
+      // Chế độ chỉnh sửa
+      this.questionService.updateQuestion(this.editingQuestionId, payload).subscribe({
+        next: () => {
+          alert('Cập nhật câu hỏi thành công!');
+          this.loadQuestions();
+          this.resetForm();
+          this.isAddModalVisible = false;
+        },
+        error: err => {
+          console.error('Lỗi khi cập nhật câu hỏi:', err);
+          alert('Không thể cập nhật câu hỏi.');
+        }
+      });
+    } else {
+      // Chế độ thêm mới
+      delete payload.createdAt;
+      this.questionService.addQuestion(payload).subscribe({
+        next: () => {
+          alert('Thêm câu hỏi thành công!');
+          this.loadQuestions();
+          this.resetForm();
+          this.isAddModalVisible = false;
+        },
+        error: (err) => {
+          console.error('Lỗi khi gửi câu hỏi:', err);
+          alert('Không thể thêm câu hỏi.');
+        }
+      });
+    }
   }
 
   applyFilter() {
@@ -170,7 +177,29 @@ getUsernameById(userId: any): string {
     );
   }
 
-  editQuestion(id: number) {
-    console.log('Edit question', id); // placeholder
+  cancelFilter() {
+    this.showFilter = false;
+    this.filterSubject = this.filterLevel = '';
+    this.filterDate = null;
   }
+
+  editQuestion(id: number) {
+    const q = this.questions.find(q => q.id === id);
+    if (!q) {
+      alert('Không tìm thấy câu hỏi để chỉnh sửa.');
+      return;
+    }
+
+    this.isAddModalVisible = true;
+    this.isEditMode = true;
+    this.editingQuestionId = id;
+    this.question = { ...q };
+    this.showPreview = false;
+  }
+  cancelAdd() {
+  this.isAddModalVisible = false;
+  this.resetForm();
 }
+
+}
+
