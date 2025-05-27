@@ -15,7 +15,7 @@ import { QuestionService } from '../services/question.service';
 export class QuestionManagementComponent {
   questions: any[] = [];
   filteredQuestions: any[] = [];
-
+users: any[] = [];  
   searchText = '';
   showFilter = false;
   filterSubject = '';
@@ -35,7 +35,8 @@ export class QuestionManagementComponent {
   constructor(private questionService: QuestionService, private router: Router) {}
 
   ngOnInit(): void {
-    this.loadQuestions();
+  this.loadQuestions();
+  this.loadUsers();
   }
 
   getEmptyQuestion() {
@@ -52,16 +53,38 @@ export class QuestionManagementComponent {
       // createdAt: new Date().toISOString().slice(0, 10) // Không cần gửi createdAt, server tự xử lý
     };
   }
+loadUsers() {
+  this.questionService.getUsers().subscribe({
+    next: data => {
+      this.users = data;
+      console.log('Dữ liệu người dùng:', data);
+    },
+    error: err => console.error('Lỗi khi tải danh sách người dùng:', err)
+  });
+}
 
-  loadQuestions() {
-    this.questionService.getQuestions().subscribe({
-      next: data => {
-        this.questions = this.filteredQuestions = data;
-        this.subjects = [...new Set(data.map(q => q.nameOfSubject))];
-      },
-      error: err => console.error('Lỗi khi tải câu hỏi:', err)
-    });
+loadQuestions() {
+  this.questionService.getQuestions().subscribe({
+    next: data => {
+      console.log('Dữ liệu câu hỏi:', data.map(q => ({ id: q.id, createdBy: q.createdBy, type: typeof q.createdBy })));
+      this.questions = this.filteredQuestions = data;
+      this.subjects = [...new Set(data.map(q => q.nameOfSubject))];
+    },
+    error: err => console.error('Lỗi khi tải câu hỏi:', err)
+  });
+}
+
+getUsernameById(userId: any): string {
+  const id = +userId;
+  const user = this.users.find(u => +u.userId === id);
+
+  if (!user) {
+    console.warn(`Không tìm thấy user với id = ${id}`);
+    console.warn('Danh sách users hiện tại:', this.users);
   }
+
+  return user ? user.username : 'Không rõ';
+}
 
   onSearch() {
     const keyword = this.searchText.toLowerCase().trim();

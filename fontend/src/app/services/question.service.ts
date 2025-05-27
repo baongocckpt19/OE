@@ -22,6 +22,8 @@ export class QuestionService {
 addQuestion(question: any): Observable<any> {
   return this.http.post(this.API_URL, question);
 }
-
+getUsers(): Observable<any[]> {
+  return this.http.get<any[]>('http://localhost:8080/api/users');
+}
 
 }
