@@ -4,7 +4,8 @@
     <img src="../images/undraw_welcome-cats_tw36.png" alt="Welcome Cats">
   </div>
   <div class="signup-content">
-    <form class="signup-form">
+    <!-- ✅ Thêm (ngSubmit)="register()" -->
+    <form class="signup-form" (ngSubmit)="register()" #signupForm="ngForm">
       <h2 class="form-title">Đăng ký tài khoản</h2>
 
       <input type="text" placeholder="Tài khoản" [(ngModel)]="username" name="username" />
@@ -20,6 +21,7 @@
         Tôi là giảng viên
       </label>
 
+      <!-- ✅ type="submit" để form gọi ngSubmit -->
       <button type="submit" class="signup-btn">Đăng ký</button>
 
       <p class="login-link">

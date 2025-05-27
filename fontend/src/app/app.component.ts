@@ -30,6 +30,7 @@ export class AppComponent {
   this.router.events.subscribe(event => {
     if (event instanceof NavigationEnd) {
       this.showLayoutlogin = !event.url.includes('/login');
+      
     }
   });
 

@@ -4,7 +4,7 @@
     <div class="search-filter-container">
         <div class="search-box">
              <input type="text" placeholder="Tìm học sinh"    [(ngModel)]="searchText" (input)="searchStudents()" >
-             
+
             <button>
                 <i class="fas fa-search"></i>
             </button>
@@ -23,7 +23,6 @@
                     <th>Lớp</th>
                     <th>Ngày tháng năm sinh</th>
                     <th>Email</th>
-
                     <th>Hành động</th>
                 </tr>
             </thead>
@@ -49,7 +48,7 @@
     <!-- MODAL CHI TIẾT HỌC SINH -->
 <div class="modal" *ngIf="selectedStudent">
   <div class="modal-content">
-    
+
     <h2>Chi tiết học sinh</h2>
 
     <div class="student-info">
@@ -82,7 +81,7 @@
   <button class="close-button" (click)="closeModal()">Đóng</button>
 </div>
   </div>
-  
+
 </div>
 
 </main>
