@@ -25,9 +25,13 @@ export class SidebarComponent implements OnInit {
     if (storedRole === 'teacher' || storedRole === 'student') {
       this.role = storedRole;
     }
-
     this.currentRoute = this.router.url;
     this.menuItems = SIDEBAR_MENUS[this.role];
+    this.router.events.subscribe(() => {
+    this.currentRoute = this.router.url.split('?')[0].split('#')[0];
+  });
+
+  this.currentRoute = this.router.url.split('?')[0].split('#')[0];
   }
 
   navigateTo(route: string) {
