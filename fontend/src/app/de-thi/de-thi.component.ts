@@ -12,7 +12,7 @@ import { BrowserModule } from '@angular/platform-browser';
 @Component({
   selector: 'app-de-thi',
   standalone: true,
-  imports: [ CommonModule, HeaderComponent,FormsModule ],
+  imports: [CommonModule, HeaderComponent, FormsModule],
   templateUrl: './de-thi.component.html',
   styleUrls: ['./de-thi.component.scss']
 })
@@ -20,6 +20,12 @@ export class DeThiComponent {
   dethis: any[] = [];
   filteredDethis: any[] = [];
   searchTerm: string = '';
+
+  showFilter = false;
+  filterSubject = '';
+  filterDate: string | null = null;
+  subjects: string[] = [];
+
 
   private subscription?: Subscription;
   constructor(private deThiService: DeThiService, private router: Router) { }
@@ -32,30 +38,37 @@ export class DeThiComponent {
       this.subscription.unsubscribe(); // Hủy subscription khi component bị hủy
     }
   }
-  loadDethis(): void {
-    this.subscription = this.deThiService.getDethis().subscribe({
-      next: (data) => {
-        this.dethis = data;
-        this.filteredDethis = data; // Ban đầu hiển thị toàn bộ
-      },
-      error: (error) => {
-        console.error('Lỗi khi tải dữ liệu đề thi:', error);
-        // Xử lý lỗi ở đây, ví dụ: hiển thị thông báo cho người dùng
-      }
-    });
-  }
+loadDethis(): void {
+  this.subscription = this.deThiService.getDethis().subscribe({
+    next: (data) => {
+      this.dethis = data;
+      this.filteredDethis = data;
+      this.subjects = [...new Set(data.map(d => d.examName))]; // Dùng examName làm danh sách môn học
+    },
+    error: (error) => {
+      console.error('Lỗi khi tải dữ liệu đề thi:', error);
+    }
+  });
+}
   addDethi(): void {
     this.router.navigate(['/themdethi']);
   }
 
-  filterDethis(): void {
-    const keyword = this.searchTerm.toLowerCase();
-    this.filteredDethis = this.dethis.filter(dethi =>
-      dethi.description.toLowerCase().includes(keyword) ||
+filterDethis(): void {
+  const keyword = this.searchTerm.toLowerCase();
+
+  this.filteredDethis = this.dethis.filter(dethi => {
+    const matchesKeyword = dethi.description.toLowerCase().includes(keyword) ||
       dethi.examName.toLowerCase().includes(keyword) ||
-      dethi.createdBy.toLowerCase().includes(keyword)
-    );
-  }
+      dethi.createdBy.toLowerCase().includes(keyword);
+
+    const matchesSubject = !this.filterSubject || dethi.examName === this.filterSubject;
+    const matchesDate = !this.filterDate || new Date(dethi.createdAt).toISOString().slice(0, 10) === this.filterDate;
+
+    return matchesKeyword && matchesSubject && matchesDate;
+  });
+}
+
   deleteDethi(id: number): void {
     // Gọi service để xóa đề thi dựa trên ID
     
@@ -76,5 +89,17 @@ export class DeThiComponent {
     }
     this.router.navigate(['/chi-tiet-de-thi', id]); // <--- Dòng này để điều hướng
   }
+
+  cancelFilter() {
+  this.showFilter = false;
+  this.filterSubject = '';
+  this.filterDate = null;
+  this.filterDethis(); // Quay lại danh sách đầy đủ hoặc tìm kiếm hiện tại
+}
+
+applyFilter() {
+  this.showFilter = false;
+  this.filterDethis();
+}
 
 }

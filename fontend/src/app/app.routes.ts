@@ -14,6 +14,7 @@ import { DashboardStudentComponent } from './dashboard-student/dashboard-student
 import { ChiTietDeThiComponent } from './chi-tiet-de-thi/chi-tiet-de-thi.component';
 import { StudentMarkComponent } from './student-mark/student-mark.component';
 import { TrangthiComponent } from './trangthi/trangthi.component';
+import { SuaCauHoiComponent } from './sua-cau-hoi/sua-cau-hoi.component';
 
 export const routes: Routes = [
   {
@@ -90,6 +91,11 @@ export const routes: Routes = [
     path: 'chi-tiet-de-thi/:id',
     component: ChiTietDeThiComponent,
     data: { title: 'Chi tiết đề thi' },
+   canActivate : [authGuard]
+  },
+   {
+    path: 'sua-cau-hoi',
+    component: SuaCauHoiComponent,
    canActivate : [authGuard]
   },
   {

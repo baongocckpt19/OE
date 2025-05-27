@@ -16,9 +16,9 @@
 
             <button class="filter-btn" (click)="showFilter = !showFilter">
                 Bộ lọc <i class="fas fa-filter"></i>
-              </button>
-              
-              
+            </button>
+
+
         </div>
     </div>
 
@@ -44,33 +44,7 @@
                     <td>{{ question.createdBy }}</td>
                     <td>{{ question.createdAt }}</td>
                     <td class='action'>
-                        <!-- From Uiverse.io by catraco -->
-                        <button>
-                            <div class="heart-container" title="Like">
-                                <input type="checkbox" class="checkbox" id="Give-It-An-Id">
-                                <div class="svg-container">
-                                    <svg viewBox="0 0 24 24" class="svg-outline" xmlns="http://www.w3.org/2000/svg">
-                                        <path
-                                            d="M17.5,1.917a6.4,6.4,0,0,0-5.5,3.3,6.4,6.4,0,0,0-5.5-3.3A6.8,6.8,0,0,0,0,8.967c0,4.547,4.786,9.513,8.8,12.88a4.974,4.974,0,0,0,6.4,0C19.214,18.48,24,13.514,24,8.967A6.8,6.8,0,0,0,17.5,1.917Zm-3.585,18.4a2.973,2.973,0,0,1-3.83,0C4.947,16.006,2,11.87,2,8.967a4.8,4.8,0,0,1,4.5-5.05A4.8,4.8,0,0,1,11,8.967a1,1,0,0,0,2,0,4.8,4.8,0,0,1,4.5-5.05A4.8,4.8,0,0,1,22,8.967C22,11.87,19.053,16.006,13.915,20.313Z">
-                                        </path>
-                                    </svg>
-                                    <svg viewBox="0 0 24 24" class="svg-filled" xmlns="http://www.w3.org/2000/svg">
-                                        <path
-                                            d="M17.5,1.917a6.4,6.4,0,0,0-5.5,3.3,6.4,6.4,0,0,0-5.5-3.3A6.8,6.8,0,0,0,0,8.967c0,4.547,4.786,9.513,8.8,12.88a4.974,4.974,0,0,0,6.4,0C19.214,18.48,24,13.514,24,8.967A6.8,6.8,0,0,0,17.5,1.917Z">
-                                        </path>
-                                    </svg>
-                                    <svg class="svg-celebrate" width="100" height="100"
-                                        xmlns="http://www.w3.org/2000/svg">
-                                        <polygon points="10,10 20,20"></polygon>
-                                        <polygon points="10,50 20,50"></polygon>
-                                        <polygon points="20,80 30,70"></polygon>
-                                        <polygon points="90,10 80,20"></polygon>
-                                        <polygon points="90,50 80,50"></polygon>
-                                        <polygon points="80,80 70,70"></polygon>
-                                    </svg>
-                                </div>
-                            </div>
-                        </button>
+
                         <button (click)="deleteQuestion(question.id)">
                             <i class="fas fa-trash-alt"></i>
                         </button>
@@ -115,37 +89,130 @@
         </div>
     </div>
     <!-- Popup bộ lọc -->
-<div class="filter-popup-overlay" *ngIf="showFilter">
-    <div class="filter-popup">
-      <h3>Bộ lọc câu hỏi</h3>
-      
-      <div class="form-group">
-        <label>Môn học:</label>
-        <select [(ngModel)]="filterSubject">
-          <option value="">Tất cả</option>
-          <option *ngFor="let subject of subjects" [value]="subject">{{ subject }}</option>
-        </select>
-      </div>
-  
-      <div class="form-group">
-        <label>Mức độ:</label>
-        <select [(ngModel)]="filterLevel">
-          <option value="">Tất cả</option>
-          <option *ngFor="let level of levels" [value]="level">{{ level }}</option>
-        </select>
-      </div>
-  
-      <div class="form-group">
-        <label>Ngày tạo:</label>
-        <input type="date" [(ngModel)]="filterDate" />
-      </div>
-  
-      <div class="filter-buttons">
-        <button class="cancel-btn" (click)="cancelFilter()">Hủy</button>
-        <button class="apply-btn" (click)="applyFilter()">Áp dụng</button>
-      </div>
+    <div class="filter-popup-overlay" *ngIf="showFilter">
+        <div class="filter-popup">
+            <h3>Bộ lọc câu hỏi</h3>
+
+            <div class="form-group">
+                <label>Môn học:</label>
+                <select [(ngModel)]="filterSubject">
+                    <option value="">Tất cả</option>
+                    <option *ngFor="let subject of subjects" [value]="subject">{{ subject }}</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Mức độ:</label>
+                <select [(ngModel)]="filterLevel">
+                    <option value="">Tất cả</option>
+                    <option value="">dễ</option>
+                    <option value="">trung bình</option>
+                    <option value="">khó</option>
+                    <option *ngFor="let level of levels" [value]="level">{{ level }}</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Ngày tạo:</label>
+                <input type="date" [(ngModel)]="filterDate" />
+            </div>
+
+            <div class="filter-buttons">
+                <button class="cancel-btn" (click)="cancelFilter()">Hủy</button>
+                <button class="apply-btn" (click)="applyFilter()">Áp dụng</button>
+            </div>
+        </div>
     </div>
-  </div>
-  
+
+    <!-- Modal thêm câu hỏi -->
+    <div class="modal-overlay" *ngIf="isAddModalVisible">
+        <div class="modal-box large">
+            <div class="container-two-column">
+                <!-- Form bên trái -->
+                <div class="form-side">
+                    <h2>📝 Thêm Câu Hỏi</h2>
+
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>Môn học <span class="required">*</span></label>
+                            <input type="text" [(ngModel)]="question.nameOfSubject" placeholder="VD: Toán học" />
+                        </div>
+                        <div class="form-group">
+                            <label>Mức độ</label>
+                            <select [(ngModel)]="question.difficulty">
+                                <option>dễ</option>
+                                <option>trung bình</option>
+                                <option>khó</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Nội dung câu hỏi</label>
+                        <textarea [(ngModel)]="question.questionText" rows="4"
+                            placeholder="Nhập nội dung chi tiết câu hỏi tại đây..."></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Đáp án</label>
+                        <div class="answer-grid-input">
+                            <div class="answer-item">
+                                <label>A</label>
+                                <input type="text" [(ngModel)]="question.option1" placeholder="Đáp án A" />
+                            </div>
+                            <div class="answer-item">
+                                <label>B</label>
+                                <input type="text" [(ngModel)]="question.option2" placeholder="Đáp án B" />
+                            </div>
+                            <div class="answer-item">
+                                <label>C</label>
+                                <input type="text" [(ngModel)]="question.option3" placeholder="Đáp án C" />
+                            </div>
+                            <div class="answer-item">
+                                <label>D</label>
+                                <input type="text" [(ngModel)]="question.option4" placeholder="Đáp án D" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Đáp án đúng</label>
+                        <select [(ngModel)]="question.correctOption">
+                            <option [value]="1">A</option>
+                            <option [value]="2">B</option>
+                            <option [value]="3">C</option>
+                            <option [value]="4">D</option>
+                        </select>
+                    </div>
+
+                    <div class="buttons">
+                        <button class="secondary" (click)="resetForm()">Hủy</button>
+                        <button class="secondary" (click)="preview()">Xem trước</button>
+                        <button class="primary" (click)="onSave()">Lưu</button>
+                    </div>
+                </div>
+
+                <!-- Preview bên phải -->
+                <div class="preview-side">
+                    <h3>👁️ Xem Trước</h3>
+                    <div class="preview-box" *ngIf="showPreview; else noPreview">
+                        <p><strong>Môn học:</strong> {{ question.nameOfSubject }}</p>
+                        <p><strong>Mức độ:</strong> {{ question.difficulty }}</p>
+                        <p><strong>Câu hỏi:</strong> {{ question.questionText }}</p>
+
+                        <div class="answer-grid">
+                            <div [class.correct]="question.correctOption === 1">A. {{ question.option1 }}</div>
+                            <div [class.correct]="question.correctOption === 2">B. {{ question.option2 }}</div>
+                            <div [class.correct]="question.correctOption === 3">C. {{ question.option3 }}</div>
+                            <div [class.correct]="question.correctOption === 4">D. {{ question.option4 }}</div>
+                        </div>
+                    </div>
+                    <ng-template #noPreview>
+                        <p class="no-preview">Chưa có nội dung câu hỏi.</p>
+                    </ng-template>
+                </div>
+            </div>
+        </div>
+    </div>
 
 </main>

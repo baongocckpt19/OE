@@ -1,93 +1,84 @@
-<app-header [title]="'Thêm câu hỏi'"></app-header>
-<div class="container">
-  <div class="header">
-    <div class="form-group">
-      <label for="subject">Môn học: <span class="required">*</span></label>
-      <input type="text" id="subject" name="subject" [(ngModel)]="question.nameOfSubject" placeholder="Nhập môn học">
-    </div>
-    <div class="form-group">
-      <label for="level">Mức độ:</label>
-      <select id="level" name="difficulty" [(ngModel)]="question.difficulty">
-        <option>dễ</option>
-        <option>trung bình</option>
-        <option>khó</option>
-      </select>
-    </div>
-  </div>
+<div class="container-two-column">
+  <!-- Form bên trái -->
+  <div class="form-side">
+    <h2>📝 Thêm Câu Hỏi</h2>
 
-  <div class="form-group">
-    <label>Câu hỏi</label>
-    <div class="editor">
-      <div class="toolbar">
-        
-            <button><i class="fas fa-undo"></i></button>
-            <button><i class="fas fa-redo"></i></button>
-            <button><i class="fas fa-search"></i></button>
-            <button><i class="fas fa-image"></i></button>
-            <button><i class="fas fa-video"></i></button>
-            <button><i class="fas fa-music"></i></button>
-            <button><i class="fas fa-bold"></i></button>
-            <button><i class="fas fa-italic"></i></button>
-            <button><i class="fas fa-underline"></i></button>
-            <button><i class="fas fa-strikethrough"></i></button>
-            <select>
-              <option>Mulish</option>
-            </select>
-            <select>
-              <option>12pt</option>
-            </select>
-            <button><i class="fas fa-align-left"></i></button>
-            <button><i class="fas fa-align-center"></i></button>
-            <button><i class="fas fa-align-right"></i></button>
-            <button><i class="fas fa-align-justify"></i></button>
-            <button><i class="fas fa-list-ul"></i></button>
-            <button><i class="fas fa-list-ol"></i></button>
-            <button><i class="fas fa-superscript"></i></button>
-            <button><i class="fas fa-subscript"></i></button>
-            <button><i class="fas fa-highlighter"></i></button>
-            <button><i class="fas fa-pen"></i></button>
-            <button><i class="fas fa-ellipsis-h"></i></button>
-         
-      </div> 
-      <textarea rows="6" [(ngModel)]="question.questionText" name="questionText"></textarea>
+    <div class="form-grid">
+      <div class="form-group">
+        <label>Môn học <span class="required">*</span></label>
+        <input type="text" [(ngModel)]="question.nameOfSubject" placeholder="VD: Toán học" />
+      </div>
+      <div class="form-group">
+        <label>Mức độ</label>
+        <select [(ngModel)]="question.difficulty">
+          <option>dễ</option>
+          <option>trung bình</option>
+          <option>khó</option>
+        </select>
+      </div>
     </div>
-  </div>
 
-  <div class="form-row">
-    <div class="form-group full-width">
-      <label for="correct-answer">Đáp án đúng:</label>
-      <select id="correct-answer" name="correctOption" [(ngModel)]="question.correctOption">
+    <div class="form-group">
+      <label>Nội dung câu hỏi</label>
+      <textarea [(ngModel)]="question.questionText" rows="4" placeholder="Nhập nội dung chi tiết câu hỏi tại đây..."></textarea>
+    </div>
+
+    <div class="form-group">
+      <label>Đáp án</label>
+      <div class="answer-grid-input">
+        <div class="answer-item">
+          <label>A</label>
+          <input type="text" [(ngModel)]="question.option1" placeholder="Đáp án A" />
+        </div>
+        <div class="answer-item">
+          <label>B</label>
+          <input type="text" [(ngModel)]="question.option2" placeholder="Đáp án B" />
+        </div>
+        <div class="answer-item">
+          <label>C</label>
+          <input type="text" [(ngModel)]="question.option3" placeholder="Đáp án C" />
+        </div>
+        <div class="answer-item">
+          <label>D</label>
+          <input type="text" [(ngModel)]="question.option4" placeholder="Đáp án D" />
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>Đáp án đúng</label>
+      <select [(ngModel)]="question.correctOption">
         <option [value]="1">A</option>
         <option [value]="2">B</option>
         <option [value]="3">C</option>
         <option [value]="4">D</option>
       </select>
     </div>
-  </div>
 
-  <div class="form-group-answers">
-    <label for="answers">Đáp án <span class="required">*</span></label>
-
-    <div class="answer">
-      <span class="answer-label">A</span>
-      <input type="text" placeholder="Nhập đáp án" [(ngModel)]="question.option1" name="option1">
-    </div>
-    <div class="answer">
-      <span class="answer-label">B</span>
-      <input type="text" placeholder="Nhập đáp án" [(ngModel)]="question.option2" name="option2">
-    </div>
-    <div class="answer">
-      <span class="answer-label">C</span>
-      <input type="text" placeholder="Nhập đáp án" [(ngModel)]="question.option3" name="option3">
-    </div>
-    <div class="answer">
-      <span class="answer-label">D</span>
-      <input type="text" placeholder="Nhập đáp án" [(ngModel)]="question.option4" name="option4">
+    <div class="buttons">
+      <button class="secondary" (click)="resetForm()">Hủy</button>
+      <button class="secondary" (click)="preview()">Xem trước</button>
+      <button class="primary" (click)="onSave()">Lưu</button>
     </div>
   </div>
 
-  <div class="buttons">
-    <button class="cancel">Hủy</button>
-    <button class="save" (click)="onSave()">Lưu</button>
+  <!-- Preview bên phải -->
+  <div class="preview-side">
+    <h3>👁️ Xem Trước</h3>
+    <div class="preview-box" *ngIf="showPreview; else noPreview">
+      <p><strong>Môn học:</strong> {{ question.nameOfSubject }}</p>
+      <p><strong>Mức độ:</strong> {{ question.difficulty }}</p>
+      <p><strong>Câu hỏi:</strong> {{ question.questionText }}</p>
+
+      <div class="answer-grid">
+        <div [class.correct]="question.correctOption === 1">A. {{ question.option1 }}</div>
+        <div [class.correct]="question.correctOption === 2">B. {{ question.option2 }}</div>
+        <div [class.correct]="question.correctOption === 3">C. {{ question.option3 }}</div>
+        <div [class.correct]="question.correctOption === 4">D. {{ question.option4 }}</div>
+      </div>
+    </div>
+    <ng-template #noPreview>
+      <p class="no-preview">Chưa có nội dung câu hỏi.</p>
+    </ng-template>
   </div>
 </div>

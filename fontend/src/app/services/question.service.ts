@@ -12,7 +12,16 @@ export class QuestionService {
   getQuestions(): Observable<any[]> {
     return this.http.get<any[]>(this.API_URL);
   }
+
   deleteQuestion(id: number): Observable<any> {
-    return this.http.delete(`${this.API_URL}/${id}`, { responseType: 'text', observe: 'response' });;
+    return this.http.delete(`${this.API_URL}/${id}`, {
+      responseType: 'text',
+      observe: 'response',
+    });
   }
+addQuestion(question: any): Observable<any> {
+  return this.http.post(this.API_URL, question);
+}
+
+
 }
