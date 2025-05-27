@@ -1,0 +1,72 @@
+<app-header title="'Đề thi'"></app-header>
+<main class="de-thi">
+  <div class="search-filter-container">
+    <div class="search-box">
+      <input
+        type="text"
+        placeholder="Tìm kiếm đề thi"
+        [(ngModel)]="searchTerm"
+        (input)="filterDethis()" />
+      <button><i class="fas fa-search"></i></button>
+    </div>
+
+    <div class="filter-group">
+      <button class="filter-btn" (click)="showFilter = !showFilter">
+        Bộ lọc <i class="fas fa-filter"></i>
+      </button>
+    </div>
+  </div>
+
+  <div class="table-container">
+    <table>
+      <thead>
+        <tr>
+          <th>STT</th>
+          <th>Tên đề thi</th>
+          <th>Môn học</th>
+          <th>Thời gian</th>
+          <th>Ngày tạo</th>
+          <th>Hành động</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let dethi of filteredDethis; let i = index">
+          <td>{{ i + 1 }}</td>
+          <td>{{ dethi.examName }}</td>
+          <td>{{ dethi.name_of_subject }}</td>
+          <td>{{ dethi.duration }} phút</td>
+          <td>{{ dethi.createdAt | date: 'dd/MM/yyyy' }}</td>
+          <td>
+            <button class="start-exam-btn" (click)="startExam(dethi.examId)">
+              Làm bài
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="filter-popup-overlay" *ngIf="showFilter">
+    <div class="filter-popup">
+      <h3>Bộ lọc đề thi</h3>
+
+      <div class="form-group">
+        <label>Môn học:</label>
+        <select [(ngModel)]="filterSubject">
+          <option value="">Tất cả</option>
+          <option *ngFor="let subject of subjects" [value]="subject">{{ subject }}</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Ngày tạo:</label>
+        <input type="date" [(ngModel)]="filterDate" />
+      </div>
+
+      <div class="filter-buttons">
+        <button class="cancel-btn" (click)="cancelFilter()">Hủy</button>
+        <button class="apply-btn" (click)="applyFilter()">Áp dụng</button>
+      </div>
+    </div>
+  </div>
+</main>
