@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import com.example.backend.model.ExamSubmissionRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -87,6 +88,16 @@ public class DethiController {
         Optional<DethiDetailResponse> response = examService.getDethiDetails(id);
         return response.map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
+    }
+    @PostMapping("/submit-exam")
+    public ResponseEntity<?> submitExam(@RequestBody ExamSubmissionRequest submission) {
+        try {
+            int score = examService.evaluateAndSave(submission);
+            return ResponseEntity.ok(Map.of("score", score));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Nộp bài thất bại: " + e.getMessage());
+        }
     }
 
 }

@@ -38,7 +38,7 @@ export class DeThiComponent {
       next: (data) => {
         this.users = data.map((s: any) => ({
           userId: s.userId, // hoặc s.userId tùy API trả về
-          username: s.fullname || s.name || s.username, // lấy đúng trường tên
+          username: s.fullname || s.name || s.username||s.userName, // lấy đúng trường tên
           role: s.role
         }));
 

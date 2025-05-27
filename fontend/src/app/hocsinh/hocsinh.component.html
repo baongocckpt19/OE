@@ -1,94 +1,84 @@
 <app-header title="'Học Sinh'"></app-header>
 <main class=" hocsinh">
 
-    <div class="search-filter-container">
-        <div class="search-box">
-             <input type="text" placeholder="Tìm học sinh"    [(ngModel)]="searchText" (input)="searchStudents()" >
+  <div class="search-filter-container">
+    <div class="search-box">
+      <input type="text" placeholder="Tìm học sinh" [(ngModel)]="searchText" (input)="searchStudents()">
 
-            <button>
-                <i class="fas fa-search"></i>
-            </button>
-        </div>
-        <button class="filter-btn">
-            Bộ lọc <i class="fas fa-filter"></i>
-        </button>
+      <button>
+        <i class="fas fa-search"></i>
+      </button>
     </div>
+  </div>
 
-    <div class="table-container">
-        <table>
-            <thead>
-                <tr>
-                    <th>Số thứ tự</th>
-                    <th>Họ và tên</th>
-                    <th>Lớp</th>
-                    <th>Ngày tháng năm sinh</th>
-                    <th>Email</th>
-                    <th>Hành động</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let student of filteredStudents; let i = index">
-                    <td>{{ i + 1 }}</td>
-                    <td>{{ student.fullName  }}</td>
-                    <td>{{ student.studentClass  }}</td>
-                    <td>{{ student.birthday | date:'dd/MM/yyyy' }}</td>
-                    <td>{{ student.email }}</td>
-                    <td class="action">
-                        <button (click)="viewStudent(student.userId)">
-                            <i class="fas fa-eye"></i>
-                        </button>
-                        <button (click)="deleteStudent(student.userId)">
-                            <i class="fas fa-trash-alt"></i>
-                        </button>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-    <!-- MODAL CHI TIẾT HỌC SINH -->
-<div class="modal" *ngIf="selectedStudent">
-  <div class="modal-content">
-
-    <h2>Chi tiết học sinh</h2>
-
-    <div class="student-info">
-      <p><strong>Họ tên:</strong> {{ selectedStudent.fullName }}</p>
-      <p><strong>Lớp:</strong> {{ selectedStudent.studentClass }}</p>
-      <p><strong>Email:</strong> {{ selectedStudent.email }}</p>
-      <p><strong>Ngày sinh:</strong> {{ selectedStudent.birthday | date:'dd/MM/yyyy' }}</p>
-    </div>
-
-    <h3 style="margin-top: 2rem;">Bài thi đã làm</h3>
-    <table class="exam-table">
+  <div class="table-container">
+    <table>
       <thead>
         <tr>
-          <th>STT</th>
-          <th>Bài thi</th>
-          <th>Điểm</th>
-          <th>Thời gian nộp</th>
+          <th>Số thứ tự</th>
+          <th>Họ và tên</th>
+          <th>Lớp</th>
+          <th>Ngày tháng năm sinh</th>
+          <th>Email</th>
+          <th>Hành động</th>
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let exam of selectedStudent.exams; let i = index">
+        <tr *ngFor="let student of filteredStudents; let i = index">
           <td>{{ i + 1 }}</td>
-          <td>{{ exam.title }}</td>
-          <td>{{ exam.score }}</td>
-          <td>{{ exam.submittedAt | date:'dd/MM/yyyy HH:mm' }}</td>
+          <td>{{ student.fullName }}</td>
+          <td>{{ student.studentClass }}</td>
+          <td>{{ student.birthday | date:'dd/MM/yyyy' }}</td>
+          <td>{{ student.email }}</td>
+          <td class="action">
+            <button (click)="viewStudent(student.userId)">
+              <i class="fas fa-eye"></i>
+            </button>
+            <button (click)="deleteStudent(student.userId)">
+              <i class="fas fa-trash-alt"></i>
+            </button>
+          </td>
         </tr>
       </tbody>
     </table>
-    <div class="modal-actions">
-  <button class="close-button" (click)="closeModal()">Đóng</button>
-</div>
+  </div>
+  <!-- MODAL CHI TIẾT HỌC SINH -->
+  <div class="modal" *ngIf="selectedStudent">
+    <div class="modal-content">
+
+      <h2>Chi tiết học sinh</h2>
+
+      <div class="student-info">
+        <p><strong>Họ tên:</strong> {{ selectedStudent.fullName }}</p>
+        <p><strong>Lớp:</strong> {{ selectedStudent.studentClass }}</p>
+        <p><strong>Email:</strong> {{ selectedStudent.email }}</p>
+        <p><strong>Ngày sinh:</strong> {{ selectedStudent.birthday | date:'dd/MM/yyyy' }}</p>
+      </div>
+
+      <h3 style="margin-top: 2rem;">Bài thi đã làm</h3>
+      <table class="exam-table">
+        <thead>
+          <tr>
+            <th>STT</th>
+            <th>Bài thi</th>
+            <th>Điểm</th>
+            <th>Thời gian nộp</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let exam of selectedStudent.exams; let i = index">
+            <td>{{ i + 1 }}</td>
+            <td>{{ exam.title }}</td>
+            <td>{{ exam.score }}</td>
+            <td>{{ exam.submittedAt | date:'dd/MM/yyyy HH:mm' }}</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="modal-actions">
+        <button class="close-button" (click)="closeModal()">Đóng</button>
+      </div>
+    </div>
+
   </div>
 
-</div>
-
 </main>
-
-
-
-
-
-
-
