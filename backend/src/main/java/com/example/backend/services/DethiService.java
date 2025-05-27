@@ -1,25 +1,21 @@
 package com.example.backend.services;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
 
+import com.example.backend.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
-import com.example.backend.model.Dethi;
-import com.example.backend.model.DethiDetailResponse;
-import com.example.backend.model.ExamQuestion;
 import com.example.backend.repository.DethiRepository;
 import com.example.backend.repository.ExamQuestionRepository;
 import com.example.backend.repository.QuestionRepository;
 
 import org.springframework.transaction.annotation.Transactional;
-
-import com.example.backend.model.Question; // <-- Đảm bảo import này
 
 @Service
 public class DethiService {
@@ -30,7 +26,8 @@ public class DethiService {
     private ExamQuestionRepository examQuestionRepository;
  @Autowired
     private QuestionRepository questionRepository;
-
+    @Autowired
+    private JdbcTemplate jdbcTemplate;
 public long createExam(Dethi exam, int userId) {
     exam.setExamName(exam.getExamName());
     exam.setDescription(exam.getDescription());
@@ -110,4 +107,30 @@ public void addQuestionsToExam(Long examId, List<Long> questionBankIds) {
                 .filter(java.util.Objects::nonNull)
                 .collect(Collectors.toList());
     }
+    public int evaluateAndSave(ExamSubmissionRequest submission) {
+        int correct = 0;
+        List<ExamSubmissionRequest.AnswerDTO> answers = submission.getAnswers();
+
+        for (ExamSubmissionRequest.AnswerDTO ans : answers) {
+            Question q = questionRepository.findById((long) ans.getQuestionId()).orElse(null);
+            if (q != null && q.getCorrectOption() == ans.getSelectedOption()) {
+                correct++;
+            }
+
+            jdbcTemplate.update(
+                    "INSERT INTO user_answers (user_id, exam_id, question_id, selected_option) VALUES (?, ?, ?, ?)",
+                    submission.getUserId(), submission.getExamId(), ans.getQuestionId(), ans.getSelectedOption()
+            );
+        }
+
+        int score = Math.round((correct * 100f) / answers.size());
+
+        jdbcTemplate.update(
+                "INSERT INTO results (user_id, exam_id, score, submitted_at) VALUES (?, ?, ?, GETDATE())",
+                submission.getUserId(), submission.getExamId(), score
+        );
+
+        return score;
+    }
+
 }
