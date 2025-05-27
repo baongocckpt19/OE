@@ -41,32 +41,36 @@ public class DethiController {
             response.put("examId", examId); // Trả về ID của đề thi
             return ResponseEntity.status(HttpStatus.CREATED).body(response);
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Lỗi khi thêm đề thi: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Lỗi khi thêm đề thi: " + e.getMessage());
         }
     }
 
     // Endpoint mới để thêm câu hỏi vào đề thi
     @PostMapping("/{examId}/questions")
-    public ResponseEntity<?> addQuestionsToExam(@PathVariable Long examId, @RequestBody List<Long> questionBankIds) {
+    public ResponseEntity<?> addQuestionsToExam(@PathVariable("examId") Long examId,
+            @RequestBody List<Long> questionBankIds) {
         System.out.println("Received request to add questions to exam. Exam ID: " + examId);
-    System.out.println("Question IDs to add: " + questionBankIds);
+        System.out.println("Question IDs to add: " + questionBankIds);
 
         try {
             examService.addQuestionsToExam(examId, questionBankIds);
-            return ResponseEntity.ok().body("Thêm câu hỏi vào đề thi thành công!");
+            Map<String, String> response = new HashMap<>();
+            response.put("message", "Thêm câu hỏi vào đề thi thành công!");
+            return ResponseEntity.ok(response);
+
         } catch (Exception e) {
-            System.err.println("Error adding questions to exam: " + e.getMessage());
-        e.printStackTrace();
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Lỗi khi thêm câu hỏi vào đề thi: " + e.getMessage());
+            Map<String, String> error = new HashMap<>();
+        error.put("error", "Lỗi: " + e.getMessage());
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(error);
         }
-    }               
+    }
 
     @GetMapping
     public ResponseEntity<List<Dethi>> getAllExams() {
         List<Dethi> exams = examService.getAllExams();
         return new ResponseEntity<>(exams, HttpStatus.OK);
     }
-
 
     @GetMapping("/{id}")
     public ResponseEntity<Dethi> getExamById(@PathVariable Long id) { // <--- Chỉ trả về Dethi
@@ -78,12 +82,11 @@ public class DethiController {
         }
     }
 
-    @GetMapping("/details/{id}") 
+    @GetMapping("/details/{id}")
     public ResponseEntity<DethiDetailResponse> getDethiDetails(@PathVariable Long id) {
         Optional<DethiDetailResponse> response = examService.getDethiDetails(id);
         return response.map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
-
 
 }

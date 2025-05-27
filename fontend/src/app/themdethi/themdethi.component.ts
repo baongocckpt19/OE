@@ -61,7 +61,7 @@ export class ThemdethiComponent implements OnInit {
     this.questionService.getQuestions()
       .subscribe((data: any[]) => {
         this.questionsBank = data.map(q => ({
-          id: q.questionId,
+          id: q.id ,
           subject: q.nameOfSubject,
           question: q.questionText,
           level: q.difficulty,
@@ -136,8 +136,8 @@ export class ThemdethiComponent implements OnInit {
     }
 
     const selectedQuestionBankIds: number[] = this.questionsBank
-      .filter(q => q.selected)
-      .map(q => Number(q.id)); // Giả sử model QuestionBank của bạn có 'id'
+      .filter(q => q.selected && !this.questions.some(qq => qq.id === qq.id))
+      .map(q => q.id as number); // Giả sử model QuestionBank của bạn có 'id'
 
     if (selectedQuestionBankIds.length === 0) {
       alert("Vui lòng chọn ít nhất một câu hỏi.");
@@ -163,13 +163,11 @@ export class ThemdethiComponent implements OnInit {
           // Reset trạng thái selected của các câu hỏi trong questionsBank
           this.questionsBank.forEach(q => q.selected = false);
         },
-        error: (err) => {
-           console.error("Lỗi khi thêm câu hỏi vào đề thi:", err);
-          // err.error.text chứa thông báo lỗi thực tế từ server
-          const errorMessage = err.error && err.error.text ? err.error.text : (err.message || 'Lỗi không xác định');
-          console.error("Lỗi khi thêm câu hỏi vào đề thi:", err); // Dòng này tạo ra thông báo bạn thấy
-          this.showMessageModal('Lỗi!', `Đã xảy ra lỗi khi thêm câu hỏi vào đề thi. Chi tiết: ${err.message || err.statusText || 'Lỗi không xác định'}`);
-        }
+error: (err) => {
+  const errorMessage = err?.error?.error || err?.message || 'Lỗi không xác định';
+  this.showMessageModal('Lỗi!', `Đã xảy ra lỗi khi thêm câu hỏi: ${errorMessage}`);
+}
+
       });
   }
 
