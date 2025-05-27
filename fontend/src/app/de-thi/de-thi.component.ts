@@ -31,24 +31,28 @@ export class DeThiComponent {
   private subscription?: Subscription;
   private usersSubscription?: Subscription;
   constructor(private deThiService: DeThiService, private router: Router, private userService: AccountService) { }
-ngOnInit(): void {
-  this.userService.getStudentsByRole('teacher').subscribe({
-    next: (data) => {
-this.users = data.map((s: any) => ({
-  userId: s.id, // hoặc s.userId tùy API trả về
-  username: s.fullname || s.name || s.username, // lấy đúng trường tên
-  role: s.role
-}));
 
-     console.log('Dữ liệu gốc từ API:', data); // <=== Thêm dòng này để kiểm tra dữ liệu
-    },
-    error: (err) => {
-      console.error('Lỗi lấy danh sách teacher:', err); // Nếu có lỗi
-    }
-  });
 
-  this.loadDethis();
-}
+  ngOnInit(): void {
+    this.userService.getStudentsByRole('teacher').subscribe({
+      next: (data) => {
+        this.users = data.map((s: any) => ({
+          userId: s.userId, // hoặc s.userId tùy API trả về
+          username: s.fullname || s.name || s.username, // lấy đúng trường tên
+          role: s.role
+        }));
+
+        console.log('Dữ liệu gốc từ API:', data); // <=== Thêm dòng này để kiểm tra dữ liệu
+
+        this.loadDethis(); 
+      },
+      error: (err) => {
+        console.error('Lỗi lấy danh sách teacher:', err); // Nếu có lỗi
+      }
+    });
+
+
+  }
 
 
   ngOnDestroy(): void {
@@ -95,11 +99,12 @@ this.users = data.map((s: any) => ({
   }
 
   getUsernameById(userId: number | string): string {
-  const id = +userId;
-  const user = this.users.find(u => (u.userId === id) && u.role === 'teacher');
-  console.log(`Tìm userId = ${id} =>`, user);
-  return user ? (user.username || 'Unknown') : 'Unknown';
-}
+    const id = +userId;
+    const user = this.users.find(u => u.userId === id); // Bỏ điều kiện role
+    console.log(`Tìm userId = ${id} =>`, user);
+    return user ? (user.username || 'Unknown') : 'Unknown';
+  }
+
 
 
 
