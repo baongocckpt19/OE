@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { SIDEBAR_MENUS } from './sidebar-menu.config';
 import { CommonModule } from '@angular/common';
-
+import { Input } from '@angular/core';
 @Component({
   selector: 'app-sidebar',
   standalone: true,
@@ -25,9 +25,13 @@ export class SidebarComponent implements OnInit {
     if (storedRole === 'teacher' || storedRole === 'student') {
       this.role = storedRole;
     }
-
     this.currentRoute = this.router.url;
     this.menuItems = SIDEBAR_MENUS[this.role];
+    this.router.events.subscribe(() => {
+    this.currentRoute = this.router.url.split('?')[0].split('#')[0];
+  });
+
+  this.currentRoute = this.router.url.split('?')[0].split('#')[0];
   }
 
   navigateTo(route: string) {
@@ -41,4 +45,5 @@ export class SidebarComponent implements OnInit {
   onMouseLeave() {
     this.isExpanded = false;
   }
+
 }

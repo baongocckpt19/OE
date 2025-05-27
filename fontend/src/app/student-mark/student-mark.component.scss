@@ -3,7 +3,8 @@
   padding: 1.5rem;
   margin-left: 5rem;
   margin-top: 100px;
-  font-family: Helvetica, Arial, Tahoma, sans-serif;
+  font-family: 'Segoe UI', sans-serif;
+  font-size: 1rem;
   color: #474747;
 }
 
@@ -116,7 +117,7 @@
   gap: 1rem;
   margin-top: 1rem;
 
-  .cancel-btn {
+ .cancel-btn {
     background: #dc2626;
     color: white;
     border: none;
@@ -188,7 +189,7 @@ table {
   }
 
   th, td {
-    padding: 1.25rem;
+    padding: 2rem;
     border-bottom: 1px solid #e5e7eb;
   }
 

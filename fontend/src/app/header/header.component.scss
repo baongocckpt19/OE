@@ -1,12 +1,18 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto&family=Quicksand&display=swap');
+
 .header {
     padding: 1.5rem;
-    font-family: 'Roboto', sans-serif;
+<<<<<<< HEAD
+    font-family: 'Quicksand',sans-serif;
+=======
+    font-family: 'Roboto', sans-serif;;
+>>>>>>> ad09167d80c3a53eadbf25aa8881964ee44abfa2
     width:  93%;
     margin-left: auto;
     margin-bottom: 1.5rem;
     border-radius: 8px;
-    font-size: 1.5rem;
-    font-weight: 300;
+    font-size: 2rem;
+    font-weight: 800;
     color: white;
     position: fixed;
     z-index: 1;
