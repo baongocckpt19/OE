@@ -1,8 +1,34 @@
 {
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+  "hash": "a42c1bb2",
+  "configHash": "77a46163",
+  "lockfileHash": "23dcec34",
+  "browserHash": "88292352",
+=======
+<<<<<<< HEAD
+>>>>>>> 005e31a2850818ade66f07db2689e6735eb7f2af
+  "hash": "9d0ce871",
+  "configHash": "60e08272",
+  "lockfileHash": "23dcec34",
+  "browserHash": "20c0e2da",
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> 924ada0032bf0ee634a93ace506808584c44559a
   "hash": "4d3a3c51",
   "configHash": "58e39ebf",
   "lockfileHash": "23dcec34",
   "browserHash": "c1464426",
+<<<<<<< HEAD
+=======
+>>>>>>> d47d4321266586ee9968dcf1a93f28d987c00ec5
+>>>>>>> c8ec382cd0f96bcd09682fcc3f2f5b6d57a0cafa
+>>>>>>> 005e31a2850818ade66f07db2689e6735eb7f2af
+>>>>>>> 924ada0032bf0ee634a93ace506808584c44559a
   "optimized": {},
   "chunks": {}
 }

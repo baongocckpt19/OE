@@ -19,9 +19,11 @@ import { QuestionService } from '../services/question.service';
   templateUrl: './themdethi.component.html',
   styleUrls: ['./themdethi.component.scss']
 })
-export class ThemdethiComponent implements OnInit{
-  currentExamId: number | null = null;
-  constructor(private examService: DeThiService, private questionService: QuestionService,private router: Router) { }
+export class ThemdethiComponent implements OnInit {
+  currentExamId: number | null = null; isMessageModalOpen: boolean = false;
+  messageModalTitle: string = '';
+  messageModalContent: string = '';
+  constructor(private examService: DeThiService, private questionService: QuestionService, private router: Router) { }
   test = {
     examName: '',
     duration: null as number | null,
@@ -59,7 +61,7 @@ export class ThemdethiComponent implements OnInit{
     this.questionService.getQuestions()
       .subscribe((data: any[]) => {
         this.questionsBank = data.map(q => ({
-          id: q.questionId,
+          id: q.id ,
           subject: q.nameOfSubject,
           question: q.questionText,
           level: q.difficulty,
@@ -68,16 +70,31 @@ export class ThemdethiComponent implements OnInit{
         }));
       });
   }
-
+  showMessageModal(title: string, content: string) {
+    this.messageModalTitle = title;
+    this.messageModalContent = content;
+    this.isMessageModalOpen = true;
+  }
   onAddTest() {
     if (this.test.examName && this.test.duration) {
       const userId = 1; // 🔁 Lấy user id từ localStorage hoặc auth service nếu có
       this.examService.addExam(this.test, userId) // No userId parameter needed here
         .subscribe({
           next: (res: any) => {
+            // this.isTestAdded = true;
+            // this.currentExamId = res.examId;
+            // alert(`Thêm đề thi thành công! ID: ${this.currentExamId}`);
+            console.log("Phản hồi từ server khi thêm đề thi (Res object):", res);
+            console.log("Giá trị của res.examId:", res ? res.examId : 'res is null/undefined'); // An toàn hơn // Gỡ lỗi: Kiểm tra cấu trúc res
             this.isTestAdded = true;
-            this.currentExamId = res.examId;
-            alert(`Thêm đề thi thành công! ID: ${this.currentExamId}`);
+            // Đảm bảo rằng res.examId tồn tại và là số
+            if (res && typeof res.examId === 'number') {
+              this.currentExamId = res.examId;
+              this.showMessageModal('Thành công!', `Thêm đề thi thành công! ID: ${this.currentExamId}`);
+            } else {
+              this.currentExamId = null; // Đặt về null nếu ID không hợp lệ
+              this.showMessageModal('Lỗi!', `Thêm đề thi thành công nhưng không nhận được ID hợp lệ. Phản hồi: ${JSON.stringify(res)}`);
+            }
           },
           error: (err) => {
             console.error("Lỗi khi thêm đề thi:", err);
@@ -112,15 +129,15 @@ export class ThemdethiComponent implements OnInit{
   }
 
   submitSelectedQuestions() {
-     console.log('Current Exam ID khi submit:', this.currentExamId); 
+    console.log('Current Exam ID khi submit:', this.currentExamId);
     if (!this.currentExamId) {
       alert("Lỗi: Không tìm thấy ID đề thi. Vui lòng tạo đề thi trước.");
       return;
     }
 
     const selectedQuestionBankIds: number[] = this.questionsBank
-      .filter(q => q.selected)
-      .map(q => Number(q.id)); // Giả sử model QuestionBank của bạn có 'id'
+      .filter(q => q.selected && !this.questions.some(qq => qq.id === qq.id))
+      .map(q => q.id as number); // Giả sử model QuestionBank của bạn có 'id'
 
     if (selectedQuestionBankIds.length === 0) {
       alert("Vui lòng chọn ít nhất một câu hỏi.");
@@ -132,24 +149,25 @@ export class ThemdethiComponent implements OnInit{
       .subscribe({
         next: (res: any) => {
           alert(res.message || "Thêm câu hỏi vào đề thi thành công!");
-          // Cập nhật danh sách câu hỏi hiển thị trên UI chính nếu cần
-          // Bạn có thể fetch lại danh sách câu hỏi cho đề thi này
-          // hoặc thêm trực tiếp vào mảng `questions` nếu bạn có đủ dữ liệu
+          console.log("Phản hồi thành công khi thêm câu hỏi:", res); // Bạn sẽ thấy chuỗi này
+          this.showMessageModal('Thành công!', res || "Thêm câu hỏi vào đề thi thành công!"); // Sử dụng trực tiếp res
+
           this.questions.push(...this.questionsBank.filter(q => q.selected).map(q => ({
-                                              id: q.id, // Giữ lại ID nếu bạn cần nó sau này
-                                              subject: q.subject,
-                                              question: q.question,
-                                              level: q.level,
-                                              answers: q.answers
-                                          }))); // Cập nhật tạm thời trên UI
+            id: q.id, // Giữ lại ID nếu bạn cần nó sau này
+            subject: q.subject,
+            question: q.question,
+            level: q.level,
+            answers: q.answers
+          }))); // Cập nhật tạm thời trên UI
           this.closeAddQuestionModal();
           // Reset trạng thái selected của các câu hỏi trong questionsBank
           this.questionsBank.forEach(q => q.selected = false);
         },
-        error: () => {
-          console.error("Lỗi khi thêm câu hỏi vào đề thi:");
-          alert("Đã xảy ra lỗi khi thêm câu hỏi vào đề thi.");
-        }
+error: (err) => {
+  const errorMessage = err?.error?.error || err?.message || 'Lỗi không xác định';
+  this.showMessageModal('Lỗi!', `Đã xảy ra lỗi khi thêm câu hỏi: ${errorMessage}`);
+}
+
       });
   }
 
@@ -165,9 +183,6 @@ export class ThemdethiComponent implements OnInit{
   onAddNewQuestion() {
     alert("Chức năng thêm mới câu hỏi sẽ được phát triển sau.");
   }
-
-
-
 
 
   onPublish(): void {

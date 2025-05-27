@@ -1,5 +1,6 @@
 package com.example.backend.services;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -35,13 +36,16 @@ public long createExam(Dethi exam, int userId) {
     exam.setDescription(exam.getDescription());
     exam.setDuration(exam.getDuration());
     exam.setCreatedBy(userId); // ✅ Đã được set
-    exam.setCreatedAt(LocalDateTime.now()); // ✅ Đã được set
+    exam.setCreatedAt(LocalDate.now()); // ✅ Đã được set
     exam.setName_of_subject(exam.getName_of_subject());
 
 return examRepository.saveExam(exam);
 }
 @Transactional
 public void addQuestionsToExam(Long examId, List<Long> questionBankIds) {
+     System.out.println("Service: Bắt đầu thêm câu hỏi cho đề thi ID: " + examId);
+    System.out.println("Service: Các Question IDs nhận được: " + questionBankIds);
+
     Dethi exam = examRepository.findById(examId)
             .orElseThrow(() -> new RuntimeException("Không tìm thấy đề thi!"));
 
