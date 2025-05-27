@@ -27,23 +27,32 @@ export class AppComponent {
   isThemCauHoiPage: boolean = false;
 
   constructor(private router: Router) {
-    this.router.events.subscribe(event => {
-      if (event instanceof NavigationEnd) {
-        this.showLayoutlogin = !event.url.includes('/login');
+  this.router.events.subscribe(event => {
+    if (event instanceof NavigationEnd) {
+      this.showLayoutlogin = !event.url.includes('/login');
+      
+    }
+  });
 
-      }
-    });
-    this.router.events.subscribe(() => {
-      this.isExamPage = this.router.url.includes('chi-tiet-de-thi');
-    });
-    this.router.events.subscribe(() => {
-      this.isSignupPage = this.router.url.includes('signup');
-  });
   this.router.events.subscribe(() => {
-      this.isTrangthiPage = this.router.url.includes('trangthi');
+    this.isExamPage = this.router.url.includes('chi-tiet-de-thi');
+    this.showLayoutlogin = !this.router.url.includes('/login'); // thêm dòng này
   });
+
   this.router.events.subscribe(() => {
-      this.isThemCauHoiPage = this.router.url.includes('them-cau-hoi');
+    this.isSignupPage = this.router.url.includes('signup');
+    this.showLayoutlogin = !this.router.url.includes('/login'); // thêm dòng này
   });
-};
+
+  this.router.events.subscribe(() => {
+    this.isTrangthiPage = this.router.url.includes('trangthi');
+    this.showLayoutlogin = !this.router.url.includes('/login'); // thêm dòng này
+  });
+
+  this.router.events.subscribe(() => {
+    this.isThemCauHoiPage = this.router.url.includes('them-cau-hoi');
+    this.showLayoutlogin = !this.router.url.includes('/login'); // thêm dòng này
+  });
+}
+
 }

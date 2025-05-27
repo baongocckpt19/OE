@@ -16,6 +16,10 @@ export class StudentMarkComponent implements OnInit, OnDestroy {
   scores: any[] = [];
   filteredScores: any[] = [];
   searchTerm: string = '';
+  showFilter: boolean = false;
+  fromDate?: string;
+  toDate?: string;
+
   private subscription?: Subscription;
 
   constructor(private scoreService: ScoreService) {}
@@ -36,11 +40,63 @@ export class StudentMarkComponent implements OnInit, OnDestroy {
     this.subscription?.unsubscribe();
   }
 
+  // ===== Tìm kiếm không dấu ===== //
   filterScores(): void {
-    const keyword = this.searchTerm.toLowerCase();
+    const keyword = this.removeVietnameseTones(this.searchTerm);
     this.filteredScores = this.scores.filter(score =>
-      score.examName.toLowerCase().includes(keyword) ||
-      score.subject.toLowerCase().includes(keyword)
+      this.removeVietnameseTones(score.examName).includes(keyword) ||
+      this.removeVietnameseTones(score.subject).includes(keyword)
     );
+  }
+
+  removeVietnameseTones(str: string): string {
+    return str
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '')
+      .toLowerCase();
+  }
+
+  // ===== Toggle modal ===== //
+  toggleFilter(): void {
+    this.showFilter = !this.showFilter;
+  }
+
+  // ===== Áp dụng lọc (theo ngày) ===== //
+  applyFilter(): void {
+    this.filterByDate();
+    this.showFilter = false;
+  }
+
+  // ===== Lọc theo ngày ===== //
+  filterByDate(): void {
+    if (!this.fromDate && !this.toDate) {
+      this.filteredScores = [...this.scores];
+      return;
+    }
+
+    const from = this.fromDate ? new Date(this.fromDate) : new Date('2000-01-01');
+    const to = this.toDate ? new Date(this.toDate + 'T23:59:59') : new Date('2100-01-01');
+
+    this.filteredScores = this.scores.filter(score => {
+      const isoDateStr = score.finishedAt.replace(' ', 'T');
+      const scoreDate = new Date(isoDateStr);
+      return scoreDate >= from && scoreDate <= to;
+    });
+  }
+
+  // ===== Sắp xếp điểm ===== //
+  sortByScoreAsc(): void {
+    this.filteredScores = [...this.filteredScores].sort((a, b) => a.score - b.score);
+  }
+
+  sortByScoreDesc(): void {
+    this.filteredScores = [...this.filteredScores].sort((a, b) => b.score - a.score);
+  }
+
+  // ===== Reset lọc ===== //
+  resetFilter(): void {
+    this.filteredScores = [...this.scores];
+    this.fromDate = undefined;
+    this.toDate = undefined;
   }
 }

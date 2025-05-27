@@ -29,7 +29,6 @@
                     <th>Môn Học</th>
                     <th>Thời gian</th>
                     <th>Người tạo</th>                   
-                    <th>Mô tả</th>
                     <th>Ngày tạo</th>
                     <th>Hành động</th>
                 </tr>
@@ -42,8 +41,7 @@
                     <td>{{ dethi.name_of_subject }}</td>
                     <td>{{ dethi.duration }}</td>
                     <td>{{ dethi.createdBy }}</td>
-                    <td>{{ dethi.description }}</td>
-                    <td>{{ dethi.createdAt }}</td>
+                    <td>{{ dethi.createdAt| date:'dd/MM/yyyy' }}</td>
                     <td class='action'>
                         <!-- From Uiverse.io by catraco -->
                         <button>

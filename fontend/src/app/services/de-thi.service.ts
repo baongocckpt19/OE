@@ -50,12 +50,22 @@ export class DeThiService {
 addExam(examData: any, userId: number): Observable<any> {
   return this.http.post(
     `${this.apiUrl}/addExam?userId=${userId}`,
-    examData,
-    { responseType: 'text' }
+    examData
   );
 }
 // de-thi.service.ts
-addQuestionsToExam(examId: number, questionIds: number[]): Observable<any> {
+// addQuestionsToExam(examId: number, questionIds: number[]): Observable<any> {
+//   const url = `${this.apiUrl}/${examId}/questions`;
+//   const token = sessionStorage.getItem('token');
+//   const headers = new HttpHeaders({
+//     'Authorization': `Bearer ${token}`,
+//     'Content-Type': 'application/json'
+//   });
+
+//   return this.http.post(url, questionIds, { headers, responseType: 'text' });
+// }
+// de-thi.service.ts
+addQuestionsToExam(examId: number, questionIds: number[]): Observable<string> {
   const url = `${this.apiUrl}/${examId}/questions`;
   const token = sessionStorage.getItem('token');
   const headers = new HttpHeaders({
@@ -63,7 +73,14 @@ addQuestionsToExam(examId: number, questionIds: number[]): Observable<any> {
     'Content-Type': 'application/json'
   });
 
-  return this.http.post(url, questionIds, { headers });
+  console.log('📤 Payload gửi lên backend:', questionIds);
+
+  // Gửi trực tiếp mảng, KHÔNG gói vào object
+  return this.http.post<string>(url, questionIds, {
+    headers,
+    responseType: 'text' as 'json'
+  });
 }
+
 
 }

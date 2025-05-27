@@ -37,7 +37,8 @@ public class DethiRepository {
             ps.setString(3, exam.getDescription());
             ps.setInt(4, exam.getDuration()); // Sửa từ setInt -> setString
             ps.setString(5, exam.getCreatedBy()); // Sửa từ setString -> setInt
-            ps.setTimestamp(6, Timestamp.valueOf(exam.getCreatedAt()));
+            ps.setDate(6, java.sql.Date.valueOf(exam.getCreatedAt()));
+
             return ps;
         }, keyHolder);
 
@@ -87,13 +88,15 @@ public class DethiRepository {
     private static class ExamRowMapper implements RowMapper<Dethi> {
         @Override
         public Dethi mapRow(ResultSet resultSet, int rowNum) throws SQLException {
+            
             Dethi exam = new Dethi();
             exam.setExamId(resultSet.getLong("exam_id")); // Sửa từ "id" thành "exam_id"
             exam.setExamName(resultSet.getString("exam_name"));
             exam.setDescription(resultSet.getString("description"));
             exam.setDuration(resultSet.getInt("duration"));
             exam.setCreatedBy(resultSet.getInt("created_by"));
-            exam.setCreatedAt(resultSet.getTimestamp("created_at").toLocalDateTime());
+            Timestamp timestamp = resultSet.getTimestamp("created_at");
+            exam.setCreatedAt(timestamp.toLocalDateTime().toLocalDate());
             exam.setName_of_subject(resultSet.getString("name_of_subject"));
             return exam;
         }

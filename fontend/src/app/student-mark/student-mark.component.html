@@ -1,28 +1,59 @@
-<app-header title="'Bảng điểm học sinh'"></app-header>
+<app-header title="'Điểm số'"></app-header>
+
 <main class="student-mark">
   <div class="search-filter-container">
+    <!-- Ô tìm kiếm -->
     <div class="search-box">
-      <input type="text" placeholder="Tìm kiếm theo tên đề hoặc môn học" [(ngModel)]="searchTerm" (input)="filterScores()">
+      <input
+        type="text"
+        placeholder="Tìm kiếm theo tên đề hoặc môn học"
+        [(ngModel)]="searchTerm"
+        (input)="filterScores()"
+      />
       <button>
         <i class="fas fa-search"></i>
       </button>
     </div>
+
+    <!-- Nhóm nút bộ lọc -->
     <div class="filter-group">
-      <button class="filter-btn">
+      <button class="filter-btn" (click)="toggleFilter()">
         Bộ lọc <i class="fas fa-filter"></i>
       </button>
     </div>
   </div>
 
+  <!-- ✅ Modal overlay + popup -->
+  <div class="modal-overlay" *ngIf="showFilter" (click)="toggleFilter()"></div>
+
+  <div class="modal" *ngIf="showFilter">
+    <h2 class="modal-title">Bộ lọc kết quả</h2>
+
+    <label for="fromDate">Từ ngày:</label>
+    <input id="fromDate" type="date" [(ngModel)]="fromDate" />
+
+    <label for="toDate">Đến ngày:</label>
+    <input id="toDate" type="date" [(ngModel)]="toDate" />
+    <label>Sắp xếp điểm số:</label>
+<div class="sort-buttons">
+  <button class="sort-btn" (click)="sortByScoreAsc()">Tăng dần</button>
+  <button class="sort-btn" (click)="sortByScoreDesc()">Giảm dần</button>
+</div>
+    <div class="modal-actions">
+      <button class="cancel-btn" (click)="toggleFilter()">Hủy</button>
+      <button class="apply-btn" (click)="applyFilter()">Áp dụng</button>
+    </div>
+  </div>
+
+  <!-- Bảng kết quả -->
   <div class="table-container">
     <table>
       <thead>
         <tr>
-          <th>STT</th>
+          <th>Số thứ tự</th>
           <th>Tên đề</th>
           <th>Môn học</th>
           <th>Thời gian hoàn thành</th>
-          <th>Thời gian nộp</th>
           <th>Điểm số</th>
         </tr>
       </thead>
@@ -32,7 +63,6 @@
           <td>{{ score.examName }}</td>
           <td>{{ score.subject }}</td>
           <td>{{ score.finishedAt }}</td>
-          <td>{{ score.submittedAt }}</td>
           <td>{{ score.score }}</td>
         </tr>
       </tbody>

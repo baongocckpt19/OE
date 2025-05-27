@@ -1,32 +1,39 @@
-import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-
+import { SIDEBAR_MENUS } from './sidebar-menu.config';
+import { CommonModule } from '@angular/common';
+import { Input } from '@angular/core';
 @Component({
   selector: 'app-sidebar',
+  standalone: true,
   imports: [CommonModule],
   templateUrl: './sidebar.component.html',
-  styleUrl: './sidebar.component.scss'
+  styleUrls: ['./sidebar.component.scss']
 })
-export class SidebarComponent {
+export class SidebarComponent implements OnInit {
+  role: 'student' | 'teacher' = 'student'; // mặc định để tránh lỗi
+  displayName: string = '';
+
   isExpanded = false;
-currentRoute: any;
+  currentRoute: string = '';
+  menuItems: any[] = [];
 
   constructor(private router: Router) {}
-  menuItems = [
-    { icon: 'fa-tachometer-alt', label: 'Dashboard', color: '#34D399', route: '/dashboard' },
-    { icon: 'fa-users', label: 'Học sinh', color: '#60A5FA', route: '/hocsinh' },
-    { icon: 'fa-question-circle', label: 'Câu hỏi', color: '#FBBF24', route: '/question-management' },
-    { icon: 'fa-file-alt', label: 'Đề thi', color: '#F87171', route: '/de-thi' },
-    { icon: 'fa-trophy', label: 'Kì thi', color: '#A78BFA', route: '/ki-thi' },
 
-    { icon: 'fa-sign-out-alt', label: 'Log out', color: '#F43F5E', route: '/login' }
-  ];
+  ngOnInit() {
+    const storedRole = localStorage.getItem('userRole') as 'student' | 'teacher';
+    if (storedRole === 'teacher' || storedRole === 'student') {
+      this.role = storedRole;
+    }
 
+    this.currentRoute = this.router.url;
+    this.menuItems = SIDEBAR_MENUS[this.role];
+  }
 
   navigateTo(route: string) {
     this.router.navigate([route]);
   }
+
   onMouseEnter() {
     this.isExpanded = true;
   }
@@ -34,4 +41,5 @@ currentRoute: any;
   onMouseLeave() {
     this.isExpanded = false;
   }
+
 }

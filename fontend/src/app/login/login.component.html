@@ -4,9 +4,6 @@
     </div>
     <div class="login">
       <!-- Logo account -->
-      <div class="account-icon">
-        <img src="/images/login_logo.png" alt="Login Logo">
-      </div>
 
       <!-- Login form -->
       <form class="login-form" >
@@ -31,13 +28,13 @@
 
         <button type="button" class="login-button" (click)="login()">Đăng nhập</button>
 
-        <div class="form-links">
-          <a href="#" class="forgot-password">Quên mật khẩu?</a>
-          <span>Bạn chưa có tài khoản?
-            <a class="register-link" href="#" (click)="navigateToSignup(); $event.preventDefault()">Đăng kí ngay!</a>
+       <div class="form-links">
+  <a href="#" class="forgot-password">Quên mật khẩu?</a>
+  <p class="register-line">
+    Bạn chưa có tài khoản? <a class="register-link" href="#" (click)="navigateToSignup(); $event.preventDefault()">Đăng kí ngay!</a>
+  </p>
+</div>
 
-          </span>
-        </div>
       </form>
     </div>
   </div>

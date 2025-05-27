@@ -28,23 +28,29 @@ export class LoginComponent {
     private router: Router
   ) {}
 
-  login() {
-    this.model.role = this.isTeacher ? 'teacher' : 'student';
-    this.accountService.login(this.model).subscribe({
-      next: response => {
-        if (response && response.user && response.user.role === 'teacher') {
-          this.router.navigate(['/dashboard']);
-        } else if (response && response.user && response.user.role === 'student') {
-          this.router.navigate(['/dashboard-student']);
-        } else {
-          console.warn('Vai trò người dùng không xác định hoặc không được hỗ trợ.');
-        }
-      },
-      error: err => {
-        console.error('Login failed:', err);
+ login() {
+  this.model.role = this.isTeacher ? 'teacher' : 'student';
+
+  this.accountService.login(this.model).subscribe({
+    next: response => {
+      if (response?.user?.role === 'teacher') {
+        localStorage.setItem('userRole', 'teacher');
+        localStorage.setItem('userName', response.user.fullname); // nếu muốn hiện tên
+        this.router.navigate(['/dashboard']);
+      } else if (response?.user?.role === 'student') {
+        localStorage.setItem('userRole', 'student');
+        localStorage.setItem('userName', response.user.fullname);
+        this.router.navigate(['/dashboard-student']);
+      } else {
+        console.warn('Vai trò người dùng không xác định hoặc không được hỗ trợ.');
       }
-    });
-  }
+    },
+    error: err => {
+      console.error('Đăng nhập thất bại:', err);
+    }
+  });
+}
+
 
   navigateToSignup() {
     this.router.navigate(['/signup']);
