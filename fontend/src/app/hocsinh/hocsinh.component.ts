@@ -6,24 +6,37 @@ import { DashboardComponent } from "../dashboard/dashboard.component";
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { Student, StudentService } from '../services/student.service';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-hocsinh',
   imports: [HeaderComponent, CommonModule, FormsModule],
   templateUrl: './hocsinh.component.html',
-  styleUrl: './hocsinh.component.scss'
+   styleUrls: ['./hocsinh.component.scss']
 })
 export class HocsinhComponent {
   students: any[] = [];
   filteredStudents: Student[] = [];
   searchText: string = '';
-  constructor(private studentService: StudentService) { }
+  constructor(private studentService: StudentService, private http: HttpClient) { }
   selectedStudent: any = null;
-  
+  exams: { examId: number, examName : string }[] = [];
+
   ngOnInit() {
     this.loadStudents();
+    this.loadExams();
   }
-
+loadExams() {
+  this.http.get<any[]>('http://localhost:8080/api/dethi').subscribe(
+    (data) => {
+      this.exams = data;
+      console.log('Danh sách exams:', this.exams);
+    },
+    (error) => {
+      console.error('Lỗi khi tải danh sách bài thi:', error);
+    }
+  );
+}
   loadStudents() {
     this.studentService.getAllStudents().subscribe(
       (data) => {
@@ -56,19 +69,30 @@ export class HocsinhComponent {
       }
     );
   }
-  viewStudent(id: number) {
-  const student = this.students.find(s => s.userId === id);
-  if (student) {
-    // Giả sử bạn có thể lấy danh sách bài thi từ student.exams
-    this.selectedStudent = {
-      ...student,
-      exams: student.exams || [  // Dữ liệu demo
-        { title: 'Toán học kỳ I', score: 8.5, submittedAt: new Date() },
-        { title: 'Văn học kỳ I', score: 7.0, submittedAt: new Date() },
-      ]
-    };
-  }
+getExamTitleById(examId: number | string): string {
+  const id = +examId;
+  const exam = this.exams.find(e => e.examId === id);
+  console.log(`Tìm examId = ${id} =>`, exam);
+  return exam ? exam.examName  : 'Unknown';
 }
+
+
+viewStudent(id: number) {
+  this.http.get<any[]>(`http://localhost:8080/api/results/user/${id}`).subscribe(results => {
+    const student = this.students.find(s => s.userId === id);
+    if (student) {
+      this.selectedStudent = {
+        ...student,
+        exams: results.map(r => ({
+          examId: r.examId,
+          score: r.score,
+          submittedAt: new Date(r.submittedAt)
+        }))
+      };
+    }
+  });
+}
+
 
 closeModal() {
   this.selectedStudent = null;

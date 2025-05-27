@@ -2,6 +2,9 @@ import {
   InjectionToken
 } from "./chunk-3HDXZIZQ.js";
 
+// node_modules/@angular/common/fesm2022/dom_tokens-rA0ACyx7.mjs
+var DOCUMENT = new InjectionToken(ngDevMode ? "DocumentToken" : "");
+
 // node_modules/@angular/common/fesm2022/xhr-BfNfxNDv.mjs
 function parseCookieValue(cookieStr, name) {
   name = encodeURIComponent(name);
@@ -25,30 +28,23 @@ function isPlatformServer(platformId) {
 var XhrFactory = class {
 };
 
-// node_modules/@angular/common/fesm2022/dom_tokens-rA0ACyx7.mjs
-var DOCUMENT = new InjectionToken(ngDevMode ? "DocumentToken" : "");
-
 export {
+  DOCUMENT,
   parseCookieValue,
   PLATFORM_BROWSER_ID,
   PLATFORM_SERVER_ID,
   isPlatformBrowser,
   isPlatformServer,
-  XhrFactory,
-  DOCUMENT
+  XhrFactory
 };
 /*! Bundled license information:
 
-@angular/common/fesm2022/xhr-BfNfxNDv.mjs:
 @angular/common/fesm2022/dom_tokens-rA0ACyx7.mjs:
+@angular/common/fesm2022/xhr-BfNfxNDv.mjs:
   (**
    * @license Angular v19.2.13
    * (c) 2010-2025 Google LLC. https://angular.io/
    * License: MIT
    *)
 */
-<<<<<<<< HEAD:fontend/.angular/cache/19.2.13/DoAn/vite/deps/chunk-DXH2C7N7.js
-//# sourceMappingURL=chunk-DXH2C7N7.js.map
-========
 //# sourceMappingURL=chunk-7WXCYLWH.js.map
->>>>>>>> 03402bb12ed67c7af039138f80cc6565bf07dd83:fontend/.angular/cache/19.2.13/DoAn/vite/deps/chunk-7WXCYLWH.js

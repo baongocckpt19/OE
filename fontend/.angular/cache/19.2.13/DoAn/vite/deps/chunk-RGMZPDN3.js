@@ -1,11 +1,7 @@
 import {
   DOCUMENT,
   isPlatformBrowser
-<<<<<<<< HEAD:fontend/.angular/cache/19.2.13/DoAn/vite/deps/chunk-ZOLGVDL6.js
-} from "./chunk-DXH2C7N7.js";
-========
 } from "./chunk-7WXCYLWH.js";
->>>>>>>> 03402bb12ed67c7af039138f80cc6565bf07dd83:fontend/.angular/cache/19.2.13/DoAn/vite/deps/chunk-RGMZPDN3.js
 import {
   ApplicationRef,
   Attribute,
@@ -5124,8 +5120,4 @@ export {
    * License: MIT
    *)
 */
-<<<<<<<< HEAD:fontend/.angular/cache/19.2.13/DoAn/vite/deps/chunk-ZOLGVDL6.js
-//# sourceMappingURL=chunk-ZOLGVDL6.js.map
-========
 //# sourceMappingURL=chunk-RGMZPDN3.js.map
->>>>>>>> 03402bb12ed67c7af039138f80cc6565bf07dd83:fontend/.angular/cache/19.2.13/DoAn/vite/deps/chunk-RGMZPDN3.js

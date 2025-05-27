@@ -1,14 +1,7 @@
-<<<<<<< HEAD
-import "./chunk-ZOLGVDL6.js";
-import {
-  DOCUMENT
-} from "./chunk-DXH2C7N7.js";
-=======
 import "./chunk-RGMZPDN3.js";
 import {
   DOCUMENT
 } from "./chunk-7WXCYLWH.js";
->>>>>>> 03402bb12ed67c7af039138f80cc6565bf07dd83
 import {
   ANIMATION_MODULE_TYPE,
   Inject,
