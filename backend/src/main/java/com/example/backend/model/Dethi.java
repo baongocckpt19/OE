@@ -1,5 +1,6 @@
 package com.example.backend.model;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 
@@ -33,11 +34,11 @@ public class Dethi {
     private String createdBy;
 
     @Column(name = "created_at", nullable = false, updatable = false)
-    private LocalDateTime createdAt;
+    private LocalDate createdAt;
 
     // Constructors (No-arg and with fields)
     public Dethi() {
-        this.createdAt = LocalDateTime.now(); // Set thời gian tạo mặc định
+        this.createdAt = LocalDate.now(); // Set thời gian tạo mặc định
     }
 
     public Dethi(String examName, String description, Integer duration, String createdBy,String name_of_subject) {
@@ -45,7 +46,7 @@ public class Dethi {
         this.description = description;
         this.duration = duration;
         this.createdBy = createdBy;
-        this.createdAt = LocalDateTime.now();
+        this.createdAt = LocalDate.now();
         this.name_of_subject = name_of_subject;
     }
 
@@ -95,9 +96,9 @@ public class Dethi {
          this.createdBy = String.valueOf(userId);
     }
 
-    public void setCreatedAt(LocalDateTime now) {
+    public void setCreatedAt(LocalDate now) {
     }
-    public LocalDateTime getCreatedAt() {
+    public LocalDate getCreatedAt() {
         return createdAt;
     }
 }

@@ -63,10 +63,12 @@ public class ExamQuestionRepository {
             dethi.setDescription(rs.getString("description"));
             dethi.setDuration(rs.getInt("duration"));
             // Xử lý cột created_at (Timestamp sang LocalDateTime)
-            Timestamp createdAtTimestamp = rs.getTimestamp("created_at");
-            if (createdAtTimestamp != null) {
-                dethi.setCreatedAt(createdAtTimestamp.toLocalDateTime());
-            }
+Timestamp createdAtTimestamp = rs.getTimestamp("created_at");
+if (createdAtTimestamp != null) {
+    dethi.setCreatedAt(createdAtTimestamp.toLocalDateTime().toLocalDate());
+}
+
+
             dethi.setCreatedBy(rs.getInt("created_by"));
 
 

@@ -1,5 +1,6 @@
 package com.example.backend.services;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -35,7 +36,7 @@ public long createExam(Dethi exam, int userId) {
     exam.setDescription(exam.getDescription());
     exam.setDuration(exam.getDuration());
     exam.setCreatedBy(userId); // ✅ Đã được set
-    exam.setCreatedAt(LocalDateTime.now()); // ✅ Đã được set
+    exam.setCreatedAt(LocalDate.now()); // ✅ Đã được set
     exam.setName_of_subject(exam.getName_of_subject());
 
 return examRepository.saveExam(exam);
