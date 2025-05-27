@@ -56,4 +56,8 @@ export class AccountService {
     localStorage.removeItem('currentUser');
     // redirect hoặc cập nhật trạng thái user
   }
+  register(model: any): Observable<any> {
+  return this.http.post('http://localhost:8080/api/auth/register', model);
+}
+
 }
