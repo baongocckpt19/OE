@@ -1,5 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
+import { DethiDetailsResponse, DeThiService } from '../services/de-thi.service';
+import { AccountService } from '../services/account-service.service';
 
 @Component({
   selector: 'app-trangthi',
@@ -15,6 +19,16 @@ export class TrangthiComponent implements OnInit {
     duration: 45,
     description: 'Đề thi trắc nghiệm Toán 12 chương I – hàm số, đạo hàm, cực trị, GTLN-GTNN.'
   };
+  router: any;
+
+
+
+
+  constructor(private route: ActivatedRoute, private deThiService: DeThiService, private accountService: AccountService) { }
+
+  examId: number | null = null;
+
+
 
   questions: any[] = [];
   selectedAnswers: (number | null)[] = [];
@@ -25,31 +39,48 @@ export class TrangthiComponent implements OnInit {
   timerInterval: any;
 
   ngOnInit(): void {
-    this.generateMockQuestions();
-    this.selectedAnswers = Array(this.questions.length).fill(null);
-    this.flaggedQuestions = Array(this.questions.length).fill(false);
-    this.startTimer();
+    this.route.paramMap.subscribe(params => {
+      const id = params.get('id');
+      this.examId = id ? +id : null;
+
+      if (this.examId) {
+        this.loadExam(this.examId);
+      } else {
+        alert("Không tìm thấy ID đề thi");
+      }
+    });
   }
 
-  generateMockQuestions() {
-    const topics = [
-      'Đạo hàm của hàm số y = x^2 là gì?',
-      'Hàm số y = sin(x) đạt cực đại tại đâu?',
-      'Giá trị lớn nhất của hàm y = -x^2 + 4x + 1 là?',
-      'Tập xác định của hàm y = √(x-2)?',
-      'Hàm số đồng biến trên khoảng nào?',
-      'Tìm x sao cho y = x^3 - 3x + 2 đạt GTNN?',
-      'Đồ thị hàm số y = x^2 + 2x + 1 có trục đối xứng là?',
-      'Giá trị nhỏ nhất của hàm y = cos(x) là?',
-      'Số nghiệm của phương trình y = x^2 - 4 = 0?',
-      'Hàm số y = |x| có đạo hàm tại x = 0 không?'
-    ];
+  loadExam(examId: number): void {
+    this.deThiService.getDethiDetails(examId).subscribe(
+      (data: DethiDetailsResponse) => {
+        this.exam = {
+          examName: data.exam.examName,
+          subject: data.exam.name_of_subject,
+          duration: data.exam.duration,
+          description: data.exam.description
+        };
 
-    this.questions = Array.from({ length: 50 }, (_, i) => ({
-      question: `Câu ${i + 1}: ${topics[i % topics.length]}`,
-      answers: ['A. Đáp án 1', 'B. Đáp án 2', 'C. Đáp án 3', 'D. Đáp án 4']
-    }));
+        // Câu hỏi thực tế từ DB
+        this.questions = data.questions.map(q => ({
+          questionId: q.id,
+          question: q.questionText,
+          answers: [q.option1, q.option2, q.option3, q.option4]
+        }));
+
+        this.selectedAnswers = new Array(this.questions.length).fill(null);
+        this.flaggedQuestions = new Array(this.questions.length).fill(false);
+
+        this.startTimer();
+      },
+      error => {
+        console.error('Lỗi khi lấy đề thi:', error);
+        alert("Không thể tải đề thi!");
+      }
+    );
   }
+
+
 
   selectAnswer(questionIndex: number, answerIndex: number) {
     if (this.selectedAnswers[questionIndex] === answerIndex) {
@@ -92,13 +123,46 @@ export class TrangthiComponent implements OnInit {
   pad(num: number): string {
     return num < 10 ? '0' + num : num.toString();
   }
+
+
+
+
   onSubmit() {
-  const confirmSubmit = confirm("Bạn có chắc chắn muốn nộp bài không?");
-  if (confirmSubmit) {
-    // TODO: xử lý nộp bài sau
-    console.log("Nộp bài!");
+    const confirmSubmit = confirm("Bạn có chắc chắn muốn nộp bài không?");
+    if (!confirmSubmit) return;
+
+    const userId = this.accountService.getUserId();
+    if (!userId) {
+      alert('Không tìm thấy thông tin người dùng. Vui lòng đăng nhập lại.');
+      return;
+    }
+
+    if (!this.examId) {
+      alert('Không có ID đề thi hợp lệ.');
+      return;
+    }
+
+    // Tạo payload
+    const payload = {
+      userId: userId,
+      examId: this.examId,
+      answers: this.questions.map((q, i) => ({
+        questionId: q.questionId,
+        selectedOption: this.selectedAnswers[i] !== null ? this.selectedAnswers[i] + 1 : 0
+      }))
+    };
+
+    // Gọi API gửi bài
+    this.deThiService.submitExam(payload).subscribe({
+      next: (result) => {
+        alert(`🎉 Nộp bài thành công! Điểm của bạn: ${result.score}`);
+        this.router.navigate(['/student-mark']);
+      },
+      error: (err) => {
+        console.error("Lỗi khi nộp bài:", err);
+        alert("Không thể nộp bài. Vui lòng thử lại.");
+      }
+    });
   }
-}
 
 }
-

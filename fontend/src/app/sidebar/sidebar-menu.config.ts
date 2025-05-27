@@ -4,7 +4,7 @@ export const SIDEBAR_MENUS = {
     { icon: 'fa-users', label: 'Học sinh', route: '/hocsinh' },
     { icon: 'fa-question-circle', label: 'Câu hỏi', route: '/question-management' },
     { icon: 'fa-file-alt', label: 'Đề thi', route: '/de-thi' },
-    { icon: 'fa-trophy', label: 'Kì thi', route: '/ki-thi' },
+
     { icon: 'fa-sign-out-alt', label: 'Đăng xuất', route: '/login' }
   ],
   student: [

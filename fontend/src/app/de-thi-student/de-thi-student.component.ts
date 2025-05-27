@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HeaderComponent } from '../header/header.component';
 import { Router } from '@angular/router';
+import { DeThiService } from '../services/de-thi.service';
 @Component({
   selector: 'app-de-thi-student',
   standalone: true,
@@ -18,35 +19,23 @@ export class DeThiStudentComponent implements OnInit {
   filterDate: string = '';
   showFilter: boolean = false;
   subjects: string[] = [];
-  constructor(private router: Router) {}
-  ngOnInit(): void {
-    this.dethis = [
-      {
-        examId: 1,
-        examName: 'Toán cơ bản',
-        name_of_subject: 'Toán',
-        duration: 60,
-        createdAt: '2025-05-27'
-      },
-      {
-        examId: 2,
-        examName: 'Vật lý nâng cao',
-        name_of_subject: 'Vật lý',
-        duration: 45,
-        createdAt: '2025-05-26'
-      },
-      {
-        examId: 3,
-        examName: 'Hóa học tổng hợp',
-        name_of_subject: 'Hóa học',
-        duration: 50,
-        createdAt: '2025-05-25'
-      }
-    ];
 
-    this.subjects = [...new Set(this.dethis.map(d => d.name_of_subject))];
-    this.filteredDethis = [...this.dethis];
-  }
+
+  
+  constructor(private router: Router, private deThiService: DeThiService) {}
+  ngOnInit(): void {
+  this.deThiService.getDethis().subscribe(
+    (data) => {
+      this.dethis = data;
+      this.filteredDethis = [...data];
+      this.subjects = [...new Set(data.map(d => d.name_of_subject))];
+    },
+    (error) => {
+      console.error('Không thể lấy danh sách đề thi:', error);
+    }
+  );
+}
+
 
   removeVietnameseTones(str: string): string {
     return str.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
@@ -76,9 +65,11 @@ export class DeThiStudentComponent implements OnInit {
     this.filteredDethis = [...this.dethis];
     this.showFilter = false;
   }
-
   startExam(examId: number): void {
     console.log('Bắt đầu làm bài thi ID:', examId);
-     this.router.navigate(['/trangthi', examId]);
+    this.router.navigate(['/trangthi', examId]).catch(error => {
+      console.error('Không thể chuyển đến trang thi:', error);
+      alert('Không thể chuyển đến trang thi. Vui lòng thử lại sau.');
+    });
   }
 }

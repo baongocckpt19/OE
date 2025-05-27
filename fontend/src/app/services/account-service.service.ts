@@ -6,21 +6,21 @@ import { BehaviorSubject, map, Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class AccountService {
-  private userInfoSubject = new BehaviorSubject<any>(JSON.parse(sessionStorage.getItem('user') || 'null'));
+  private userInfoSubject = new BehaviorSubject<any>(JSON.parse(localStorage.getItem('currentUser') || 'null'));
   userInfo$ = this.userInfoSubject.asObservable();
   constructor(private http: HttpClient) { }
 
-// ✅ Sửa setUser() dùng localStorage thay vì sessionStorage
-setUser(user: any) {
-  localStorage.setItem('currentUser', JSON.stringify(user));
-  this.userInfoSubject.next(user);
-}
+  // ✅ Sửa setUser() dùng localStorage thay vì sessionStorage
+  setUser(user: any) {
+    localStorage.setItem('currentUser', JSON.stringify(user));
+    this.userInfoSubject.next(user);
+  }
 
-// ✅ getCurrentUser cũng dùng localStorage
-getCurrentUser(): any {
-  const userJson = localStorage.getItem('currentUser');
-  return userJson ? JSON.parse(userJson) : null;
-}
+  // ✅ getCurrentUser cũng dùng localStorage
+  getCurrentUser(): any {
+    const userJson = localStorage.getItem('currentUser');
+    return userJson ? JSON.parse(userJson) : null;
+  }
 
 
   getUserId(): number | null {
@@ -34,9 +34,9 @@ getCurrentUser(): any {
       return null;
     }
   }
-getStudentsByRole(role: string): Observable<any[]> {
-  return this.http.get<any[]>(`http://localhost:8080/api/students/role/${role}`);
-}
+  getStudentsByRole(role: string): Observable<any[]> {
+    return this.http.get<any[]>(`http://localhost:8080/api/students/role/${role}`);
+  }
 
   login(model: any): Observable<any> {
     return this.http.post<any>('http://localhost:8080/api/login', model).pipe(
@@ -46,6 +46,7 @@ getStudentsByRole(role: string): Observable<any[]> {
           localStorage.setItem('currentUser', JSON.stringify(response.user));
           this.setUser(response.user); // Nếu bạn có method này thì giữ lại
         }
+        console.log('Login successful:', this.userInfo$);
         return response;
       })
     );
