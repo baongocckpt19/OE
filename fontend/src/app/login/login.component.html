@@ -1,44 +1,58 @@
 <div id="body">
-    <div class="background">
-      <img src="/images/login_image.png" alt="Login Background" class="background">
-    </div>
-    <div class="login">
-      <!-- Logo account -->
-
-      <!-- Login form -->
-      <form class="login-form" >
-        <div class="form-group">
-          <div class="input-container">
-            <input type="text" id="username" name="username" [(ngModel)]="model.username" placeholder="Tên đăng nhập">
-            <i class="fas fa-user input-icon"></i>
-          </div>
-        </div>
-
-        <div class="form-group">
-  <div class="input-container">
-    <input [type]="showPassword ? 'text' : 'password'" id="password" name="password"
-           [(ngModel)]="model.password_hash" placeholder="Mật khẩu">
-    <i class="fas fa-lock input-icon"></i>
-    <i class="fas" [ngClass]="showPassword ? 'fa-eye-slash' : 'fa-eye'"
-       (click)="togglePasswordVisibility()" class="toggle-password-icon"></i>
+  <div class="background">
+    <img src="/images/login_image.png" alt="Login Background" class="background">
   </div>
-</div>
+  <div class="login">
+    <!-- Logo account -->
 
-        <div class="checkbox-group">
-          <input type="checkbox" id="teacher" [(ngModel)]="isTeacher"  name="isTeacher">
-          <label for="teacher">Bạn là giảng viên?</label>
+    <!-- Login form -->
+    <form class="login-form">
+      <div class="form-group">
+        <div class="input-container">
+          <input type="text" id="username" name="username"
+                 [(ngModel)]="model.username"
+                 (input)="clearError()"
+                 placeholder="Tên đăng nhập">
+          <i class="fas fa-user input-icon"></i>
+        </div>
       </div>
 
-        <button type="button" class="login-button" (click)="login()">Đăng nhập</button>
+      <div class="form-group">
+        <div class="input-container">
+          <input [type]="showPassword ? 'text' : 'password'" id="password" name="password"
+                 [(ngModel)]="model.password_hash"
+                 (input)="clearError()"
+                 placeholder="Mật khẩu">
+          <i class="fas fa-lock input-icon"></i>
+          <i [ngClass]="['fas', showPassword ? 'fa-eye-slash' : 'fa-eye', 'toggle-password-icon']"
+   (click)="togglePasswordVisibility()"></i>
+        </div>
+      </div>
 
-       <div class="form-links">
+      <div class="checkbox-group">
+        <input type="checkbox" id="teacher" [(ngModel)]="isTeacher" name="isTeacher">
+        <label for="teacher">Bạn là giảng viên?</label>
+      </div>
 
-  <p class="register-line">
-    Bạn chưa có tài khoản? <a class="register-link" href="#" (click)="navigateToSignup(); $event.preventDefault()">Đăng kí ngay!</a>
-  </p>
-</div>
+      <div class="form-error" *ngIf="loginError">
+        <i class="fas fa-exclamation-triangle warning-icon"></i>
+        Thông tin đăng nhập không chính xác
+      </div>
 
-      </form>
-    </div>
+      <button type="button" class="login-button" [disabled]="isLoading" (click)="login()">
+  <ng-container *ngIf="!isLoading">Đăng nhập</ng-container>
+  <ng-container *ngIf="isLoading">
+    <i class="fas fa-spinner fa-spin"></i> Đang đăng nhập...
+  </ng-container>
+</button>
+
+
+      <div class="form-links">
+        <p class="register-line">
+          Bạn chưa có tài khoản?
+          <a class="register-link" href="#" (click)="navigateToSignup(); $event.preventDefault()">Đăng kí ngay!</a>
+        </p>
+      </div>
+    </form>
   </div>
-
+</div>

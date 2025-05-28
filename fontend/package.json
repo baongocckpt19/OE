@@ -2,12 +2,13 @@
   "name": "do-an",
   "version": "0.0.0",
   "scripts": {
-    "ng": "ng",
-    "start": "ng serve",
-    "build": "ng build",
-    "watch": "ng build --watch --configuration development",
-    "test": "ng test",
-    "serve:ssr:DoAn": "node dist/do-an/server/server.mjs"
+  "ng": "ng",
+  "start": "ng serve",
+  "build": "ng build",
+  "watch": "ng build --watch --configuration development",
+  "test": "ng test",
+  "serve:ssr:DoAn": "node dist/do-an/server/server.mjs"
+
   },
   "private": true,
   "dependencies": {

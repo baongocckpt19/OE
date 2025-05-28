@@ -3,15 +3,7 @@ import {
   XhrFactory,
   isPlatformServer,
   parseCookieValue
-<<<<<<< HEAD:fontend/.angular/cache/19.2.13/DoAn/vite/deps/chunk-JVBOKW6K.js
 } from "./chunk-P3LJCSKC.js";
-=======
-<<<<<<< HEAD:fontend/.angular/cache/19.2.13/DoAn/vite/deps/chunk-YDLELMTR.js
-} from "./chunk-2TLEZPVW.js";
-=======
-} from "./chunk-P3LJCSKC.js";
->>>>>>> 2cec4bb50563c307190303c4c672784523c4fdcb:fontend/.angular/cache/19.2.13/DoAn/vite/deps/chunk-JVBOKW6K.js
->>>>>>> 6165728fee7e294d0ff7692a5eec08b553d0db0a:fontend/.angular/cache/19.2.13/DoAn/vite/deps/chunk-YDLELMTR.js
 import {
   APP_BOOTSTRAP_LISTENER,
   ApplicationRef,
@@ -46,15 +38,7 @@ import {
   ɵɵdefineInjector,
   ɵɵdefineNgModule,
   ɵɵinject
-<<<<<<< HEAD:fontend/.angular/cache/19.2.13/DoAn/vite/deps/chunk-JVBOKW6K.js
 } from "./chunk-D7Y4CFTW.js";
-=======
-<<<<<<< HEAD:fontend/.angular/cache/19.2.13/DoAn/vite/deps/chunk-YDLELMTR.js
-} from "./chunk-NS2O7JMR.js";
-=======
-} from "./chunk-D7Y4CFTW.js";
->>>>>>> 2cec4bb50563c307190303c4c672784523c4fdcb:fontend/.angular/cache/19.2.13/DoAn/vite/deps/chunk-JVBOKW6K.js
->>>>>>> 6165728fee7e294d0ff7692a5eec08b553d0db0a:fontend/.angular/cache/19.2.13/DoAn/vite/deps/chunk-YDLELMTR.js
 import {
   Observable,
   concatMap,
@@ -2584,12 +2568,4 @@ export {
    * License: MIT
    *)
 */
-<<<<<<< HEAD:fontend/.angular/cache/19.2.13/DoAn/vite/deps/chunk-JVBOKW6K.js
 //# sourceMappingURL=chunk-JVBOKW6K.js.map
-=======
-<<<<<<< HEAD:fontend/.angular/cache/19.2.13/DoAn/vite/deps/chunk-YDLELMTR.js
-//# sourceMappingURL=chunk-YDLELMTR.js.map
-=======
-//# sourceMappingURL=chunk-JVBOKW6K.js.map
->>>>>>> 2cec4bb50563c307190303c4c672784523c4fdcb:fontend/.angular/cache/19.2.13/DoAn/vite/deps/chunk-JVBOKW6K.js
->>>>>>> 6165728fee7e294d0ff7692a5eec08b553d0db0a:fontend/.angular/cache/19.2.13/DoAn/vite/deps/chunk-YDLELMTR.js
