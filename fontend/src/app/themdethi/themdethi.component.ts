@@ -165,8 +165,6 @@ export class ThemdethiComponent implements OnInit {
       alert("Vui lòng chọn ít nhất một câu hỏi.");
       return;
     }
-
-
     this.examService.addQuestionsToExam(this.currentExamId, selectedQuestionBankIds) // Gọi service mới
       .subscribe({
         next: (res: any) => {

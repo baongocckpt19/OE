@@ -118,12 +118,10 @@ getUsernameById(userId: number | string): string {
   return user ? (user.fullname || 'Unknown') : 'Unknown';
 }
 
-  editDethi(id: number): void {
-    // Điều hướng đến trang chỉnh sửa đề thi với ID tương ứng
-    console.log(`Chỉnh sửa đề thi với ID: ${id}`);
-    // this.router.navigate(['/edit-de-thi', id]); // Cần inject Router nếu bạn muốn điều hướng
-  }
-
+ editDethi(id: number): void {
+  console.log(`Chỉnh sửa đề thi với ID: ${id}`);
+  this.router.navigate(['/sua-de-thi', id]);
+}
   viewDethi(id: number) {
     if (!id) {
       console.error('Exam ID is undefined');

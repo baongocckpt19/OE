@@ -1,11 +1,7 @@
 import {
   DOCUMENT,
   isPlatformBrowser
-<<<<<<< HEAD:fontend/.angular/cache/19.2.13/DoAn/vite/deps/chunk-GGRVDYZH.js
-} from "./chunk-2TLEZPVW.js";
-=======
-} from "./chunk-P3LJCSKC.js";
->>>>>>> 2cec4bb50563c307190303c4c672784523c4fdcb:fontend/.angular/cache/19.2.13/DoAn/vite/deps/chunk-OL7WVFLG.js
+} from "./chunk-GONUFVUX.js";
 import {
   ApplicationRef,
   Attribute,
@@ -64,11 +60,7 @@ import {
   ɵɵinject,
   ɵɵinjectAttribute,
   ɵɵstyleProp
-<<<<<<< HEAD:fontend/.angular/cache/19.2.13/DoAn/vite/deps/chunk-GGRVDYZH.js
-} from "./chunk-NS2O7JMR.js";
-=======
 } from "./chunk-D7Y4CFTW.js";
->>>>>>> 2cec4bb50563c307190303c4c672784523c4fdcb:fontend/.angular/cache/19.2.13/DoAn/vite/deps/chunk-OL7WVFLG.js
 import {
   Subject
 } from "./chunk-P6U2JBMQ.js";
@@ -5130,8 +5122,4 @@ export {
    * License: MIT
    *)
 */
-<<<<<<< HEAD:fontend/.angular/cache/19.2.13/DoAn/vite/deps/chunk-GGRVDYZH.js
-//# sourceMappingURL=chunk-GGRVDYZH.js.map
-=======
-//# sourceMappingURL=chunk-OL7WVFLG.js.map
->>>>>>> 2cec4bb50563c307190303c4c672784523c4fdcb:fontend/.angular/cache/19.2.13/DoAn/vite/deps/chunk-OL7WVFLG.js
+//# sourceMappingURL=chunk-3CCTEYJ3.js.map

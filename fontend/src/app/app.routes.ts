@@ -16,6 +16,7 @@ import { StudentMarkComponent } from './student-mark/student-mark.component';
 import { TrangthiComponent } from './trangthi/trangthi.component';
 import { SuaCauHoiComponent } from './sua-cau-hoi/sua-cau-hoi.component';
 import { DeThiStudentComponent } from './de-thi-student/de-thi-student.component';
+import { SuaDeThiComponent } from './sua-de-thi/sua-de-thi.component';
 
 export const routes: Routes = [
   {
@@ -104,6 +105,12 @@ export const routes: Routes = [
     path: 'trangthi/:id',
     component: TrangthiComponent,
     data: { title: 'Trang thi' },
+    canActivate: [authGuard]
+  },
+   {
+    path: 'sua-de-thi/:id',
+    component: SuaDeThiComponent,
+    data: { title: 'Sửa đề thi' },
     canActivate: [authGuard]
   },
   {

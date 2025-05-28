@@ -5,6 +5,11 @@ import { catchError, Observable, throwError } from 'rxjs';
 import { AccountService } from './account-service.service';
 
 export interface Question {
+  question: string;
+  level: any;
+  difficulty: any;
+  subject: any;
+  nameOfSubject: any;
   id: number;
   questionText: string;
   option1: string;
@@ -88,5 +93,30 @@ export class DeThiService {
     return this.http.post<{ score: number }>('http://localhost:8080/api/dethi/submit-exam', payload);
 
   }
+  getExamById(id: number): Observable<Dethi> {
+    return this.http.get<Dethi>(`${this.apiUrl}/${id}`);
+  }
+//// cập nhât đề thi
+updateExam(id: number, exam: Dethi): Observable<any> {
+  return this.http.put(`http://localhost:8080/api/dethi/${id}`, exam, {
+    responseType: 'text'
+  });
+}
+
+
+  // Thay thế câu hỏi trong đề thi  
+replaceQuestionsInExam(examId: number, questionIds: number[]): Observable<any> {
+  const url = `${this.apiUrl}/${examId}/replace-questions`;
+  const token = sessionStorage.getItem('token');
+  const headers = new HttpHeaders({
+    'Authorization': `Bearer ${token}`,
+    'Content-Type': 'application/json'
+  });
+
+  return this.http.put(url, questionIds, {
+    headers,
+    responseType: 'text' as 'json'
+  });
+}
 
 }

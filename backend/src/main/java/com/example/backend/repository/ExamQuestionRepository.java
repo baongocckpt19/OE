@@ -53,6 +53,13 @@ public class ExamQuestionRepository {
     }
 
 
+    //xóa caau hỏi trong đề thi đẻ cập nhật câu hỏi mới trong chức năng sửa đề thi baongoc
+    public void deleteByExamId(Long examId) {
+        String sql = "DELETE FROM questions WHERE exam_id = ?";
+        jdbcTemplate.update(sql, examId);
+    }
+
+
     private static class ExamQuestionFullRowMapper implements RowMapper<ExamQuestion> {
         @Override
         public ExamQuestion mapRow(ResultSet rs, int rowNum) throws SQLException {

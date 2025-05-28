@@ -15,7 +15,7 @@ import { QuestionService } from '../services/question.service';
 export class QuestionManagementComponent {
   questions: any[] = [];
   filteredQuestions: any[] = [];
-users: { userId: number; fullname: string }[] = [];
+  users: { userId: number; fullname: string }[] = [];
   searchText = '';
   showFilter = false;
   filterSubject = '';
@@ -32,31 +32,31 @@ users: { userId: number; fullname: string }[] = [];
   isEditMode: boolean = false;
   editingQuestionId: number | null = null;
 
-  constructor(private questionService: QuestionService, private router: Router) {}
+  constructor(private questionService: QuestionService, private router: Router) { }
 
   ngOnInit(): void {
     this.loadQuestions();
     this.loadUsers();
   }
 
-getEmptyQuestion() {
-  const storedUser = localStorage.getItem('currentUser');
-  const currentUser = storedUser ? JSON.parse(storedUser) : null;
+  getEmptyQuestion() {
+    const storedUser = localStorage.getItem('currentUser');
+    const currentUser = storedUser ? JSON.parse(storedUser) : null;
 
-  return {
-    questionText: '',
-    option1: '',
-    option2: '',
-    option3: '',
-    option4: '',
-    correctOption: 1,
-    nameOfSubject: '',
-    difficulty: 'dễ',
-    createdBy: currentUser?.user_id || null, // Gán userId từ localStorage
-  };
-}
+    return {
+      questionText: '',
+      option1: '',
+      option2: '',
+      option3: '',
+      option4: '',
+      correctOption: 1,
+      nameOfSubject: '',
+      difficulty: 'dễ',
+      createdBy: currentUser?.user_id || null, // Gán userId từ localStorage
+    };
+  }
 
- loadUsers() {
+  loadUsers() {
     this.questionService.getUsers().subscribe({ // Giữ nguyên getUsers() nếu đây là API bạn dùng để lấy user data
       next: data => {
         console.log('Dữ liệu gốc từ API (users cho QuestionManagement):', data); // Log dữ liệu thô từ API
@@ -81,7 +81,7 @@ getEmptyQuestion() {
   loadQuestions() {
     this.questionService.getQuestions().subscribe({
       next: data => {
-         console.log('Dữ liệu gốc từ API (teachers):', data);
+        console.log('Dữ liệu gốc từ API (teachers):', data);
         console.log('Dữ liệu câu hỏi:', data.map(q => ({ id: q.id, createdBy: q.createdBy, type: typeof q.createdBy })));
         this.questions = this.filteredQuestions = data;
         this.subjects = [...new Set(data.map(q => q.nameOfSubject))];
@@ -150,13 +150,13 @@ getEmptyQuestion() {
       alert('Vui lòng nhập đầy đủ nội dung câu hỏi và các phương án!');
       return;
     }
-  const storedUser = localStorage.getItem('currentUser');
-  const currentUser = storedUser ? JSON.parse(storedUser) : null;
+    const storedUser = localStorage.getItem('currentUser');
+    const currentUser = storedUser ? JSON.parse(storedUser) : null;
 
-  const payload = {
-    ...this.question,
-    createdBy: currentUser?.userId || this.question.createdBy,
-  };
+    const payload = {
+      ...this.question,
+      createdBy: currentUser?.userId || this.question.createdBy,
+    };
     //const payload = { ...this.question };
 
     if (this.isEditMode && this.editingQuestionId !== null) {
@@ -220,9 +220,9 @@ getEmptyQuestion() {
     this.showPreview = false;
   }
   cancelAdd() {
-  this.isAddModalVisible = false;
-  this.resetForm();
-}
+    this.isAddModalVisible = false;
+    this.resetForm();
+  }
 
 }
 

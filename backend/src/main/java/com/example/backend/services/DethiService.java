@@ -137,4 +137,34 @@ public class DethiService {
     public void deleteDethi(Long id) {
             examRepository.deleteExamById(id); // Xóa bản ghi liên quan trong user_answers
     }
+
+    // cập nhật edit dề thi baongoc
+    public boolean updateExam(Long id, Dethi exam) {
+        String sql = "UPDATE exams SET exam_name = ?, name_of_subject = ?, description = ?, duration = ? WHERE exam_id = ?";
+        int rows = jdbcTemplate.update(sql,
+                exam.getExamName(),
+                exam.getName_of_subject(),
+                exam.getDescription(),
+                exam.getDuration(),
+                id
+        );
+        return rows > 0;
+    }
+    @Transactional
+    public void replaceQuestions(Long examId, List<Long> questionIds) {
+        // 1. Xóa toàn bộ câu hỏi cũ trong đề thi
+        examQuestionRepository.deleteByExamId(examId);
+
+        // 2. Lấy danh sách câu hỏi mới theo ID
+        List<Question> newQuestions = questionRepository.findAllById(questionIds);
+
+        // 3. Tạo danh sách ExamQuestion mới
+        List<ExamQuestion> examQuestions = newQuestions.stream()
+                .map(q -> new ExamQuestion(getExamById(examId), q))
+                .collect(Collectors.toList());
+
+        // 4. Lưu vào database
+        examQuestionRepository.saveAllExamQuestions(examQuestions);
+    }
+
 }
