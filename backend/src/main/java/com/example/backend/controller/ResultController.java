@@ -24,9 +24,4 @@ public class ResultController {
     public ResponseEntity<List<Result>> getResultsByUserId(@PathVariable Long userId) {
         return ResponseEntity.ok(resultService.getResultsByUserId(userId));
     }
-
-    @GetMapping("/ping")
-    public ResponseEntity<String> ping() {
-        return ResponseEntity.ok("pong");
-    }
 }
