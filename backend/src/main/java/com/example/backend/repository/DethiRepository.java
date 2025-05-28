@@ -53,6 +53,10 @@ public class DethiRepository {
                 exam.getDuration(),
                 exam.getExamId());
     }
+    public void softDeleteQuestionById(Long questionId) {
+        String sql = "UPDATE question_bank SET is_deleted = 1 WHERE id = ?";
+        jdbcTemplate.update(sql, questionId);
+    }
 
     // Xóa exam theo id
     public int deleteExamById(Long exam_id) {

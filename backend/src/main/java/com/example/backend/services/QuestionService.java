@@ -19,9 +19,10 @@ public class QuestionService {
         this.questionRepository = questionRepository;
     }
 
-    public List<Question> getAllQuestions() {
-        return questionRepository.findAll();
+    public List<Question> getAllActiveQuestions() {
+        return questionRepository.findAllActive();
     }
+
 
     public Optional<Question> getQuestionById(Long id) {
         return questionRepository.findById(id);

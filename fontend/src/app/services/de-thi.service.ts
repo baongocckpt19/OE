@@ -103,7 +103,6 @@ updateExam(id: number, exam: Dethi): Observable<any> {
   });
 }
 
-
   // Thay thế câu hỏi trong đề thi  
 replaceQuestionsInExam(examId: number, questionIds: number[]): Observable<any> {
   const url = `${this.apiUrl}/${examId}/replace-questions`;
@@ -116,6 +115,11 @@ replaceQuestionsInExam(examId: number, questionIds: number[]): Observable<any> {
   return this.http.put(url, questionIds, {
     headers,
     responseType: 'text' as 'json'
+  });
+}
+softDeleteQuestionFromExam(examId: number, questionId: number): Observable<any> {
+  return this.http.put(`http://localhost:8080/api/dethi/questions/soft-delete/${examId}/${questionId}`, {}, {
+    responseType: 'text'
   });
 }
 

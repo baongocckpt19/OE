@@ -23,6 +23,11 @@ public interface QuestionRepository extends JpaRepository<Question, Long> {
             @Param("subject") String subject,
             @Param("difficulty") String difficulty);
 
+    //thêm truy vấn active question cho cột is_archived
+    @Query("SELECT q FROM Question q WHERE q.isArchived = false")
+    List<Question> findAllActive();
+
+
     @Transactional
     @Modifying
     @Query(value = "DELETE FROM dbo.user_answers WHERE question_id = :id", nativeQuery = true)

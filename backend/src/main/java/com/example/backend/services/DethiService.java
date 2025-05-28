@@ -153,7 +153,8 @@ public class DethiService {
     @Transactional
     public void replaceQuestions(Long examId, List<Long> questionIds) {
         // 1. Xóa toàn bộ câu hỏi cũ trong đề thi
-        examQuestionRepository.deleteByExamId(examId);
+        examQuestionRepository.softDeleteByExamId(examId);
+
 
         // 2. Lấy danh sách câu hỏi mới theo ID
         List<Question> newQuestions = questionRepository.findAllById(questionIds);

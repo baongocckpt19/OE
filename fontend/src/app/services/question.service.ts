@@ -10,8 +10,9 @@ export class QuestionService {
   constructor(private http: HttpClient) {}
 
   getQuestions(): Observable<any[]> {
-    return this.http.get<any[]>(this.API_URL);
-  }
+  return this.http.get<any[]>(`${this.API_URL}`);
+}
+
 
   deleteQuestion(id: number): Observable<any> {
     return this.http.delete(`${this.API_URL}/${id}`, {
@@ -27,6 +28,12 @@ getUsers(): Observable<any[]> {
 }
 updateQuestion(id: number, updatedData: any) {
   return this.http.put(`http://localhost:8080/api/questions/${id}`, updatedData);
+}
+softDeleteQuestion(id: number): Observable<any> {
+  return this.http.put(`${this.API_URL}/archive/${id}`, {}, {
+    responseType: 'text',
+    observe: 'response',
+  });
 }
 
 }

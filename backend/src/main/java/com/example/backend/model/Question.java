@@ -34,6 +34,19 @@
                         @Column(name = "created_at")
                         private LocalDate createdAt;
 
+                        //thêm cờ đẻ đánh dấu xóa mềm baongoc
+                        @Column(name = "is_archived", nullable = false)
+                        private boolean isArchived = false;
+
+                        public boolean isIsArchived() {
+                            return isArchived;
+                        }
+
+                        public void setIsArchived(boolean isArchived) {
+                            this.isArchived = isArchived;
+                        }
+
+
                         public Question() {}
 
                         public Question(Long id, String questionText, String option1, String option2,

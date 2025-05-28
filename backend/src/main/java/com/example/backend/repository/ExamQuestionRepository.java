@@ -21,19 +21,26 @@ public class ExamQuestionRepository {
     private JdbcTemplate jdbcTemplate;
 
     public void saveAllExamQuestions(List<ExamQuestion> examQuestions) {
-        // SQL INSERT statement để chèn exam_id và question_bank_id vào bảng 'questions'
-        String sql = "INSERT INTO questions (exam_id, question_bank_id) VALUES (?, ?)";
-        
-        // Sử dụng batchUpdate để chèn nhiều bản ghi cùng lúc, hiệu quả hơn.
-        jdbcTemplate.batchUpdate(sql, examQuestions, examQuestions.size(),
-            (ps, examQuestion) -> {
-                // Lấy exam_id từ đối tượng Dethi được liên kết với ExamQuestion
-                ps.setLong(1, examQuestion.getExam().getExamId());
-                // Lấy question_id từ đối tượng Question (ngân hàng câu hỏi) được liên kết
-                ps.setLong(2, examQuestion.getQuestionBank().getId()); // Đã sửa: Sử dụng getId() của Question
-            System.out.println("Repository: Chuẩn bị chèn - exam_id: " + examQuestion.getExam().getExamId() + ", question_id: " + examQuestion.getQuestionBank().getId());
-            });
+        for (ExamQuestion eq : examQuestions) {
+            Long examId = eq.getExam().getExamId();
+            Long questionId = eq.getQuestionBank().getId();
+
+            // Kiểm tra xem câu hỏi đã tồn tại (kể cả is_deleted = 1)
+            String checkSql = "SELECT COUNT(*) FROM questions WHERE exam_id = ? AND question_bank_id = ?";
+            Integer count = jdbcTemplate.queryForObject(checkSql, Integer.class, examId, questionId);
+
+            if (count != null && count > 0) {
+                // Nếu có rồi, phục hồi bằng cách set lại is_deleted = 0
+                String updateSql = "UPDATE questions SET is_deleted = 0 WHERE exam_id = ? AND question_bank_id = ?";
+                jdbcTemplate.update(updateSql, examId, questionId);
+            } else {
+                // Nếu chưa có thì insert mới
+                String insertSql = "INSERT INTO questions (exam_id, question_bank_id, is_deleted) VALUES (?, ?, 0)";
+                jdbcTemplate.update(insertSql, examId, questionId);
+            }
+        }
     }
+
 
     public List<ExamQuestion> findByExamExamId(Long examId) {
         // Câu lệnh SQL JOIN để kết hợp dữ liệu từ bảng 'questions' (trung gian),
@@ -46,16 +53,16 @@ public class ExamQuestionRepository {
                      "FROM questions eq " +
                      "JOIN exams e ON eq.exam_id = e.exam_id " +
                      "JOIN question_bank qb ON eq.question_bank_id = qb.question_id " +
-                     "WHERE eq.exam_id = ?"; // Lọc theo exam_id
+                     "WHERE eq.exam_id = ? AND eq.is_deleted = 0"; // Lọc theo exam_id avf is-delete=0
 
         // Thực hiện truy vấn và ánh xạ kết quả bằng ExamQuestionFullRowMapper
         return jdbcTemplate.query(sql, new Object[]{examId}, new ExamQuestionFullRowMapper());
     }
 
 
-    //xóa caau hỏi trong đề thi đẻ cập nhật câu hỏi mới trong chức năng sửa đề thi baongoc
-    public void deleteByExamId(Long examId) {
-        String sql = "DELETE FROM questions WHERE exam_id = ?";
+    //xóa caau hỏi mềm trong đề thi đẻ cập nhật câu hỏi mới trong chức năng sửa đề thi baongoc
+    public void softDeleteByExamId(Long examId) {
+        String sql = "UPDATE questions SET is_deleted = 1 WHERE exam_id = ?";
         jdbcTemplate.update(sql, examId);
     }
 

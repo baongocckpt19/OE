@@ -98,15 +98,18 @@ export class SuaDeThiComponent implements OnInit {
 
     this.questionService.getQuestions().subscribe({
       next: (data) => {
-        // Thêm field `selected` để checkbox hoạt động
-        this.filteredQuestions = data.map(q => ({
+        const existingIds = this.questions.map(q => q.id);
+
+        // Lọc bỏ những câu hỏi đã có
+        const notInExam = data.filter(q => !existingIds.includes(q.id));
+
+        this.filteredQuestions = notInExam.map(q => ({
           ...q,
           subject: q.nameOfSubject || q.subject || 'Không rõ',
           level: q.difficulty || q.level || 'Không rõ',
           question: q.questionText || q.question,
           selected: false
         }));
-
       },
       error: (err) => {
         console.error('Lỗi khi lấy danh sách câu hỏi:', err);
@@ -114,6 +117,7 @@ export class SuaDeThiComponent implements OnInit {
       }
     });
   }
+
 
 
   closeAddQuestionModal() {
@@ -126,29 +130,29 @@ export class SuaDeThiComponent implements OnInit {
   }
 
   addSelectedQuestionsToExam() {
-  const selected = this.filteredQuestions.filter(q => q.selected);
+    const selected = this.filteredQuestions.filter(q => q.selected);
 
-  // Gộp dữ liệu với danh sách hiện tại, ghi đè nếu trùng id
-  selected.forEach(newQ => {
-    const existingIndex = this.questions.findIndex(q => q.id === newQ.id);
-    const questionToAdd = {
-      ...newQ,
-      nameOfSubject: newQ.subject || 'Không rõ',
-      difficulty: newQ.level || 'Không rõ',
-      questionText: newQ.question || 'Không rõ'
-    };
+    // Gộp dữ liệu với danh sách hiện tại, ghi đè nếu trùng id
+    selected.forEach(newQ => {
+      const existingIndex = this.questions.findIndex(q => q.id === newQ.id);
+      const questionToAdd = {
+        ...newQ,
+        nameOfSubject: newQ.subject || 'Không rõ',
+        difficulty: newQ.level || 'Không rõ',
+        questionText: newQ.question || 'Không rõ'
+      };
 
-    if (existingIndex !== -1) {
-      this.questions[existingIndex] = questionToAdd;
-    } else {
-      this.questions.push(questionToAdd);
-    }
-  });
+      if (existingIndex !== -1) {
+        this.questions[existingIndex] = questionToAdd;
+      } else {
+        this.questions.push(questionToAdd);
+      }
+    });
 
-  // Reset modal
-  this.selectedAnswers = new Array(this.questions.length).fill(null);
-  this.closeAddQuestionModal();
-}
+    // Reset modal
+    this.selectedAnswers = new Array(this.questions.length).fill(null);
+    this.closeAddQuestionModal();
+  }
 
 
   selectAnswerInPreview(questionIndex: number, answerIndex: number) {
@@ -164,10 +168,21 @@ export class SuaDeThiComponent implements OnInit {
   }
 
   removeQuestionFromExam(id: number) {
-    this.questions = this.questions.filter(q => q.id !== id);
-    this.selectedAnswers = new Array(this.questions.length).fill(null);
-    // Gợi ý: bạn nên gọi API để cập nhật câu hỏi sau khi xóa
-  }
+  if (!confirm('Bạn có chắc muốn xóa câu hỏi này?')) return;
+
+  this.questionService.softDeleteQuestion(id).subscribe({
+    next: () => {
+      this.questions = this.questions.filter(q => q.id !== id);
+      this.selectedAnswers = new Array(this.questions.length).fill(null);
+    },
+    error: (err) => {
+      console.error('Lỗi khi xóa câu hỏi:', err);
+      alert('Không thể xóa câu hỏi');
+    }
+  });
+}
+
+
 
   cancelEdit() {
     if (confirm('Bạn có chắc muốn hủy chỉnh sửa?')) {
@@ -175,33 +190,33 @@ export class SuaDeThiComponent implements OnInit {
     }
   }
 
- finalizeExamUpdate() {
-  if (!this.examId) return;
+  finalizeExamUpdate() {
+    if (!this.examId) return;
 
-  // Cập nhật thông tin đề thi
-  this.deThiService.updateExam(this.examId, this.test).subscribe({
-    next: () => {
-      // Lấy danh sách ID câu hỏi đang có trong danh sách
-      const questionIds = this.questions.map(q => q.id);
+    // Cập nhật thông tin đề thi
+    this.deThiService.updateExam(this.examId, this.test).subscribe({
+      next: () => {
+        // Lấy danh sách ID câu hỏi đang có trong danh sách
+        const questionIds = this.questions.map(q => q.id);
 
-      // Gửi câu hỏi lên DB
-      this.deThiService.replaceQuestionsInExam(this.examId!, questionIds).subscribe({
-        next: () => {
-          alert('Cập nhật đề thi thành công!');
-          this.router.navigate(['/de-thi']);
-        },
-        error: (err) => {
-          console.error('Lỗi khi cập nhật câu hỏi:', err);
-          alert('Không thể cập nhật câu hỏi');
-        }
-      });
-    },
-    error: (err) => {
-      console.error('Lỗi cập nhật đề thi:', err);
-      alert('Không thể cập nhật đề thi');
-    }
-  });
-}
+        // Gửi câu hỏi lên DB
+        this.deThiService.replaceQuestionsInExam(this.examId!, questionIds).subscribe({
+          next: () => {
+            alert('Cập nhật đề thi thành công!');
+            this.router.navigate(['/de-thi']);
+          },
+          error: (err) => {
+            console.error('Lỗi khi cập nhật câu hỏi:', err);
+            alert('Không thể cập nhật câu hỏi');
+          }
+        });
+      },
+      error: (err) => {
+        console.error('Lỗi cập nhật đề thi:', err);
+        alert('Không thể cập nhật đề thi');
+      }
+    });
+  }
 
 
   createNewQuestion() {

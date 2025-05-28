@@ -104,15 +104,18 @@ export class QuestionManagementComponent {
         .some(field => field.toString().toLowerCase().includes(keyword))
     );
   }
-
+  //xóa câu hỏi mềm băng cách ẩn câu hỏi(đặt isDeleted = 1)
   deleteQuestion(id: number) {
-    if (confirm('Bạn có chắc chắn muốn xóa câu hỏi này?')) {
-      this.questionService.deleteQuestion(id).subscribe({
-        next: () => this.loadQuestions(),
-        error: () => alert('Lỗi khi xóa câu hỏi')
-      });
-    }
+  if (confirm('Bạn có chắc chắn muốn ẩn câu hỏi này?')) {
+    this.questionService.softDeleteQuestion(id).subscribe({
+      next: () => {
+        alert('Câu hỏi đã được ẩn.');
+        this.loadQuestions();
+      },
+      error: () => alert('Lỗi khi ẩn câu hỏi.')
+    });
   }
+}
 
   viewQuestion(id: number) {
     this.selectedQuestion = this.questions.find(q => q.id === id);

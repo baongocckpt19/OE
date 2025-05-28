@@ -2,6 +2,8 @@ package com.example.backend.controller;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -32,18 +34,21 @@ public class QuestionController {
 
     @GetMapping("")
     public ResponseEntity<List<Question>> getAllQuestions() {
-        List<Question> questions = questionService.getAllQuestions();
+        List<Question> questions = questionService.getAllActiveQuestions();
         return new ResponseEntity<>(questions, HttpStatus.OK);
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteQuestion(@PathVariable Long id) {
-        try {
-            questionService.deleteQuestion(id);
-            return new ResponseEntity<>("Câu hỏi và các chi tiết liên quan đã được xóa.", HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+
+    @PutMapping("/archive/{id}")
+    public ResponseEntity<?> softDeleteQuestion(@PathVariable Long id) {
+        Optional<Question> optionalQuestion = questionService.getQuestionById(id);
+        if (optionalQuestion.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Không tìm thấy câu hỏi.");
         }
+        Question question = optionalQuestion.get();
+        question.setIsArchived(true);
+        questionService.saveQuestion(question);
+        return ResponseEntity.ok("Câu hỏi đã được ẩn (is_archived = true).");
     }
 
     @PostMapping("") 
