@@ -10,8 +10,28 @@
 
       <input type="text" placeholder="Tài khoản" [(ngModel)]="username" name="username" />
       <input type="text" placeholder="Họ và tên" [(ngModel)]="fullname" name="fullname" />
-      <input type="password" placeholder="Mật khẩu" [(ngModel)]="password" name="password" />
-      <input type="password" placeholder="Xác nhận mật khẩu" [(ngModel)]="confirmPassword" name="confirmPassword" />
+<div class="password-container">
+ <input [type]="showPassword ? 'text' : 'password'"
+       placeholder="Mật khẩu"
+       [(ngModel)]="password"
+       name="password"
+       autocomplete="off" />
+  <i [ngClass]="['fas', showPassword ? 'fa-eye-slash' : 'fa-eye']"
+   (click)="showPassword = !showPassword"
+   class="toggle-password-icon"></i>
+</div>
+
+<!-- Xác nhận mật khẩu -->
+<div class="password-container">
+  <input [type]="showConfirmPassword ? 'text' : 'password'"
+       placeholder="Xác nhận mật khẩu"
+       [(ngModel)]="confirmPassword"
+       name="confirmPassword"
+       autocomplete="off" />
+  <i [ngClass]="['fas', showPassword ? 'fa-eye-slash' : 'fa-eye']"
+   (click)="showPassword = !showPassword"
+   class="toggle-password-icon"></i>
+</div>
       <input type="email" placeholder="Email" [(ngModel)]="email" name="email" />
       <input type="text" placeholder="Lớp" [(ngModel)]="class" name="class" />
       <input type="date" [(ngModel)]="dob" name="dob" />
@@ -21,7 +41,6 @@
         Tôi là giảng viên
       </label>
 
-      <!-- ✅ type="submit" để form gọi ngSubmit -->
       <button type="submit" class="signup-btn">Đăng ký</button>
 
       <p class="login-link">

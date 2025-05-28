@@ -27,6 +27,8 @@ import { AccountService } from '../services/account-service.service'; // ✅ đ�
 export class SignupComponent {
   imageState = 'start';
   formState = 'hidden';
+  showPassword: boolean = false;
+  showConfirmPassword: boolean = false;
 
   confirmPassword: string = '';
   username: string = '';
