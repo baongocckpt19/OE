@@ -17,6 +17,7 @@ import { TrangthiComponent } from './trangthi/trangthi.component';
 import { SuaCauHoiComponent } from './sua-cau-hoi/sua-cau-hoi.component';
 import { DeThiStudentComponent } from './de-thi-student/de-thi-student.component';
 import { SuaDeThiComponent } from './sua-de-thi/sua-de-thi.component';
+import { XemLaiBaiLamComponent } from './xem-lai-bai-lam/xem-lai-bai-lam.component';
 
 export const routes: Routes = [
   {
@@ -111,6 +112,12 @@ export const routes: Routes = [
     path: 'sua-de-thi/:id',
     component: SuaDeThiComponent,
     data: { title: 'Sửa đề thi' },
+    canActivate: [authGuard]
+  },
+   {
+    path: 'xem-lai-bai-lam',
+    component: XemLaiBaiLamComponent,
+   // data: { title: 'Sửa đề thi' },
     canActivate: [authGuard]
   },
   {

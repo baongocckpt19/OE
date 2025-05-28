@@ -234,5 +234,27 @@
       }
     }
   }
+  
+
+}
+.answer-option.correct {
+  background-color: #d1fae5; /* xanh lá */
+  border-color: #10b981;
+  color: #065f46;
+}
+
+.answer-option.wrong {
+  background-color: #fee2e2; /* đỏ */
+  border-color: #ef4444;
+  color: #991b1b;
+}
+.nav-item.correct-answer {
+  background-color: #10b981;
+  color: white;
+}
+
+.nav-item.wrong-answer {
+  background-color: #ef4444;
+  color: white;
 }
 

@@ -19,6 +19,7 @@ export interface Question {
 }
 
 export interface Dethi {
+  submitted_at?: string;
   examId: number;
   examName: string;
   description: string;
@@ -31,6 +32,13 @@ export interface Dethi {
 export interface DethiDetailsResponse {
   exam: Dethi;
   questions: Question[];
+}
+export interface SubmittedExam {
+  exam: Dethi ;
+  questions: (Question & { correctOption: number })[];
+  userAnswers: number[];
+  score: number;
+ 
 }
 
 @Injectable({
@@ -92,10 +100,10 @@ deleteDethi(id: number) {
     });
   }
 
-  submitExam(payload: any): Observable<{ score: number }> {
-    return this.http.post<{ score: number }>('http://localhost:8080/api/dethi/submit-exam', payload);
+  submitExam(payload: any): Observable<{ message: string, score: number }> {
+  return this.http.post<{ message: string, score: number }>('http://localhost:8080/api/userAnswers/submit-exam', payload);
+}
 
-  }
   getExamById(id: number): Observable<Dethi> {
     return this.http.get<Dethi>(`${this.apiUrl}/${id}`);
   }
@@ -125,5 +133,12 @@ deleteDethi(id: number) {
       responseType: 'text'
     });
   }
+  submitUserAnswers(payload: any): Observable<any> {
+  return this.http.post('http://localhost:8080/api/userAnswers/submit-all', payload, {
+    responseType: 'text' as 'json'  // 👈 Fix lỗi "Unexpected token"
+  });
+}
+
+
 
 }

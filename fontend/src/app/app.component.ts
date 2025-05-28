@@ -25,7 +25,7 @@ export class AppComponent {
 
   isTrangthiPage: boolean = false;
   isThemCauHoiPage: boolean = false;
-
+  isxemlaibailam: boolean = false;
   constructor(private router: Router) {
   this.router.events.subscribe(event => {
     if (event instanceof NavigationEnd) {
@@ -51,6 +51,10 @@ export class AppComponent {
 
   this.router.events.subscribe(() => {
     this.isThemCauHoiPage = this.router.url.includes('them-cau-hoi');
+    this.showLayoutlogin = !this.router.url.includes('/login'); // thêm dòng này
+  });
+   this.router.events.subscribe(() => {
+    this.isxemlaibailam = this.router.url.includes('xem-lai-bai-lam');
     this.showLayoutlogin = !this.router.url.includes('/login'); // thêm dòng này
   });
 }

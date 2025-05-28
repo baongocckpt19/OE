@@ -1,7 +1,6 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { Router } from '@angular/router';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { DethiDetailsResponse, DeThiService } from '../services/de-thi.service';
 import { AccountService } from '../services/account-service.service';
 
@@ -12,33 +11,39 @@ import { AccountService } from '../services/account-service.service';
   templateUrl: './trangthi.component.html',
   styleUrl: './trangthi.component.scss'
 })
-export class TrangthiComponent implements OnInit {
+export class TrangthiComponent implements OnInit, OnDestroy {
   exam = {
-    examName: 'Đề thi giữa kỳ I',
-    subject: 'Toán 12',
-    duration: 45,
-    description: 'Đề thi trắc nghiệm Toán 12 chương I – hàm số, đạo hàm, cực trị, GTLN-GTNN.'
+    examName: '',
+    subject: '',
+    duration: 0,
+    description: ''
   };
-  router: any;
 
-
-
-
-  constructor(private route: ActivatedRoute, private deThiService: DeThiService, private accountService: AccountService) { }
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private deThiService: DeThiService,
+    private accountService: AccountService
+  ) {}
 
   examId: number | null = null;
-
-
-
   questions: any[] = [];
   selectedAnswers: (number | null)[] = [];
   flaggedQuestions: boolean[] = [];
-
   timeLeft: number = 0;
   displayTime: string = '00:00';
   timerInterval: any;
+  hasSubmitted: boolean = false;
+  showResultModal: boolean = false;
+  examScore: number = 0;
 
   ngOnInit(): void {
+    if (localStorage.getItem('hasSubmitted') === 'true') {
+      localStorage.removeItem('hasSubmitted');
+      this.router.navigate(['/student-mark']);
+      return;
+    }
+
     this.route.paramMap.subscribe(params => {
       const id = params.get('id');
       this.examId = id ? +id : null;
@@ -49,6 +54,35 @@ export class TrangthiComponent implements OnInit {
         alert("Không tìm thấy ID đề thi");
       }
     });
+
+    window.addEventListener('beforeunload', this.handleUnload.bind(this));
+  }
+
+  ngOnDestroy(): void {
+    window.removeEventListener('beforeunload', this.handleUnload.bind(this));
+  }
+
+  handleUnload(event: BeforeUnloadEvent): void {
+    if (this.hasSubmitted || !this.examId) return;
+
+    const userId = this.accountService.getUserId();
+    if (!userId) return;
+
+    const payload = {
+      userId: userId,
+      examId: this.examId,
+      answers: this.questions.map((q, i) => ({
+        questionId: q.questionId,
+        selectedOption: this.selectedAnswers[i] !== null ? this.selectedAnswers[i] + 1 : 0
+      }))
+    };
+
+    localStorage.setItem('hasSubmitted', 'true');
+
+    navigator.sendBeacon(
+      'http://localhost:8080/api/userAnswers/submit-exam',
+      new Blob([JSON.stringify(payload)], { type: 'application/json' })
+    );
   }
 
   loadExam(examId: number): void {
@@ -61,7 +95,6 @@ export class TrangthiComponent implements OnInit {
           description: data.exam.description
         };
 
-        // Câu hỏi thực tế từ DB
         this.questions = data.questions.map(q => ({
           questionId: q.id,
           question: q.questionText,
@@ -80,14 +113,9 @@ export class TrangthiComponent implements OnInit {
     );
   }
 
-
-
   selectAnswer(questionIndex: number, answerIndex: number) {
-    if (this.selectedAnswers[questionIndex] === answerIndex) {
-      this.selectedAnswers[questionIndex] = null;
-    } else {
-      this.selectedAnswers[questionIndex] = answerIndex;
-    }
+    this.selectedAnswers[questionIndex] =
+      this.selectedAnswers[questionIndex] === answerIndex ? null : answerIndex;
   }
 
   scrollToQuestion(index: number) {
@@ -103,13 +131,14 @@ export class TrangthiComponent implements OnInit {
   startTimer() {
     this.timeLeft = this.exam.duration * 60;
     this.updateDisplayTime();
+
     this.timerInterval = setInterval(() => {
       if (this.timeLeft > 0) {
         this.timeLeft--;
         this.updateDisplayTime();
       } else {
         clearInterval(this.timerInterval);
-        alert('⏰ Hết giờ làm bài!');
+        this.autoSubmitWhenTimeout();
       }
     }, 1000);
   }
@@ -124,25 +153,16 @@ export class TrangthiComponent implements OnInit {
     return num < 10 ? '0' + num : num.toString();
   }
 
-
-
-
   onSubmit() {
     const confirmSubmit = confirm("Bạn có chắc chắn muốn nộp bài không?");
     if (!confirmSubmit) return;
 
     const userId = this.accountService.getUserId();
-    if (!userId) {
-      alert('Không tìm thấy thông tin người dùng. Vui lòng đăng nhập lại.');
+    if (!userId || !this.examId) {
+      alert('Thiếu thông tin người dùng hoặc đề thi.');
       return;
     }
 
-    if (!this.examId) {
-      alert('Không có ID đề thi hợp lệ.');
-      return;
-    }
-
-    // Tạo payload
     const payload = {
       userId: userId,
       examId: this.examId,
@@ -152,17 +172,55 @@ export class TrangthiComponent implements OnInit {
       }))
     };
 
-    // Gọi API gửi bài
-    this.deThiService.submitExam(payload).subscribe({
-      next: (result) => {
-        alert(`🎉 Nộp bài thành công! Điểm của bạn: ${result.score}`);
-        this.router.navigate(['/student-mark']);
+    this.hasSubmitted = true;
+    localStorage.setItem('hasSubmitted', 'true');
+
+    this.deThiService.submitExam(payload).subscribe(
+      (response: { message: string; score: number }) => {
+        this.examScore = response.score;
+        this.showResultModal = true;
       },
-      error: (err) => {
+      (err) => {
         console.error("Lỗi khi nộp bài:", err);
         alert("Không thể nộp bài. Vui lòng thử lại.");
       }
-    });
+    );
   }
 
+  autoSubmitWhenTimeout() {
+    if (this.hasSubmitted || !this.examId) return;
+
+    const userId = this.accountService.getUserId();
+    if (!userId) return;
+
+    const payload = {
+      userId: userId,
+      examId: this.examId,
+      answers: this.questions.map((q, i) => ({
+        questionId: q.questionId,
+        selectedOption: this.selectedAnswers[i] !== null ? this.selectedAnswers[i] + 1 : 0
+      }))
+    };
+
+    this.hasSubmitted = true;
+    localStorage.setItem('hasSubmitted', 'true');
+
+    this.deThiService.submitExam(payload).subscribe(
+      (response: { message: string; score: number }) => {
+        this.examScore = response.score;
+        this.showResultModal = true;
+      },
+      (err) => {
+        console.error("Lỗi khi nộp bài hết giờ:", err);
+      }
+    );
+  }
+
+  reviewExam() {
+    this.showResultModal = false;
+  }
+
+  exitExam() {
+    this.router.navigate(['/student-mark']);
+  }
 }

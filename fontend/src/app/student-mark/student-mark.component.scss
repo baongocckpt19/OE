@@ -110,10 +110,6 @@
     border-radius: 8px;
     font-size: 1rem;
   }
-
-
-
-
 }
 
 .sort-buttons {
@@ -133,14 +129,58 @@
     transition: all 0.2s ease;
 
     &:hover {
-      background-color: #dbeafe; // xanh nhạt khi hover
+      background-color: #dbeafe;
       color: #1e3a8a;
     }
 
     &.selected {
-      background-color: #2563EB; // xanh đậm
+      background-color: #2563EB;
       color: white;
       border-color: #2563EB;
+    }
+  }
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 1.5rem;
+
+  .cancel-btn,
+  .apply-btn {
+    width: 120px;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 500;
+    font-family: inherit;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    text-align: center;
+    border: none;
+  }
+
+  .cancel-btn {
+    background-color: #e5e7eb;
+    color: #6b7280;
+
+    &:hover {
+      background-color: #dc2626;
+      color: white;
+      transform: scale(1.02);
+      box-shadow: 0 2px 6px rgba(220, 38, 38, 0.3);
+    }
+  }
+
+  .apply-btn {
+    background-color: #4caf50;
+    color: white;
+
+    &:hover {
+      background-color: #388e3c;
+      transform: scale(1.02);
+      box-shadow: 0 2px 6px rgba(76, 175, 80, 0.3);
     }
   }
 }
@@ -165,8 +205,9 @@ table {
   }
 
   th, td {
-    padding: 2rem;
+    padding: 1rem 0.75rem;
     border-bottom: 1px solid #e5e7eb;
+    vertical-align: middle;
   }
 
   th {
@@ -180,75 +221,64 @@ table {
     background: #f3e8ff;
   }
 
-  th:nth-child(1),
-  td:nth-child(1) {
-    width: 11%;
+  // Chiều rộng cột tùy chỉnh
+  th:nth-child(1), td:nth-child(1) {
+    width: 8%;
   }
 
-  th:nth-child(2),
-  td:nth-child(2) {
-    width: 23%;
-  }
-
-  th:nth-child(3),
-  td:nth-child(3) {
-    width: 21%;
-  }
-
-  th:nth-child(4),
-  td:nth-child(4) {
+  th:nth-child(2), td:nth-child(2) {
     width: 25%;
   }
 
-  th:nth-child(5),
-  td:nth-child(5) {
+  th:nth-child(3), td:nth-child(3) {
     width: 20%;
+  }
+
+  th:nth-child(4), td:nth-child(4) {
+    width: 20%;
+  }
+
+  th:nth-child(5), td:nth-child(5) {
+    width: 15%;
     font-weight: bold;
     color: #1e40af;
   }
-}
-.modal-actions {
-  display: flex;
-  justify-content: center;
-  gap: 1rem;
-  margin-top: 1.5rem;
 
-  .cancel-btn,
-  .apply-btn {
-    
-    width: 120px;
-    padding: 0.5rem 1rem;
-    border-radius: 8px;
+  th:nth-child(6), td:nth-child(6) {
+    width: 12%;
+  }
+}
+
+// ======= Action Button ======= //
+.action-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.4rem 0.8rem;
+  font-size: 0.95rem;
+  font-weight: 500;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.15s ease;
+  font-family: inherit;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.view-btn {
+  background-color: #22c55e;
+  color: white;
+
+  i {
     font-size: 1rem;
-    font-weight: 500;
-    font-family: inherit;
-    cursor: pointer;
-    transition: all 0.25s ease;
-    text-align: center;
-    border: none;
   }
 
-  .cancel-btn {
-    background-color: #e5e7eb; // xám nhạt
-    color: #6b7280;            // xám đậm
-
-    &:hover {
-      background-color: #dc2626; // đỏ khi hover
-      color: white;
-      transform: scale(1.02);
-      box-shadow: 0 2px 6px rgba(220, 38, 38, 0.3);
-    }
+  &:hover {
+    background-color: #15803d;
+    transform: scale(1.05);
   }
 
-  .apply-btn {
-    background-color: #4caf50;
-    color: white;
-
-    &:hover {
-      background-color: #388e3c;
-      transform: scale(1.02);
-      box-shadow: 0 2px 6px rgba(76, 175, 80, 0.3);
-    }
+  &:active {
+    transform: scale(0.98);
   }
 }
-

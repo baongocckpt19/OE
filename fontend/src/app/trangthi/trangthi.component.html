@@ -51,4 +51,18 @@
         </div>
 
     </div>
+
+
+    <!-- Modal hiển thị kết quả -->
+    <div class="result-modal" *ngIf="showResultModal">
+        <div class="modal-content">
+            <h2>🎉 Kết quả bài thi</h2>
+            <p>Điểm của bạn: <strong>{{ examScore }}</strong></p>
+            <div class="modal-buttons">
+                <button (click)="reviewExam()">Xem lại bài thi</button>
+                <button (click)="exitExam()">Thoát</button>
+            </div>
+        </div>
+    </div>
+
 </div>
