@@ -50,11 +50,17 @@ export class DeThiComponent {
         console.error('Lỗi lấy danh sách teacher:', err); // Nếu có lỗi
       }
     });
-
-
   }
 
 
+  deleteDethi(id: number) {
+    if (confirm('Bạn có chắc chắn muốn xóa câu hỏi này?')) {
+      this.deThiService.deleteDethi(id).subscribe({
+        next: () => this.loadDethis(),
+        error: () => alert('Lỗi khi xóa câu hỏi')
+      });
+    }
+  }
   ngOnDestroy(): void {
     if (this.subscription) {
       this.subscription.unsubscribe();
@@ -105,17 +111,6 @@ export class DeThiComponent {
     return user ? (user.username || 'Unknown') : 'Unknown';
   }
 
-
-
-
-
-
-  deleteDethi(id: number): void {
-    // Gọi service để xóa đề thi dựa trên ID
-
-    console.log(`Xóa đề thi với ID: ${id}`);
-    // this.deThiService.deleteDethi(id).subscribe(...);
-  }
 
   editDethi(id: number): void {
     // Điều hướng đến trang chỉnh sửa đề thi với ID tương ứng

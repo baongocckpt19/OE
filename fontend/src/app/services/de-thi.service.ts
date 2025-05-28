@@ -41,10 +41,15 @@ export class DeThiService {
   getDethis(): Observable<Dethi[]> {
     return this.http.get<Dethi[]>(this.apiUrl);
   }
+  deleteDethi(id: number): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/${id}`, {
+      responseType: 'text',
+      observe: 'response',
+    });
+  }
 
 
 
-  
   // Lấy chi tiết đề thi theo ID (gồm đề + danh sách câu hỏi)
   getDethiDetails(id: number): Observable<DethiDetailsResponse> {
     const token = sessionStorage.getItem('token');
@@ -55,33 +60,33 @@ export class DeThiService {
     return this.http.get<DethiDetailsResponse>(`${this.apiUrl}/details/${id}`);
   }
 
-addExam(examData: any, userId: number): Observable<any> {
-  return this.http.post(
-    `${this.apiUrl}/addExam?userId=${userId}`,
-    examData
-  );
-}
+  addExam(examData: any, userId: number): Observable<any> {
+    return this.http.post(
+      `${this.apiUrl}/addExam?userId=${userId}`,
+      examData
+    );
+  }
 
-addQuestionsToExam(examId: number, questionIds: number[]): Observable<string> {
-  const url = `${this.apiUrl}/${examId}/questions`;
-  const token = sessionStorage.getItem('token');
-  const headers = new HttpHeaders({
-    'Authorization': `Bearer ${token}`,
-    'Content-Type': 'application/json'
-  });
+  addQuestionsToExam(examId: number, questionIds: number[]): Observable<string> {
+    const url = `${this.apiUrl}/${examId}/questions`;
+    const token = sessionStorage.getItem('token');
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json'
+    });
 
-  console.log('📤 Payload gửi lên backend:', questionIds);
+    console.log('📤 Payload gửi lên backend:', questionIds);
 
-  // Gửi trực tiếp mảng, KHÔNG gói vào object
-  return this.http.post<string>(url, questionIds, {
-    headers,
-    responseType: 'text' as 'json'
-  });
-}
+    // Gửi trực tiếp mảng, KHÔNG gói vào object
+    return this.http.post<string>(url, questionIds, {
+      headers,
+      responseType: 'text' as 'json'
+    });
+  }
 
-submitExam(payload: any): Observable<{ score: number }> {
- return this.http.post<{ score: number }>('http://localhost:8080/api/dethi/submit-exam', payload);
+  submitExam(payload: any): Observable<{ score: number }> {
+    return this.http.post<{ score: number }>('http://localhost:8080/api/dethi/submit-exam', payload);
 
-}
+  }
 
 }
