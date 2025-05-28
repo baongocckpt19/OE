@@ -1,6 +1,7 @@
 package com.example.backend.controller;
 
 import com.example.backend.model.Student;
+import com.example.backend.model.User;
 import com.example.backend.services.StudentService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

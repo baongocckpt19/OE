@@ -8,6 +8,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
 import com.example.backend.model.Student;
+import com.example.backend.model.User;
 import com.example.backend.repository.StudentRepository;
 
 @Service

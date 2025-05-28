@@ -78,8 +78,8 @@
         <tr *ngFor="let score of filteredScores; let i = index">
           <td>{{ i + 1 }}</td>
           <td>{{ score.examName }}</td>
-          <td>{{ score.subject }}</td>
-          <td>{{ score.finishedAt }}</td>
+          <td>{{ score.name_of_subject }}</td>
+          <td>{{ score.submittedAt| date:'dd/MM/yyyy' }}</td>
           <td>{{ score.score }}</td>
         </tr>
       </tbody>

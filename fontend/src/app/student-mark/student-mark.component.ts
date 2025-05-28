@@ -1,8 +1,8 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HeaderComponent } from '../header/header.component';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Subscription } from 'rxjs';
+import { HeaderComponent } from '../header/header.component';
 import { ScoreService } from '../services/score.service';
 
 @Component({
@@ -28,19 +28,66 @@ export class StudentMarkComponent implements OnInit, OnDestroy {
 
   private subscription?: Subscription;
 
-  constructor(private scoreService: ScoreService) {}
+  constructor(private scoreService: ScoreService) { }
 
   ngOnInit(): void {
-    this.subscription = this.scoreService.getScores().subscribe({
-      next: (data) => {
-        this.scores = data;
-        this.filteredScores = data;
-      },
-      error: (err) => {
-        console.error('Lỗi khi tải điểm số:', err);
+    const currentUserStr = localStorage.getItem('currentUser');
+    if (!currentUserStr) {
+      console.warn('Không tìm thấy currentUser trong localStorage');
+      return;
+    }
+
+    try {
+      const currentUser = JSON.parse(currentUserStr);
+      const userId = currentUser?.user_id;
+
+      if (!userId) {
+        console.warn('Không tìm thấy user_id trong currentUser');
+        return;
       }
-    });
+
+      this.subscription = this.scoreService.getScoresByUser(userId).subscribe({
+        next: async (data) => {
+          this.scores = data;
+
+          // Lấy examName cho từng score, giả sử có examId trong score
+          for (const score of this.scores) {
+        this.scores.forEach(score => {
+          // Gọi API lấy examName
+          this.scoreService.getExamById(score.examId).subscribe({
+            next: (exam) => {
+              score.examName = exam.examName;
+            },
+            error: () => {
+              score.examName = 'Không xác định';
+            }
+          });
+
+          // Gọi API lấy name_of_subject (giả sử có method getSubjectById)
+          this.scoreService.getSubjectById(score.examId).subscribe({
+            next: (subject) => {
+              score.name_of_subject = subject.name_of_subject;
+            },
+            error: () => {
+              score.name_of_subject = 'Không xác định';
+            }
+          });
+        });
+          }
+
+          this.filteredScores = [...this.scores];
+        },
+        error: (err) => {
+          console.error('Lỗi khi tải điểm số:', err);
+        }
+      });
+    } catch (e) {
+      console.error('Lỗi parse currentUser từ localStorage:', e);
+    }
   }
+
+
+
 
   ngOnDestroy(): void {
     this.subscription?.unsubscribe();
