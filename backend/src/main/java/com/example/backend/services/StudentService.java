@@ -36,7 +36,8 @@ public class StudentService {
             throw e; // rollback
         }
     }
-
+    
+    
     // Thêm các phương thức mới phù hợp với repository
     public List<Student> getStudentsByClass(String className) {
         return studentRepository.findByStudentClass(className);

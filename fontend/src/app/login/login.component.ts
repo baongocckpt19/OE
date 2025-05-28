@@ -1,15 +1,17 @@
 import { HttpClientModule } from '@angular/common/http';
-import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AccountService } from '../services/account-service.service';
+import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common'
 
 @Component({
   selector: 'app-login',
   standalone: true,
   imports: [
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    CommonModule
   ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
@@ -19,15 +21,18 @@ export class LoginComponent {
     username: '',
     password_hash: '',
     role: 'student' // Giá trị mặc định
+
   };
 
   isTeacher: boolean = false;
-
+  showPassword = false;
   constructor(
     public accountService: AccountService,
     private router: Router
   ) {}
-
+  togglePasswordVisibility() {
+    this.showPassword = !this.showPassword;
+  }
  login() {
   this.model.role = this.isTeacher ? 'teacher' : 'student';
 

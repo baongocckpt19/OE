@@ -81,4 +81,5 @@ public class Result {
     public void setSubmittedAt(LocalDateTime submittedAt) {
         this.submittedAt = submittedAt;
     }
-}
+    
+}   

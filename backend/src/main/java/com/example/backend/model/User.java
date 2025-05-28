@@ -123,6 +123,6 @@ public class User {
     public void setCreatedAt(LocalDate createdAt) {
         this.createdAt = createdAt;
     }
-
+    
 
 }

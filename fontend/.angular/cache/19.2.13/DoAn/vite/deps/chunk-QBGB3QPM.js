@@ -1,31 +1,19 @@
 import {
   withHttpTransferCache
-<<<<<<<< HEAD:fontend/.angular/cache/19.2.13/DoAn/vite/deps/chunk-QBGB3QPM.js
 } from "./chunk-JVBOKW6K.js";
-========
-} from "./chunk-44SKUFK4.js";
->>>>>>>> 3fd9d6c7d56edbbea24be03f326ebf95563d72fc:fontend/.angular/cache/19.2.13/DoAn/vite/deps/chunk-YN7WHQRO.js
 import {
   CommonModule,
   DomAdapter,
   getDOM,
   setRootDomAdapter
-<<<<<<<< HEAD:fontend/.angular/cache/19.2.13/DoAn/vite/deps/chunk-QBGB3QPM.js
 } from "./chunk-OL7WVFLG.js";
-========
-} from "./chunk-RGMZPDN3.js";
->>>>>>>> 3fd9d6c7d56edbbea24be03f326ebf95563d72fc:fontend/.angular/cache/19.2.13/DoAn/vite/deps/chunk-YN7WHQRO.js
 import {
   DOCUMENT,
   PLATFORM_BROWSER_ID,
   XhrFactory,
   isPlatformServer,
   parseCookieValue
-<<<<<<<< HEAD:fontend/.angular/cache/19.2.13/DoAn/vite/deps/chunk-QBGB3QPM.js
 } from "./chunk-P3LJCSKC.js";
-========
-} from "./chunk-7WXCYLWH.js";
->>>>>>>> 3fd9d6c7d56edbbea24be03f326ebf95563d72fc:fontend/.angular/cache/19.2.13/DoAn/vite/deps/chunk-YN7WHQRO.js
 import {
   APP_ID,
   ApplicationModule,
@@ -84,11 +72,7 @@ import {
   ɵɵdefineInjector,
   ɵɵdefineNgModule,
   ɵɵinject
-<<<<<<<< HEAD:fontend/.angular/cache/19.2.13/DoAn/vite/deps/chunk-QBGB3QPM.js
 } from "./chunk-D7Y4CFTW.js";
-========
-} from "./chunk-3HDXZIZQ.js";
->>>>>>>> 3fd9d6c7d56edbbea24be03f326ebf95563d72fc:fontend/.angular/cache/19.2.13/DoAn/vite/deps/chunk-YN7WHQRO.js
 import {
   __spreadProps,
   __spreadValues
@@ -2031,8 +2015,4 @@ export {
    * License: MIT
    *)
 */
-<<<<<<<< HEAD:fontend/.angular/cache/19.2.13/DoAn/vite/deps/chunk-QBGB3QPM.js
 //# sourceMappingURL=chunk-QBGB3QPM.js.map
-========
-//# sourceMappingURL=chunk-YN7WHQRO.js.map
->>>>>>>> 3fd9d6c7d56edbbea24be03f326ebf95563d72fc:fontend/.angular/cache/19.2.13/DoAn/vite/deps/chunk-YN7WHQRO.js

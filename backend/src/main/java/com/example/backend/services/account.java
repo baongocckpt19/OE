@@ -26,11 +26,11 @@ public class account {
     }
 
  public boolean register(Map<String, Object> data) {
-    System.out.println("📥 Dữ liệu nhận từ frontend: " + data);
+    System.out.println("Dữ liệu nhận từ frontend: " + data);
 
     String username = (String) data.get("username");
     if (studentRepository.existsByUsername(username)) {
-        System.out.println("⛔ Username đã tồn tại: " + username);
+        System.out.println("Username đã tồn tại: " + username);
         return false;
     }
 
@@ -45,19 +45,11 @@ public class account {
     try {
         birthday = LocalDate.parse(dobStr); // ISO format: yyyy-MM-dd
     } catch (DateTimeParseException e) {
-        System.out.println("⛔ Lỗi định dạng ngày sinh: " + dobStr);
+        System.out.println("Lỗi định dạng ngày sinh: " + dobStr);
         return false;
     }
 
-    // ✅ In log từng trường để dễ kiểm tra lỗi
-    System.out.println("👤 username = " + username);
-    System.out.println("🔐 password = " + password);
-    System.out.println("📧 email = " + email);
-    System.out.println("🧍 fullname = " + fullName);
-    System.out.println("🏫 class = " + studentClass);
-    System.out.println("📅 dob = " + dobStr);
-    System.out.println("📆 birthday (parsed) = " + birthday);
-    System.out.println("🎓 role = " + role);
+
 
     String passwordHash = password; // Không mã hóa
 
@@ -70,17 +62,9 @@ public class account {
         studentClass,
         role
     );
+    return false;
 
-    // ✅ Bọc save trong try-catch để phát hiện lỗi ghi CSDL
-    try {
-        studentRepository.save(newUser);
-        System.out.println("✅ Lưu user vào database: " + username);
-        return true;
-    } catch (Exception e) {
-        System.out.println("❌ Lỗi khi lưu vào DB: " + e.getMessage());
-        e.printStackTrace();
-        return false;
-    }
+   
 }
     
     public int getTotalStudents() {

@@ -15,11 +15,14 @@
         </div>
 
         <div class="form-group">
-          <div class="input-container">
-            <input type="password" id="password" name="password" [(ngModel)]="model.password_hash" placeholder="Mật khẩu">
-            <i class="fas fa-lock input-icon"></i>
-          </div>
-        </div>
+  <div class="input-container">
+    <input [type]="showPassword ? 'text' : 'password'" id="password" name="password"
+           [(ngModel)]="model.password_hash" placeholder="Mật khẩu">
+    <i class="fas fa-lock input-icon"></i>
+    <i class="fas" [ngClass]="showPassword ? 'fa-eye-slash' : 'fa-eye'"
+       (click)="togglePasswordVisibility()" class="toggle-password-icon"></i>
+  </div>
+</div>
 
         <div class="checkbox-group">
           <input type="checkbox" id="teacher" [(ngModel)]="isTeacher"  name="isTeacher">
@@ -29,7 +32,7 @@
         <button type="button" class="login-button" (click)="login()">Đăng nhập</button>
 
        <div class="form-links">
-  <a href="#" class="forgot-password">Quên mật khẩu?</a>
+
   <p class="register-line">
     Bạn chưa có tài khoản? <a class="register-link" href="#" (click)="navigateToSignup(); $event.preventDefault()">Đăng kí ngay!</a>
   </p>

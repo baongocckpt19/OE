@@ -1,10 +1,6 @@
 import {
   InjectionToken
-<<<<<<<< HEAD:fontend/.angular/cache/19.2.13/DoAn/vite/deps/chunk-P3LJCSKC.js
 } from "./chunk-D7Y4CFTW.js";
-========
-} from "./chunk-3HDXZIZQ.js";
->>>>>>>> 3fd9d6c7d56edbbea24be03f326ebf95563d72fc:fontend/.angular/cache/19.2.13/DoAn/vite/deps/chunk-7WXCYLWH.js
 
 // node_modules/@angular/common/fesm2022/dom_tokens-rA0ACyx7.mjs
 var DOCUMENT = new InjectionToken(ngDevMode ? "DocumentToken" : "");
@@ -51,8 +47,4 @@ export {
    * License: MIT
    *)
 */
-<<<<<<<< HEAD:fontend/.angular/cache/19.2.13/DoAn/vite/deps/chunk-P3LJCSKC.js
 //# sourceMappingURL=chunk-P3LJCSKC.js.map
-========
-//# sourceMappingURL=chunk-7WXCYLWH.js.map
->>>>>>>> 3fd9d6c7d56edbbea24be03f326ebf95563d72fc:fontend/.angular/cache/19.2.13/DoAn/vite/deps/chunk-7WXCYLWH.js
