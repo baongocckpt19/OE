@@ -1,6 +1,6 @@
 package com.example.backend.services;
 
-import com.example.backend.model.Student;
+import com.example.backend.model.User;
 import com.example.backend.repository.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,7 +17,7 @@ public class StudentService {
         this.studentRepository = studentRepository;
     }
 
-    public List<Student> getAllStudents() {
+    public List<User> getAllStudents() {
         return studentRepository.findByRole("student");
     }
 
@@ -37,15 +37,15 @@ public class StudentService {
     }
 
     // Thêm các phương thức mới phù hợp với repository
-    public List<Student> getStudentsByClass(String className) {
+    public List<User> getStudentsByClass(String className) {
         return studentRepository.findByStudentClass(className);
     }
 
-    public List<Student> getStudentsByRole(String role) {
+    public List<User> getStudentsByRole(String role) {
         return studentRepository.findByRole(role);
     }
     
-    public List<Student> getStudentsByEmailDomain(String domain) {
+    public List<User> getStudentsByEmailDomain(String domain) {
         return studentRepository.findByEmailDomain(domain);
     }
 }

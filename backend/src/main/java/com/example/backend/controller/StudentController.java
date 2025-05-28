@@ -1,6 +1,6 @@
 package com.example.backend.controller;
 
-import com.example.backend.model.Student;
+import com.example.backend.model.User;
 import com.example.backend.services.StudentService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,26 +20,26 @@ public class StudentController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Student>> getAllStudents() {
-        List<Student> students = studentService.getAllStudents();
+    public ResponseEntity<List<User>> getAllStudents() {
+        List<User> students = studentService.getAllStudents();
         return new ResponseEntity<>(students, HttpStatus.OK);
     }
 
     @GetMapping("/class/{className}")
-    public ResponseEntity<List<Student>> getStudentsByClass(@PathVariable String className) {
-        List<Student> students = studentService.getStudentsByClass(className);
+    public ResponseEntity<List<User>> getStudentsByClass(@PathVariable String className) {
+        List<User> students = studentService.getStudentsByClass(className);
         return new ResponseEntity<>(students, HttpStatus.OK);
     }
 
     @GetMapping("/role/{role}")
-    public ResponseEntity<List<Student>> getStudentsByRole(@PathVariable String role) {
-        List<Student> students = studentService.getStudentsByRole(role);
+    public ResponseEntity<List<User>> getStudentsByRole(@PathVariable String role) {
+        List<User> students = studentService.getStudentsByRole(role);
         return new ResponseEntity<>(students, HttpStatus.OK);
     }
 
     @GetMapping("/email/{domain}")
-    public ResponseEntity<List<Student>> getStudentsByEmailDomain(@PathVariable String domain) {
-        List<Student> students = studentService.getStudentsByEmailDomain(domain);
+    public ResponseEntity<List<User>> getStudentsByEmailDomain(@PathVariable String domain) {
+        List<User> students = studentService.getStudentsByEmailDomain(domain);
         return new ResponseEntity<>(students, HttpStatus.OK);
     }
 
