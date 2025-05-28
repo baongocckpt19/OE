@@ -4,6 +4,8 @@ import { FormsModule } from '@angular/forms';
 import { HeaderComponent } from '../header/header.component';
 import { Router } from '@angular/router';
 import { DeThiService } from '../services/de-thi.service';
+import Swal from 'sweetalert2';
+
 @Component({
   selector: 'app-de-thi-student',
   standalone: true,
@@ -21,7 +23,7 @@ export class DeThiStudentComponent implements OnInit {
   subjects: string[] = [];
 
 
-  
+
   constructor(private router: Router, private deThiService: DeThiService) {}
   ngOnInit(): void {
   this.deThiService.getDethis().subscribe(
@@ -66,10 +68,21 @@ export class DeThiStudentComponent implements OnInit {
     this.showFilter = false;
   }
   startExam(examId: number): void {
-    console.log('Bắt đầu làm bài thi ID:', examId);
-    this.router.navigate(['/trangthi', examId]).catch(error => {
-      console.error('Không thể chuyển đến trang thi:', error);
-      alert('Không thể chuyển đến trang thi. Vui lòng thử lại sau.');
-    });
-  }
+  Swal.fire({
+    title: 'Bạn sẵn sàng làm bài chưa?',
+    text: 'Sau khi bắt đầu, thời gian sẽ được tính và bạn không thể quay lại.',
+    icon: 'question',
+    showCancelButton: true,
+    confirmButtonText: 'Sẵn sàng',
+    cancelButtonText: 'Hủy'
+  }).then((result) => {
+    if (result.isConfirmed) {
+      this.router.navigate(['/trangthi', examId]).catch(error => {
+        console.error('Không thể chuyển đến trang thi:', error);
+        Swal.fire('Lỗi!', 'Không thể chuyển đến trang thi. Vui lòng thử lại sau.', 'error');
+      });
+    }
+  });
+}
+
 }
