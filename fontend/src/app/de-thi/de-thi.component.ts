@@ -21,7 +21,7 @@ export class DeThiComponent {
   dethis: any[] = [];
   filteredDethis: any[] = [];
   searchTerm: string = '';
-  users: { userId: number; username: string; role: string }[] = [];
+  users: { userId: number; role: string ;fullname: string}[] = [];
   showFilter = false;
   filterSubject = '';
   filterDate: string | null = null;
@@ -33,21 +33,28 @@ export class DeThiComponent {
   constructor(private deThiService: DeThiService, private router: Router, private userService: AccountService) { }
 
 
-  ngOnInit(): void {
-    this.userService.getStudentsByRole('teacher').subscribe({
+ngOnInit(): void {
+    // Đăng ký usersSubscription để quản lý việc hủy đăng ký
+    this.usersSubscription = this.userService.getStudentsByRole('teacher').subscribe({
       next: (data) => {
-        this.users = data.map((s: any) => ({
-          userId: s.userId, // hoặc s.userId tùy API trả về
-          username: s.fullname || s.name || s.username||s.userName, // lấy đúng trường tên
-          role: s.role
-        }));
+        console.log('Dữ liệu gốc từ API (teachers):', data); // Kiểm tra dữ liệu thô từ API
+        if (data && Array.isArray(data)) {
+          this.users = data.map((s: any) => ({
+            userId: s.userId || s.id, // Sử dụng s.userId hoặc s.id tùy thuộc vào API trả về
+            fullname: s.fullName || s.name || 'Unknown User', // Ưu tiên full_name, nếu không có thì dùng name, nếu không có nữa thì Unknown User
+            role: s.role || 'Unknown Role' // Lấy role
+          }));
+          console.log('Populated this.users array:', this.users); // Kiểm tra mảng users đã được ánh xạ
+        } else {
+          console.warn('API trả về dữ liệu không hợp lệ cho teachers:', data);
+          this.users = []; // Đảm bảo users là một mảng rỗng nếu dữ liệu không hợp lệ
+        }
 
-        console.log('Dữ liệu gốc từ API:', data); // <=== Thêm dòng này để kiểm tra dữ liệu
-
-        this.loadDethis(); 
+        this.loadDethis(); // Đảm bảo loadDethis được gọi sau khi users được nạp
       },
       error: (err) => {
-        console.error('Lỗi lấy danh sách teacher:', err); // Nếu có lỗi
+        console.error('Lỗi lấy danh sách teacher:', err);
+        // Có thể hiển thị thông báo cho người dùng ở đây
       }
     });
   }
@@ -104,13 +111,12 @@ export class DeThiComponent {
     });
   }
 
-  getUsernameById(userId: number | string): string {
-    const id = +userId;
-    const user = this.users.find(u => u.userId === id); // Bỏ điều kiện role
-    console.log(`Tìm userId = ${id} =>`, user);
-    return user ? (user.username || 'Unknown') : 'Unknown';
-  }
-
+getUsernameById(userId: number | string): string {
+  const id = +userId;
+  const user = this.users.find(u => u.userId === id); // Bỏ điều kiện role
+  console.log(`Tìm userId = ${id} =>`, user);
+  return user ? (user.fullname || 'Unknown') : 'Unknown';
+}
 
   editDethi(id: number): void {
     // Điều hướng đến trang chỉnh sửa đề thi với ID tương ứng

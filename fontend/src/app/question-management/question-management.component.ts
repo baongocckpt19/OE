@@ -15,7 +15,7 @@ import { QuestionService } from '../services/question.service';
 export class QuestionManagementComponent {
   questions: any[] = [];
   filteredQuestions: any[] = [];
-  users: any[] = [];
+users: { userId: number; fullname: string }[] = [];
   searchText = '';
   showFilter = false;
   filterSubject = '';
@@ -39,33 +39,49 @@ export class QuestionManagementComponent {
     this.loadUsers();
   }
 
-  getEmptyQuestion() {
-    return {
-      questionText: '',
-      option1: '',
-      option2: '',
-      option3: '',
-      option4: '',
-      correctOption: 1,
-      nameOfSubject: '',
-      difficulty: 'dễ',
-      createdBy: 1
-    };
-  }
+getEmptyQuestion() {
+  const storedUser = localStorage.getItem('currentUser');
+  const currentUser = storedUser ? JSON.parse(storedUser) : null;
 
-  loadUsers() {
-    this.questionService.getUsers().subscribe({
+  return {
+    questionText: '',
+    option1: '',
+    option2: '',
+    option3: '',
+    option4: '',
+    correctOption: 1,
+    nameOfSubject: '',
+    difficulty: 'dễ',
+    createdBy: currentUser?.user_id || null, // Gán userId từ localStorage
+  };
+}
+
+ loadUsers() {
+    this.questionService.getUsers().subscribe({ // Giữ nguyên getUsers() nếu đây là API bạn dùng để lấy user data
       next: data => {
-        this.users = data;
-        console.log('Dữ liệu người dùng:', data);
+        console.log('Dữ liệu gốc từ API (users cho QuestionManagement):', data); // Log dữ liệu thô từ API
+
+        if (data && Array.isArray(data)) {
+          // Ánh xạ dữ liệu để tạo thuộc tính 'fullname'
+          this.users = data.map((user: any) => ({
+            userId: user.userId || user.id, // Đảm bảo lấy đúng ID người dùng
+            // Ưu tiên 'full_name' (từ API), sau đó 'name', và cuối cùng là 'username'
+            fullname: user.fullName || user.name || 'Unknown User',
+          }));
+          console.log('Mảng users đã được ánh xạ (QuestionManagement):', this.users); // Log mảng users sau khi ánh xạ
+        } else {
+          console.warn('API trả về dữ liệu không hợp lệ cho người dùng (QuestionManagement):', data);
+          this.users = []; // Đảm bảo mảng users rỗng nếu dữ liệu không hợp lệ
+        }
       },
-      error: err => console.error('Lỗi khi tải danh sách người dùng:', err)
+      error: err => console.error('Lỗi khi tải danh sách người dùng (QuestionManagement):', err)
     });
   }
 
   loadQuestions() {
     this.questionService.getQuestions().subscribe({
       next: data => {
+         console.log('Dữ liệu gốc từ API (teachers):', data);
         console.log('Dữ liệu câu hỏi:', data.map(q => ({ id: q.id, createdBy: q.createdBy, type: typeof q.createdBy })));
         this.questions = this.filteredQuestions = data;
         this.subjects = [...new Set(data.map(q => q.nameOfSubject))];
@@ -75,9 +91,10 @@ export class QuestionManagementComponent {
   }
 
   getUsernameById(userId: any): string {
-    const id = +userId;
+    const id = +userId; // Chuyển đổi userId sang kiểu số
     const user = this.users.find(u => +u.userId === id);
-    return user ? user.username : 'Không rõ';
+    // Trả về user.fullname (chữ 'f' thường)
+    return user ? user.fullname : 'Không rõ';
   }
 
   onSearch() {
@@ -133,8 +150,14 @@ export class QuestionManagementComponent {
       alert('Vui lòng nhập đầy đủ nội dung câu hỏi và các phương án!');
       return;
     }
+  const storedUser = localStorage.getItem('currentUser');
+  const currentUser = storedUser ? JSON.parse(storedUser) : null;
 
-    const payload = { ...this.question };
+  const payload = {
+    ...this.question,
+    createdBy: currentUser?.userId || this.question.createdBy,
+  };
+    //const payload = { ...this.question };
 
     if (this.isEditMode && this.editingQuestionId !== null) {
       // Chế độ chỉnh sửa
