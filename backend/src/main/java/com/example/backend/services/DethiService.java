@@ -133,10 +133,7 @@ public class DethiService {
 
         return score;
     }
-    @Transactional
-    public void deleteDethi(Long id) {
-            examRepository.deleteExamById(id); // Xóa bản ghi liên quan trong user_answers
-    }
+
 
     // cập nhật edit dề thi baongoc
     public boolean updateExam(Long id, Dethi exam) {
@@ -146,15 +143,14 @@ public class DethiService {
                 exam.getName_of_subject(),
                 exam.getDescription(),
                 exam.getDuration(),
-                id
-        );
+                id);
         return rows > 0;
     }
+
     @Transactional
     public void replaceQuestions(Long examId, List<Long> questionIds) {
         // 1. Xóa toàn bộ câu hỏi cũ trong đề thi
         examQuestionRepository.softDeleteByExamId(examId);
-
 
         // 2. Lấy danh sách câu hỏi mới theo ID
         List<Question> newQuestions = questionRepository.findAllById(questionIds);
@@ -166,6 +162,13 @@ public class DethiService {
 
         // 4. Lưu vào database
         examQuestionRepository.saveAllExamQuestions(examQuestions);
+    }
+
+    @Transactional
+    public void deleteExamWithDependencies(Long examId) {
+        // Xóa bảng phụ trước
+        examRepository.deleteExamCascade(examId);
+
     }
 
 }

@@ -46,12 +46,15 @@ export class DeThiService {
   getDethis(): Observable<Dethi[]> {
     return this.http.get<Dethi[]>(this.apiUrl);
   }
-  deleteDethi(id: number): Observable<any> {
-    return this.http.delete(`${this.apiUrl}/${id}`, {
-      responseType: 'text',
-      observe: 'response',
-    });
-  }
+deleteDethi(id: number) {
+  const token = sessionStorage.getItem('token');
+  const headers = new HttpHeaders({
+    Authorization: `Bearer ${token}`
+  });
+  return this.http.delete(`${this.apiUrl}/${id}`, { headers });
+}
+
+
 
 
 
@@ -96,31 +99,31 @@ export class DeThiService {
   getExamById(id: number): Observable<Dethi> {
     return this.http.get<Dethi>(`${this.apiUrl}/${id}`);
   }
-//// cập nhât đề thi
-updateExam(id: number, exam: Dethi): Observable<any> {
-  return this.http.put(`http://localhost:8080/api/dethi/${id}`, exam, {
-    responseType: 'text'
-  });
-}
+  //// cập nhât đề thi
+  updateExam(id: number, exam: Dethi): Observable<any> {
+    return this.http.put(`http://localhost:8080/api/dethi/${id}`, exam, {
+      responseType: 'text'
+    });
+  }
 
   // Thay thế câu hỏi trong đề thi  
-replaceQuestionsInExam(examId: number, questionIds: number[]): Observable<any> {
-  const url = `${this.apiUrl}/${examId}/replace-questions`;
-  const token = sessionStorage.getItem('token');
-  const headers = new HttpHeaders({
-    'Authorization': `Bearer ${token}`,
-    'Content-Type': 'application/json'
-  });
+  replaceQuestionsInExam(examId: number, questionIds: number[]): Observable<any> {
+    const url = `${this.apiUrl}/${examId}/replace-questions`;
+    const token = sessionStorage.getItem('token');
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json'
+    });
 
-  return this.http.put(url, questionIds, {
-    headers,
-    responseType: 'text' as 'json'
-  });
-}
-softDeleteQuestionFromExam(examId: number, questionId: number): Observable<any> {
-  return this.http.put(`http://localhost:8080/api/dethi/questions/soft-delete/${examId}/${questionId}`, {}, {
-    responseType: 'text'
-  });
-}
+    return this.http.put(url, questionIds, {
+      headers,
+      responseType: 'text' as 'json'
+    });
+  }
+  softDeleteQuestionFromExam(examId: number, questionId: number): Observable<any> {
+    return this.http.put(`http://localhost:8080/api/dethi/questions/soft-delete/${examId}/${questionId}`, {}, {
+      responseType: 'text'
+    });
+  }
 
 }

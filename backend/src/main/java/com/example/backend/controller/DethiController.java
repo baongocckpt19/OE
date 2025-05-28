@@ -52,7 +52,7 @@ public class DethiController {
 
     @PostMapping("/{examId}/questions")
     public ResponseEntity<?> addQuestionsToExam(@PathVariable("examId") Long examId,
-                                                @RequestBody List<Long> questionBankIds) {
+            @RequestBody List<Long> questionBankIds) {
         System.out.println("Received request to add questions to exam. Exam ID: " + examId);
         System.out.println("Question IDs to add: " + questionBankIds);
 
@@ -115,12 +115,13 @@ public class DethiController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteDethi(@PathVariable Long id) {
+    public ResponseEntity<?> deleteExam(@PathVariable("id") Long examId) {
         try {
-            examService.deleteDethi(id);
-            return ResponseEntity.ok("Deleted");
+            examService.deleteExamWithDependencies(examId);
+            return ResponseEntity.ok().build();
         } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Lỗi khi xóa đề thi: " + e.getMessage());
         }
     }
 

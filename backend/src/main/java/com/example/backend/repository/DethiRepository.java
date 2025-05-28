@@ -23,14 +23,13 @@ public class DethiRepository {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
-
     public Long saveExam(Dethi exam) {
         String sql = "INSERT INTO exams (exam_name, name_of_subject,description, duration, created_by, created_at) " +
                 "VALUES (?, ?, ?, ?,? ,?)";
 
         KeyHolder keyHolder = new GeneratedKeyHolder();
         jdbcTemplate.update(connection -> {
-            PreparedStatement ps = connection.prepareStatement(sql, new String[]{ "exam_id" });
+            PreparedStatement ps = connection.prepareStatement(sql, new String[] { "exam_id" });
             ps.setString(1, exam.getExamName());
             ps.setString(2, exam.getName_of_subject());
             ps.setString(3, exam.getDescription());
@@ -53,16 +52,33 @@ public class DethiRepository {
                 exam.getDuration(),
                 exam.getExamId());
     }
+
     public void softDeleteQuestionById(Long questionId) {
         String sql = "UPDATE question_bank SET is_deleted = 1 WHERE id = ?";
         jdbcTemplate.update(sql, questionId);
     }
 
-    // Xóa exam theo id
-    public int deleteExamById(Long exam_id) {
-        String sql = "DELETE FROM exams WHERE exam_id = ?";
-        return jdbcTemplate.update(sql, exam_id);
-    }
+public void deleteExamCascade(Long examId) {
+// 1. Xóa user_answers liên quan đến các câu hỏi trong đề thi
+    String sql1 = "DELETE FROM user_answers WHERE question_id IN (SELECT question_id FROM questions WHERE exam_id = ?)";
+    jdbcTemplate.update(sql1, examId);
+
+    // 2. Xóa user_answers gắn trực tiếp với exam_id (nếu có)
+    String sql1b = "DELETE FROM user_answers WHERE exam_id = ?";
+    jdbcTemplate.update(sql1b, examId);
+
+    // 3. Xóa kết quả thi
+    String sql2 = "DELETE FROM results WHERE exam_id = ?";
+    jdbcTemplate.update(sql2, examId);
+
+    // 5. Xóa câu hỏi trong đề thi
+    String sql4 = "DELETE FROM questions WHERE exam_id = ?";
+    jdbcTemplate.update(sql4, examId);
+
+    // 6. Cuối cùng xóa đề thi
+    String sql5 = "DELETE FROM exams WHERE exam_id = ?";
+    jdbcTemplate.update(sql5, examId);
+}
 
     // Lấy exam theo id
     public Optional<Dethi> findById(Long exam_id) {
@@ -91,7 +107,7 @@ public class DethiRepository {
     private static class ExamRowMapper implements RowMapper<Dethi> {
         @Override
         public Dethi mapRow(ResultSet resultSet, int rowNum) throws SQLException {
-            
+
             Dethi exam = new Dethi();
             exam.setExamId(resultSet.getLong("exam_id")); // Sửa từ "id" thành "exam_id"
             exam.setExamName(resultSet.getString("exam_name"));
