@@ -1,5 +1,6 @@
 package com.example.backend.repository;
 
+import com.example.backend.model.Student;
 import com.example.backend.model.User;
 import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -11,16 +12,16 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface StudentRepository extends JpaRepository<User, Long> {
+public interface StudentRepository extends JpaRepository<Student, Long> {
 
     @Query("SELECT s FROM Student s WHERE s.studentClass = :className")
-    List<User> findByClass(@Param("className") String className);
+    List<Student> findByClass(@Param("className") String className);
 
     @Query(value = "SELECT * FROM dbcusers WHERE email LIKE %:domain", nativeQuery = true)
-    List<User> findByEmailDomain(@Param("domain") String domain);
+    List<Student> findByEmailDomain(@Param("domain") String domain);
 
-    List<User> findByRole(String role);
-    List<User> findByStudentClass(String studentClass);
+    List<Student> findByRole(String role);
+    List<Student> findByStudentClass(String studentClass);
 
     // ✅ Thêm hàm kiểm tra tồn tại username (dành cho đăng ký)
     boolean existsByUsername(String username);

@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -26,9 +27,9 @@ import com.example.backend.services.DethiService; // Đã sửa lại import (se
 @RequestMapping("/api/dethi") // <--- Thêm annotation này để định nghĩa base path cho các endpoint
 @CrossOrigin(origins = "http://localhost:4200")
 public class DethiController {
-    @Autowired
-    private DethiService examService;
-
+    
+    private final  DethiService examService;
+@Autowired
     public DethiController(DethiService examService) {
         this.examService = examService;
     }
@@ -99,5 +100,13 @@ public class DethiController {
                     .body("Nộp bài thất bại: " + e.getMessage());
         }
     }
-
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteDethi(@PathVariable Long id) {
+        try {
+            examService.deleteDethi(id);
+            return ResponseEntity.ok("Deleted");
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
 }

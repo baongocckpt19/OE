@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
+import com.example.backend.model.Student;
 import com.example.backend.model.User;
 import com.example.backend.repository.StudentRepository;
 
@@ -60,7 +61,7 @@ public class account {
 
     String passwordHash = password; // Không mã hóa
 
-    User newUser = new User(
+    Student newUser = new Student(
         username,
         passwordHash,
         email,

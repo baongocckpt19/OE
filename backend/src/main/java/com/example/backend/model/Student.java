@@ -5,11 +5,11 @@ import java.time.LocalDate;
 
 @Entity
 @Table(name = "users") // Ánh xạ với tên bảng trong CSDL
-public class User {
+public class Student {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "user_id") // Ánh xạ với tên cột trong bảng
+    @Column(name = "User_id") // Ánh xạ với tên cột trong bảng
     private Long userId;
     
     @Column(name = "username", nullable = false, unique = true)
@@ -37,10 +37,10 @@ public class User {
     private LocalDate createdAt;
 
     // Constructor mặc định
-    public User() {}
+    public Student() {}
 
     // Constructor có tham số
-    public User(String username, String passwordHash, String email, 
+    public Student(String username, String passwordHash, String email, 
                    String fullName, LocalDate birthday, String studentClass, 
                    String role) {
         this.username = username;
