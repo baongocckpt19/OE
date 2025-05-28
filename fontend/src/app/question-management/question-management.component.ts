@@ -8,7 +8,7 @@ import { QuestionService } from '../services/question.service';
 @Component({
   selector: 'app-question-management',
   standalone: true,
-  imports: [CommonModule, FormsModule, HeaderComponent],
+  imports: [CommonModule, FormsModule],
   templateUrl: './question-management.component.html',
   styleUrls: ['./question-management.component.scss']
 })

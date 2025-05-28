@@ -10,7 +10,6 @@ import { QuestionService } from '../services/question.service';
   selector: 'app-sua-de-thi',
   standalone: true,
   imports: [
-    HeaderComponent,
     CommonModule,
     FormsModule,
     ReactiveFormsModule

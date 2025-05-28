@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-student-mark',
   standalone: true,
-  imports: [CommonModule, HeaderComponent, FormsModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './student-mark.component.html',
   styleUrls: ['./student-mark.component.scss']
 })

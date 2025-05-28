@@ -1,140 +1,135 @@
 .hocsinh {
-    flex: 1;
-    padding: 1.5rem;
-    margin-left: 5rem;
-    margin-top: 100px;
+  flex: 1;
+  padding: 1.5rem;
+  margin-left: 5rem;
+  margin-top: 100px;
   font-family: Roboto, sans-serif;
   color: #474747;
   font-size: 1rem;
 }
 
 .search-filter-container {
-    height: 2.5rem;
-    display: flex;
-    justify-content: space-between; /* Đưa ô tìm kiếm sang trái, nút lọc sang phải */
-    align-items: center;
-    margin-bottom: 1rem;
-}
-.search-box {
-    display: flex;
+  height: 2.5rem;
+  display: flex;
+  justify-content: space-between;
   align-items: center;
-  background: white;
+  margin-bottom: 1rem;
+}
+
+.search-box {
+  display: flex;
+  align-items: center;
+  background: #f1f0f0;
   padding: 0.5rem;
   border-radius: 15px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   width: 400px;
   height: 2rem;
-
-  background-color: #f1f0f0;
 }
-    
 
 .search-box input {
-    flex: 1;
-    border: none;
-    outline: none;
-    padding: 1rem;
-    border-radius: 999px;
-    background: none;
-    font-size: 1rem;
-  }
+  flex: 1;
+  border: none;
+  outline: none;
+  padding: 1rem;
+  border-radius: 999px;
+  background: none;
+  font-size: 1rem;
+}
 
 .search-box button {
-    margin-left: 9rem;
-    background: none;
-    border: none;
-    color: #6D28D9;
-    font-size: 1.2rem;
-    cursor: pointer;
+  margin-left: 9rem;
+  background: none;
+  border: none;
+  color: #6D28D9;
+  font-size: 1.2rem;
+  cursor: pointer;
 }
 
 .filter-btn {
-    background: #2563EB;
-    color: white;
-    border: none;
-    padding: 0.5rem 1rem;
-    border-radius: 15px;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    cursor: pointer;
-    margin-bottom: 0;
-    width: 8rem;
-    height: 2.5rem;
-    position: relative;
+  background: #2563EB;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 15px;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  width: 8rem;
+  height: 2.5rem;
 }
 
 .filter-btn i {
-    font-size: 1rem;
+  font-size: 1rem;
 }
-.action{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-   // margin-bottom: 1rem;
-    margin-left: 10%;
-    margin-right: 10%;
+
+.action {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-left: 10%;
+  margin-right: 10%;
 }
+
 .table-container {
-    width: 100%;
-    background: white;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
-    overflow: hidden;
-    margin: 0 auto;
+  width: 100%;
+  background: white;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  overflow: hidden;
+  margin: 0 auto;
 }
 
 table {
-    width: 100%;
-    border-collapse: collapse;
+  width: 100%;
+  border-collapse: collapse;
 }
 
 thead tr {
-    background: #f7db95;
-    text-align: center;
-
+  background: #f7db95;
+  text-align: center;
 }
+
 thead tr th {
-    background: #f7db95;
-    text-align: center;
-    border-right: 1px solid white; // Thêm đường kẻ màu trắng giữa các cột
-  }
-  
-  thead tr th:last-child {
-    border-right: none; // Loại bỏ đường kẻ ở cột cuối cùng
-  }
+  background: #f7db95;
+  text-align: center;
+  border-right: 1px solid white;
+}
+
+thead tr th:last-child {
+  border-right: none;
+}
+
 th,
 td {
-    padding: 2rem;
-    border-bottom: 1px solid #E5E7EB;
-    text-align: center;
-
+  padding: 2rem;
+  border-bottom: 1px solid #E5E7EB;
+  text-align: center;
 }
 
 tbody tr:nth-child(even) {
-    background: #F3E8FF;
-
+  background: #F3E8FF;
 }
 
 button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: rgb(255, 91, 137);
+  font-size: 1rem;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
 
-    background: none;
-    border: none;
-    cursor: pointer;
-    color: rgb(255, 91, 137);
-    font-size: 1rem;
-    width: 100%;
-    height: 100%;
-
-    text-align: center;
-    justify-content: center;
-    align-items: center;
-    &:hover {
-        transform: scale(1.1);
-       // box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
-    }
-
+  &:hover {
+    transform: scale(1.1);
+  }
 }
+
+/* ================= Modal ================= */
 .modal {
   position: fixed;
   top: 0;
@@ -154,8 +149,10 @@ button {
   border-radius: 12px;
   width: 80%;
   max-width: 800px;
+  max-height: 80vh;         /* 👈 Giới hạn chiều cao */
   box-shadow: 0 8px 20px rgba(0,0,0,0.2);
   animation: fadeIn 0.3s ease;
+  overflow-y: auto;         /* 👈 Cho phép cuộn */
 }
 
 @keyframes fadeIn {
@@ -163,16 +160,22 @@ button {
   to { opacity: 1; transform: translateY(0); }
 }
 
-
 .student-info p {
   margin: 0.5rem 0;
   font-size: 1.1rem;
 }
 
+/* Bọc bảng trong modal bằng div cuộn */
+.exam-table-container {
+  max-height: 300px;
+  overflow-y: auto;
+  margin-top: 1rem;
+}
+
 .exam-table {
   width: 100%;
   border-collapse: collapse;
-  margin-top: 1rem;
+  min-width: 600px;
 }
 
 .exam-table th, .exam-table td {
@@ -181,13 +184,17 @@ button {
   text-align: center;
 }
 
-.exam-table thead tr {
+.exam-table thead {
+  position: sticky;
+  top: 0;
   background-color: #f7db95;
+  z-index: 1;
 }
 
 .exam-table tbody tr:nth-child(even) {
   background-color: #f3e8ff;
 }
+
 .modal-actions {
   display: flex;
   justify-content: flex-end;
@@ -198,14 +205,15 @@ button {
   background-color: #007bff;
   color: white;
   border: none;
-  padding: 0.6rem 1rem;        // giữ chiều cao
+  padding: 0.6rem 1rem;
   border-radius: 12px;
   font-size: 1rem;
   cursor: pointer;
   transition: background-color 0.3s ease;
-  width: 80px;                 // giảm chiều ngang tại đây
+  width: 80px;
   text-align: center;
 }
+
 .close-button:hover {
-  background-color: #0056b3;   // màu sắc khi hover
+  background-color: #0056b3;
 }

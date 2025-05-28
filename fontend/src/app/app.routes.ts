@@ -4,17 +4,14 @@ import { LoginComponent } from './login/login.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { HocsinhComponent } from './hocsinh/hocsinh.component';
 import { QuestionManagementComponent } from './question-management/question-management.component';
-
 import { DeThiComponent } from './de-thi/de-thi.component';
 import { SignupComponent } from './signup/signup.component';
-import { ThemcauhoiComponent } from './themcauhoi/themcauhoi.component';
 import { ThemdethiComponent } from './themdethi/themdethi.component';
 import { authGuard } from './guard/auth.guard';
 import { DashboardStudentComponent } from './dashboard-student/dashboard-student.component';
 import { ChiTietDeThiComponent } from './chi-tiet-de-thi/chi-tiet-de-thi.component';
 import { StudentMarkComponent } from './student-mark/student-mark.component';
 import { TrangthiComponent } from './trangthi/trangthi.component';
-import { SuaCauHoiComponent } from './sua-cau-hoi/sua-cau-hoi.component';
 import { DeThiStudentComponent } from './de-thi-student/de-thi-student.component';
 import { SuaDeThiComponent } from './sua-de-thi/sua-de-thi.component';
 import { XemLaiBaiLamComponent } from './xem-lai-bai-lam/xem-lai-bai-lam.component';
@@ -61,12 +58,7 @@ export const routes: Routes = [
     data: { title: 'Thêm đề thi' },
     canActivate: [authGuard]
   },
-  {
-    path: 'them-cau-hoi',
-    component: ThemcauhoiComponent,
-    //data: {title:'Đề Thi'},
-    canActivate: [authGuard]
-  },
+
   {
     path: 'dashboard-student',
     component: DashboardStudentComponent,
@@ -88,18 +80,13 @@ export const routes: Routes = [
   {
     path: 'student-mark',
     component: StudentMarkComponent,
-    data: { title: 'Điểm số học sinh' },
+    data: { title: 'Điểm số' },
     canActivate: [authGuard]
   },
   {
     path: 'chi-tiet-de-thi/:id',
     component: ChiTietDeThiComponent,
     data: { title: 'Chi tiết đề thi' },
-    canActivate: [authGuard]
-  },
-  {
-    path: 'sua-cau-hoi',
-    component: SuaCauHoiComponent,
     canActivate: [authGuard]
   },
   {
