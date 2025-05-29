@@ -87,11 +87,7 @@ import {
   provideNetlifyLoader,
   registerLocaleData,
   setRootDomAdapter
-<<<<<<< HEAD
-} from "./chunk-3CCTEYJ3.js";
-=======
-} from "./chunk-GGRVDYZH.js";
->>>>>>> 8e881b3cdad3221c2e399a2cf948818c61b881a9
+} from "./chunk-OL7WVFLG.js";
 import {
   DOCUMENT,
   PLATFORM_BROWSER_ID,
@@ -100,14 +96,10 @@ import {
   isPlatformBrowser,
   isPlatformServer,
   parseCookieValue
-<<<<<<< HEAD
-} from "./chunk-GONUFVUX.js";
-=======
-} from "./chunk-2TLEZPVW.js";
->>>>>>> 8e881b3cdad3221c2e399a2cf948818c61b881a9
+} from "./chunk-P3LJCSKC.js";
 import {
   IMAGE_CONFIG
-} from "./chunk-NS2O7JMR.js";
+} from "./chunk-D7Y4CFTW.js";
 import "./chunk-P6U2JBMQ.js";
 import "./chunk-WDMUDEB6.js";
 export {
