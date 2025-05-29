@@ -21,5 +21,8 @@ public List<Result> getResultsByUserId(Long userId) {
     System.out.println("Results for user " + userId + ": " + results.size());
     return results;
 }
+    public List<Object[]> getResultsByExamId(int examId) {
+        return resultRepository.findResultsByExamId(examId);
+    }
 
 }

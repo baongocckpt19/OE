@@ -8,10 +8,14 @@
     </section>
 
     <!-- Đồng hồ đếm ngược -->
-    <div class="timer">
+    <div class="timer" [class.flashing]="isTimerFlashing">
         <span>⏰ Thời gian còn lại:</span>
         <strong>{{ displayTime }}</strong>
     </div>
+    <div class="warning-banner" *ngIf="showWarningBanner" >
+        ⏳ Cảnh báo: Thời gian sắp hết! Hãy kiểm tra bài làm của bạn.
+    </div>
+
 
     <div class="exam-layout">
         <!-- DANH SÁCH CÂU HỎI -->

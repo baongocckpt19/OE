@@ -23,5 +23,15 @@ public interface ResultRepository extends JpaRepository<Result, Long > {
                "WHERE r.user_id = :studentId ORDER BY r.submitted_at DESC", 
        nativeQuery = true)
     List<Object[]> findTop6RecentScores(int studentId);
-    List<Result> findByUserIdAndExamId(Long userId, Long examId);
+
+
+    @Query(value = """
+    SELECT u.user_id, u.full_name, u.class, r.score, FORMAT(r.submitted_at, 'yyyy-MM-dd HH:mm') as submitted_at
+    FROM results r
+    JOIN users u ON r.user_id = u.user_id
+    WHERE r.exam_id = :examId
+    ORDER BY r.score DESC
+""", nativeQuery = true)
+    List<Object[]> findResultsByExamId(int examId);
+
 }

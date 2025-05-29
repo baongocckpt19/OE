@@ -8,6 +8,7 @@ import { Router } from '@angular/router';
 import { FormsModule, NgModel } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { AccountService } from '../services/account-service.service';
+import { ScoreService } from '../services/score.service';
 
 
 @Component({
@@ -30,8 +31,12 @@ export class DeThiComponent {
 
   private subscription?: Subscription;
   private usersSubscription?: Subscription;
-  constructor(private deThiService: DeThiService, private router: Router, private userService: AccountService) { }
-
+  constructor(
+  private deThiService: DeThiService,
+  private scoreService: ScoreService,
+  private router: Router,
+  private userService: AccountService
+) { }
 
 ngOnInit(): void {
     // Đăng ký usersSubscription để quản lý việc hủy đăng ký
@@ -141,5 +146,39 @@ getUsernameById(userId: number | string): string {
     this.showFilter = false;
     this.filterDethis();
   }
+
+
+
+showScoreModal = false;
+selectedExam: any = null;
+selectedExamStudents: any[] = [];
+
+
+openStudentScoresModal(dethi: any) {
+  this.selectedExam = dethi;
+  this.scoreService.getScoresByExamId(dethi.examId).subscribe({
+    next: (data) => {
+      // Refactor mỗi phần tử [id, name, class, score, submitted_at] thành object rõ ràng
+      this.selectedExamStudents = data.map((s: any) => ({
+        userId: s[0],
+        fullName: s[1],
+        class: s[2],
+        score: s[3],
+      }));
+      this.showScoreModal = true;
+    },
+    error: (err) => {
+      console.error('❌ Lỗi lấy điểm học sinh theo đề:', err);
+    }
+  });
+}
+
+
+
+closeStudentScoresModal() {
+  this.showScoreModal = false;
+  this.selectedExam = null;
+  this.selectedExamStudents = [];
+}
 
 }

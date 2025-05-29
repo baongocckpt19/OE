@@ -24,7 +24,7 @@ export class TrangthiComponent implements OnInit, OnDestroy {
     private router: Router,
     private deThiService: DeThiService,
     private accountService: AccountService
-  ) {}
+  ) { }
 
   examId: number | null = null;
   questions: any[] = [];
@@ -36,6 +36,11 @@ export class TrangthiComponent implements OnInit, OnDestroy {
   hasSubmitted: boolean = false;
   showResultModal: boolean = false;
   examScore: number = 0;
+  showWarningBanner = false;
+
+  isTimerFlashing = false;
+
+  tenMinutesWarningShown = false;
 
   ngOnInit(): void {
     if (localStorage.getItem('hasSubmitted') === 'true') {
@@ -136,12 +141,30 @@ export class TrangthiComponent implements OnInit, OnDestroy {
       if (this.timeLeft > 0) {
         this.timeLeft--;
         this.updateDisplayTime();
+
+        // Hiển thị banner cảnh báo khi còn 10 phút
+        if (this.timeLeft === 600 && !this.tenMinutesWarningShown) {
+          this.showWarningBanner = true;
+          this.tenMinutesWarningShown = true;
+
+          // Ẩn banner sau 1 phút (60s)
+          setTimeout(() => {
+            this.showWarningBanner = false;
+          }, 60000);
+        }
+
+        // Bắt đầu nhấp nháy khi còn dưới 1 phút
+        if (this.timeLeft <= 60 && !this.isTimerFlashing) {
+          this.isTimerFlashing = true;
+        }
+
       } else {
         clearInterval(this.timerInterval);
         this.autoSubmitWhenTimeout();
       }
     }, 1000);
   }
+
 
   updateDisplayTime() {
     const minutes = Math.floor(this.timeLeft / 60);
