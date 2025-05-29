@@ -1,9 +1,11 @@
 package com.example.backend.repository;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.example.backend.model.Result;
@@ -33,5 +35,7 @@ public interface ResultRepository extends JpaRepository<Result, Long > {
     ORDER BY r.score DESC
 """, nativeQuery = true)
     List<Object[]> findResultsByExamId(int examId);
+@Query("SELECT r FROM Result r WHERE r.userId = :userId AND r.examId = :examId")
+Optional<Result> findByUserIdAndExamId(@Param("userId") Long userId, @Param("examId") Long examId);
 
 }

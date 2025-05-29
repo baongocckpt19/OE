@@ -1,20 +1,19 @@
-<nav class="sidebar"
-     [class.expanded]="isExpanded"
-     (mouseover)="onMouseEnter()"
-     (mouseleave)="onMouseLeave()">
+<nav class="sidebar" [class.expanded]="isExpanded"
+     (mouseenter)="onMouseEnter()" (mouseleave)="onMouseLeave()">
 
   <div class="profile">
-    <img src="..\images\Logo.png"/>
-    <div class="username" *ngIf="isExpanded">{{ displayName }}</div>
+    <img src="../images/Logo.png" alt="Logo" />
+    <div class="username" [class.visible]="isExpanded">{{ displayName }}</div>
   </div>
 
   <div class="menu-items">
     <div class="menu-item"
          *ngFor="let item of menuItems"
          [class.active]="item.route === currentRoute"
-         (click)="navigateTo(item.route)">
+         (click)="navigateTo(item.route)"
+         [attr.title]="!isExpanded ? item.label : null">
       <i class="fas {{ item.icon }}"></i>
-      <span class="menu-label" *ngIf="isExpanded">{{ item.label }}</span>
+      <span class="menu-label" [class.visible]="isExpanded">{{ item.label }}</span>
     </div>
   </div>
 </nav>
