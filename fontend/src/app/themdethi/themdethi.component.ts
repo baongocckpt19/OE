@@ -11,7 +11,6 @@ import { AccountService } from '../services/account-service.service';
   selector: 'app-themdethi',
   standalone: true,
   imports: [
-    HeaderComponent,
     CommonModule,
     FormsModule,
     ReactiveFormsModule,

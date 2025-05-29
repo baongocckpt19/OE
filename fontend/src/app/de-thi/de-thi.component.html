@@ -28,7 +28,7 @@
                     <th>Tên đề thi</th>
                     <th>Môn Học</th>
                     <th>Thời gian</th>
-                    <th>Người tạo</th>                   
+                    <th>Người tạo</th>
                     <th>Ngày tạo</th>
                     <th>Hành động</th>
                 </tr>
@@ -43,7 +43,7 @@
                     <td>{{ getUsernameById(dethi.createdBy) }}</td>
                     <td>{{ dethi.createdAt| date:'dd/MM/yyyy' }}</td>
                     <td class='action'>
-              
+
                         <button (click)="deleteDethi(dethi.examId)">
                             <i class="fas fa-trash-alt"></i>
                         </button>
@@ -52,6 +52,9 @@
                         </button>
                         <button (click)="viewDethi(dethi.examId)">
                             <i class="fas fa-eye"></i>
+                        </button>
+                        <button (click)="openStudentScoresModal(dethi)">
+                            <i class="fas fa-chart-bar"></i>
                         </button>
                     </td>
 
@@ -80,6 +83,50 @@
             <div class="filter-buttons">
                 <button class="cancel-btn" (click)="cancelFilter()">Hủy</button>
                 <button class="apply-btn" (click)="applyFilter()">Áp dụng</button>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="score-modal-overlay" *ngIf="showScoreModal">
+        <div class="score-modal-content">
+            <!-- Header: Thông tin đề thi -->
+            <div class="score-modal-header">
+                <h2>{{ selectedExam?.examName }}</h2>
+                <div class="exam-meta">
+                    <span><strong>Môn học:</strong> {{ selectedExam?.name_of_subject }}</span>
+                    <span><strong>Thời gian:</strong> {{ selectedExam?.duration }} phút</span>
+                    <span><strong>Người tạo:</strong> {{ getUsernameById(selectedExam?.createdBy) }}</span>
+                </div>
+            </div>
+            <!-- Body: Danh sách học sinh -->
+            <div class="score-modal-body">
+                <table class="score-modal-table">
+                    <thead>
+                        <tr>
+                            <th>STT</th>
+                            <th>Họ và tên</th>
+                            <th>Lớp</th>
+                            <th>Điểm</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let student of selectedExamStudents; let i = index">
+                            <td>{{ i + 1 }}</td>
+                            <td>{{ student.fullName }}</td>
+                            <td>{{ student.class }}</td>
+                            <td>{{ student.score }}</td>
+                       
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+
+            <!-- Footer: Đóng -->
+            <div class="score-modal-footer">
+                <button class="btn-close" (click)="closeStudentScoresModal()">Đóng</button>
             </div>
         </div>
     </div>

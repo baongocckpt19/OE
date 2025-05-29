@@ -4,11 +4,12 @@ import { FormsModule } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { HeaderComponent } from '../header/header.component';
 import { ScoreService } from '../services/score.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-student-mark',
   standalone: true,
-  imports: [CommonModule, HeaderComponent, FormsModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './student-mark.component.html',
   styleUrls: ['./student-mark.component.scss']
 })
@@ -28,8 +29,7 @@ export class StudentMarkComponent implements OnInit, OnDestroy {
 
   private subscription?: Subscription;
 
-  constructor(private scoreService: ScoreService) { }
-
+constructor(private scoreService: ScoreService, private router: Router) {}
   ngOnInit(): void {
     const currentUserStr = localStorage.getItem('currentUser');
     if (!currentUserStr) {
@@ -86,7 +86,9 @@ export class StudentMarkComponent implements OnInit, OnDestroy {
     }
   }
 
-
+viewExam(examId: number) {
+  this.router.navigate(['/xem-lai-bai-lam']);
+}
 
 
   ngOnDestroy(): void {

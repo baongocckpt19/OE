@@ -5,8 +5,6 @@ import { SidebarComponent } from "./sidebar/sidebar.component";
 import { CommonModule } from '@angular/common';
 import { HocsinhComponent } from './hocsinh/hocsinh.component';
 import { QuestionManagementComponent } from './question-management/question-management.component';
-import { Routes } from '@angular/router';
-import { TooltipComponent } from './tooltip/tooltip.component';
 import { SignupComponent } from "./signup/signup.component";
 import { FormsModule } from '@angular/forms';
 
@@ -15,7 +13,7 @@ import { FormsModule } from '@angular/forms';
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
-  imports: [HeaderComponent, SidebarComponent, RouterModule, CommonModule, FormsModule]
+  imports: [HeaderComponent,SidebarComponent, RouterModule, CommonModule, FormsModule]
 })
 //baongoc
 export class AppComponent {
@@ -24,8 +22,8 @@ export class AppComponent {
   isSignupPage: boolean = false;
 
   isTrangthiPage: boolean = false;
-  isThemCauHoiPage: boolean = false;
-
+  
+  isxemlaibailam: boolean = false;
   constructor(private router: Router) {
   this.router.events.subscribe(event => {
     if (event instanceof NavigationEnd) {
@@ -48,9 +46,8 @@ export class AppComponent {
     this.isTrangthiPage = this.router.url.includes('trangthi');
     this.showLayoutlogin = !this.router.url.includes('/login'); // thêm dòng này
   });
-
-  this.router.events.subscribe(() => {
-    this.isThemCauHoiPage = this.router.url.includes('them-cau-hoi');
+   this.router.events.subscribe(() => {
+    this.isxemlaibailam = this.router.url.includes('xem-lai-bai-lam');
     this.showLayoutlogin = !this.router.url.includes('/login'); // thêm dòng này
   });
 }

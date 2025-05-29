@@ -34,4 +34,8 @@ getExamById(examId: number): Observable<Dethi> {
 getSubjectById(subjectId: number): Observable<any> {
   return this.http.get<any>(`http://localhost:8080/api/dethi/${subjectId}`);
 }
+getScoresByExamId(examId: number): Observable<any[]> {
+  return this.http.get<any[]>(`${this.apiUrl}/exam/${examId}`);
+}
+
 }

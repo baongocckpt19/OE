@@ -1,0 +1,54 @@
+<div class="exam-container">
+    <!-- THÔNG TIN ĐỀ THI -->
+    <section class="exam-info">
+        <h2>{{ exam.examName }}</h2>
+        <p><strong>Môn học:</strong> {{ exam.subject }}</p>
+        <p><strong>Thời gian làm bài:</strong> {{ exam.duration }} phút</p>
+        <p><strong>Mô tả:</strong> {{ exam.description }}</p>
+    </section>
+
+    <div class="exam-layout">
+        <!-- CÂU HỎI -->
+        <div class="question-section">
+            <div *ngFor="let q of questions; let i = index" class="question-block">
+                <p><strong>Câu {{ i + 1 }}:</strong> {{ q.question }}</p>
+
+                <div class="answer-grid">
+                    <label *ngFor="let a of q.answers; let j = index" class="answer-option" [ngClass]="{
+    'correct': j === q.correctOption,
+    'wrong': userAnswers[i] === j && j !== q.correctOption
+  }">
+                        <span class="label">{{ 'ABCD'[j] }}.</span>
+                        <span class="text">{{ a }}</span>
+                        <span *ngIf="j === q.correctOption" style="margin-left: auto; color: green;">✔</span>
+                        <span *ngIf="userAnswers[i] === j && j !== q.correctOption"
+                            style="margin-left: auto; color: red;">✘</span>
+
+                    </label>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- NAVIGATION CÂU HỎI -->
+        <div class="question-nav">
+            <h4>Câu hỏi</h4>
+            <div class="nav-grid">
+                <div *ngFor="let q of questions; let i = index" class="nav-item" [ngClass]="{
+            'answered': userAnswers[i] !== null,
+            'correct-answer': userAnswers[i] === q.correctOption,
+            'wrong-answer': userAnswers[i] !== q.correctOption
+          }" (click)="scrollToQuestion(i)">
+                    {{ i + 1 }}
+                </div>
+            </div>
+
+            <div class="review-info">
+                <p><strong>Điểm số:</strong> {{ score }}/{{ questions.length }}</p>
+                <p><strong>Thời gian nộp:</strong> {{ submittedAt | date: 'HH:mm dd/MM/yyyy' }}</p>
+            </div>
+
+            <button class="submit-button" (click)="exitReview()">Thoát</button>
+        </div>
+    </div>
+</div>

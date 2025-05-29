@@ -24,4 +24,9 @@ public class ResultController {
     public ResponseEntity<List<Result>> getResultsByUserId(@PathVariable Long userId) {
         return ResponseEntity.ok(resultService.getResultsByUserId(userId));
     }
+    @GetMapping("/exam/{examId}")
+    public ResponseEntity<List<Object[]>> getResultsByExamId(@PathVariable int examId) {
+        return ResponseEntity.ok(resultService.getResultsByExamId(examId));
+    }
+
 }

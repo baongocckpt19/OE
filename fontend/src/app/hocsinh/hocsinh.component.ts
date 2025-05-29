@@ -10,7 +10,7 @@ import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-hocsinh',
-  imports: [HeaderComponent, CommonModule, FormsModule],
+  imports: [ CommonModule, FormsModule],
   templateUrl: './hocsinh.component.html',
    styleUrls: ['./hocsinh.component.scss']
 })

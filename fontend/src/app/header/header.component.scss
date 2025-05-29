@@ -1,18 +1,41 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto&family=Quicksand&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto&family=Quicksand:wght@500;700&display=swap');
 
 .header {
-    padding: 1.5rem;
-    font-family: 'Quicksand',sans-serif;
-    width:  93%;
-    margin-left: auto;
-    margin-bottom: 1.5rem;
-    border-radius: 8px;
-    font-size: 2rem;
-    font-weight: 800;
-    color: white;
-    position: fixed;
-    z-index: 1;
-    right: 0;
-    top: 0.8rem;
-    background: linear-gradient(to left, #F76AC2, #3EDBFF);
+  padding: 1.2rem 2rem;
+  font-family: 'Quicksand', sans-serif;
+  font-size: 2rem;
+  font-weight: 700;
+  color: white;
+  border-radius: 16px;
+  width: calc(100% - 190px);
+  margin-left: auto;
+  margin-right: 2rem;
+  margin-top: 0;
+  position: fixed;
+  z-index: 1000;
+  right: 0;
+  top: 0;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+  background: linear-gradient(90deg, #3EDBFF, #7F6AFF, #F76AC2);
+  background-size: 200% 200%;
+  animation: gradientFlow 8s ease infinite;
+  transition: box-shadow 0.3s ease, transform 0.2s ease;
+}
+
+.header:hover {
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+  transform: scale(1.01);
+}
+
+.header span {
+  background: linear-gradient(to right, #ffffff, #fefefe);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+@keyframes gradientFlow {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
 }
