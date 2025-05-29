@@ -1,6 +1,4 @@
 import {
-<<<<<<< HEAD:fontend/.angular/cache/19.2.13/DoAn/vite/deps/chunk-6AA6OTL7.js
-=======
   withHttpTransferCache
 <<<<<<<< HEAD:fontend/.angular/cache/19.2.13/DoAn/vite/deps/chunk-54V5PKNN.js
 } from "./chunk-AKN5BWQQ.js";
@@ -8,38 +6,26 @@ import {
 } from "./chunk-YDLELMTR.js";
 >>>>>>>> 8e881b3cdad3221c2e399a2cf948818c61b881a9:fontend/.angular/cache/19.2.13/DoAn/vite/deps/chunk-TTMHXAUD.js
 import {
->>>>>>> cb1cab1468ffe18d13e04dbddb73f62fbc520bc5:fontend/.angular/cache/19.2.13/DoAn/vite/deps/chunk-54V5PKNN.js
   CommonModule,
   DomAdapter,
   getDOM,
   setRootDomAdapter
-<<<<<<< HEAD:fontend/.angular/cache/19.2.13/DoAn/vite/deps/chunk-6AA6OTL7.js
-} from "./chunk-OL7WVFLG.js";
-import {
-  withHttpTransferCache
-} from "./chunk-JVBOKW6K.js";
-=======
 <<<<<<<< HEAD:fontend/.angular/cache/19.2.13/DoAn/vite/deps/chunk-54V5PKNN.js
 } from "./chunk-3CCTEYJ3.js";
 ========
 } from "./chunk-GGRVDYZH.js";
 >>>>>>>> 8e881b3cdad3221c2e399a2cf948818c61b881a9:fontend/.angular/cache/19.2.13/DoAn/vite/deps/chunk-TTMHXAUD.js
->>>>>>> cb1cab1468ffe18d13e04dbddb73f62fbc520bc5:fontend/.angular/cache/19.2.13/DoAn/vite/deps/chunk-54V5PKNN.js
 import {
   DOCUMENT,
   PLATFORM_BROWSER_ID,
   XhrFactory,
   isPlatformServer,
   parseCookieValue
-<<<<<<< HEAD:fontend/.angular/cache/19.2.13/DoAn/vite/deps/chunk-6AA6OTL7.js
-} from "./chunk-P3LJCSKC.js";
-=======
 <<<<<<<< HEAD:fontend/.angular/cache/19.2.13/DoAn/vite/deps/chunk-54V5PKNN.js
 } from "./chunk-GONUFVUX.js";
 ========
 } from "./chunk-2TLEZPVW.js";
 >>>>>>>> 8e881b3cdad3221c2e399a2cf948818c61b881a9:fontend/.angular/cache/19.2.13/DoAn/vite/deps/chunk-TTMHXAUD.js
->>>>>>> cb1cab1468ffe18d13e04dbddb73f62fbc520bc5:fontend/.angular/cache/19.2.13/DoAn/vite/deps/chunk-54V5PKNN.js
 import {
   APP_ID,
   ApplicationModule,
@@ -2041,12 +2027,8 @@ export {
    * License: MIT
    *)
 */
-<<<<<<< HEAD:fontend/.angular/cache/19.2.13/DoAn/vite/deps/chunk-6AA6OTL7.js
-//# sourceMappingURL=chunk-6AA6OTL7.js.map
-=======
 <<<<<<<< HEAD:fontend/.angular/cache/19.2.13/DoAn/vite/deps/chunk-54V5PKNN.js
 //# sourceMappingURL=chunk-54V5PKNN.js.map
 ========
 //# sourceMappingURL=chunk-TTMHXAUD.js.map
 >>>>>>>> 8e881b3cdad3221c2e399a2cf948818c61b881a9:fontend/.angular/cache/19.2.13/DoAn/vite/deps/chunk-TTMHXAUD.js
->>>>>>> cb1cab1468ffe18d13e04dbddb73f62fbc520bc5:fontend/.angular/cache/19.2.13/DoAn/vite/deps/chunk-54V5PKNN.js

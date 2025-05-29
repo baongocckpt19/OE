@@ -1,15 +1,11 @@
 import {
   DOCUMENT,
   isPlatformBrowser
-<<<<<<< HEAD:fontend/.angular/cache/19.2.13/DoAn/vite/deps/chunk-OL7WVFLG.js
-} from "./chunk-P3LJCSKC.js";
-=======
 <<<<<<<< HEAD:fontend/.angular/cache/19.2.13/DoAn/vite/deps/chunk-3CCTEYJ3.js
 } from "./chunk-GONUFVUX.js";
 ========
 } from "./chunk-2TLEZPVW.js";
 >>>>>>>> 8e881b3cdad3221c2e399a2cf948818c61b881a9:fontend/.angular/cache/19.2.13/DoAn/vite/deps/chunk-GGRVDYZH.js
->>>>>>> cb1cab1468ffe18d13e04dbddb73f62fbc520bc5:fontend/.angular/cache/19.2.13/DoAn/vite/deps/chunk-3CCTEYJ3.js
 import {
   ApplicationRef,
   Attribute,
@@ -5130,12 +5126,8 @@ export {
    * License: MIT
    *)
 */
-<<<<<<< HEAD:fontend/.angular/cache/19.2.13/DoAn/vite/deps/chunk-OL7WVFLG.js
-//# sourceMappingURL=chunk-OL7WVFLG.js.map
-=======
 <<<<<<<< HEAD:fontend/.angular/cache/19.2.13/DoAn/vite/deps/chunk-3CCTEYJ3.js
 //# sourceMappingURL=chunk-3CCTEYJ3.js.map
 ========
 //# sourceMappingURL=chunk-GGRVDYZH.js.map
 >>>>>>>> 8e881b3cdad3221c2e399a2cf948818c61b881a9:fontend/.angular/cache/19.2.13/DoAn/vite/deps/chunk-GGRVDYZH.js
->>>>>>> cb1cab1468ffe18d13e04dbddb73f62fbc520bc5:fontend/.angular/cache/19.2.13/DoAn/vite/deps/chunk-3CCTEYJ3.js
