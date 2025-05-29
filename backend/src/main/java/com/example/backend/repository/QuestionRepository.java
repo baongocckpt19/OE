@@ -27,6 +27,10 @@ public interface QuestionRepository extends JpaRepository<Question, Long> {
     @Query("SELECT q FROM Question q WHERE q.isArchived = false")
     List<Question> findAllActive();
 
+@Query(value = "SELECT * FROM question_bank q " +
+               "JOIN exam_questions eq ON q.question_id = eq.question_id " +
+               "WHERE eq.exam_id = :examId", nativeQuery = true)
+List<Question> findQuestionsByExamId(@Param("examId") Long examId);
 
     @Transactional
     @Modifying
