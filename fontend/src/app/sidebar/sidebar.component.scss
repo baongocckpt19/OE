@@ -12,6 +12,7 @@
   z-index: 1000;
   transition: width 0.3s ease;
   font-family: 'Segoe UI', 'Roboto', sans-serif;
+   z-index: 9999;
 
   &.expanded {
     width: 16rem;
